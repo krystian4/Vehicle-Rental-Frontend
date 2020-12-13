@@ -29,7 +29,7 @@ const App = () => {
           <Route exact path="/register" component={Register} />
           <Route exact path="/profile" component={Profile} />
           <Route path="/user" component={BoardUser} />
-          <Route path="/mod" component={BoardManager} />
+          <Route path="/manager" component={BoardManager} />
           <Route path="/admin" component={BoardAdmin} />
           <Route path="/changepassword" component={BoardUser} />
         </Switch>
