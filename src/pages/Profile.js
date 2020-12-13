@@ -1,5 +1,6 @@
 import React from "react";
 import AuthService from "../services/auth.service";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const currentUser = AuthService.getCurrentUser();
@@ -19,13 +20,22 @@ const Profile = () => {
         <strong>Id:</strong> {currentUser.id}
       </p>
       <p>
+        <strong>Login:</strong> {currentUser.username}
+      </p>
+      <p>
         <strong>Email:</strong> {currentUser.email}
       </p>
-      <strong>Authorities:</strong>
+      <strong>Roles:</strong>
       <ul>
         {currentUser.roles &&
           currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
       </ul>
+      <p>
+        <strong>Change password:</strong>
+        <div>
+        <Link to="/changepassword" className="btn btn-primary btn-block" style={{width:"200px"}}>Change Password</Link>
+        </div>
+      </p>
     </div>
   );
 };
