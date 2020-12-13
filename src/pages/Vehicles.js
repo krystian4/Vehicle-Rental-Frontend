@@ -15,7 +15,7 @@ const Vehicles = () =>  {
     const fetchVehicles = async () => {
         setLoading(true)
         try{
-            const response = await fetch('data.json')
+            const response = await fetch('http://localhost:8080/api/vehicle/all')
             const vehicles = await response.json()
             setLoading(false)
             setVehicles(vehicles)
