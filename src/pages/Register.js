@@ -6,6 +6,7 @@ import { isEmail } from "validator";
 
 import AuthService from "../services/auth.service";
 
+
 const required = (value) => {
   if (!value) {
     return (
@@ -46,6 +47,16 @@ const vpassword = (value) => {
   }
 };
 
+const rpassword = (value, props, components) => {
+  if(value !== components['password'][0].value) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        The passwords are not the same.
+      </div>
+    );
+  }
+};
+
 const Register = (props) => {
   const form = useRef();
   const checkBtn = useRef();
@@ -53,6 +64,13 @@ const Register = (props) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [phone, setPhone] = useState("");
+
+
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -71,6 +89,31 @@ const Register = (props) => {
     setPassword(password);
   };
 
+  const onChangeName = (e) => {
+    const name = e.target.value;
+    setName(name);
+  };
+
+  const onChangeLastName = (e) => {
+    const lastname = e.target.value;
+    setLastName(lastname);
+  };
+
+  const onChangeAddress = (e) => {
+    const address = e.target.value;
+    setAddress(address);
+  };
+
+  const onChangeCity = (e) => {
+    const city = e.target.value;
+    setCity(city);
+  };
+
+  const onChangePhone = (e) => {
+    const phone = e.target.value;
+    setPhone(phone);
+  };
+
   const handleRegister = (e) => {
     e.preventDefault();
 
@@ -80,7 +123,7 @@ const Register = (props) => {
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
-      AuthService.register(username, email, password).then(
+      AuthService.register(username, email, password, name, lastname, address, city, phone).then(
         (response) => {
           setMessage(response.data.message);
           setSuccessful(true);
@@ -145,6 +188,76 @@ const Register = (props) => {
                   value={password}
                   onChange={onChangePassword}
                   validations={[required, vpassword]}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="rpassword">Repeat Password</label>
+                <Input
+                  type="password"
+                  className="form-control"
+                  name="repeat_password"
+                  validations={[required, rpassword]}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="name">Name</label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="name"
+                  value={name}
+                  onChange={onChangeName}
+                  validations={[required]}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="lastname">Last Name</label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="lastname"
+                  value={lastname}
+                  onChange={onChangeLastName}
+                  validations={[required]}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="address">Address</label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="address"
+                  value={address}
+                  onChange={onChangeAddress}
+                  validations={[required]}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="city">City</label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="city"
+                  value={city}
+                  onChange={onChangeCity}
+                  validations={[required]}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="phone">Phone Number</label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="phone"
+                  value={phone}
+                  onChange={onChangePhone}
+                  validations={[required]}
                 />
               </div>
 
