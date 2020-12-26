@@ -3,9 +3,9 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
+import { CountryDropdown, RegionDropdown} from 'react-country-region-selector';
 
 import AuthService from "../services/auth.service";
-
 
 const required = (value) => {
   if (!value) {
@@ -58,6 +58,7 @@ const rpassword = (value, props, components) => {
 };
 
 const Register = (props) => {
+
   const form = useRef();
   const checkBtn = useRef();
 
@@ -69,6 +70,7 @@ const Register = (props) => {
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [phone, setPhone] = useState("");
+  const [country, setCountry] = useState('');
 
 
   const [successful, setSuccessful] = useState(false);
@@ -123,7 +125,7 @@ const Register = (props) => {
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
-      AuthService.register(username, email, password, name, lastname, address, city, phone).then(
+      AuthService.register(username, email, password, name, lastname, address, city, phone, country).then(
         (response) => {
           setMessage(response.data.message);
           setSuccessful(true);
@@ -145,7 +147,7 @@ const Register = (props) => {
 
   return (
     <div className="col-md-12">
-      <div className="card card-container">
+      <div className="card" style={{width: "425px"}}>
         <img
           src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
           alt="profile-img"
@@ -259,6 +261,17 @@ const Register = (props) => {
                   onChange={onChangePhone}
                   validations={[required]}
                 />
+              </div>
+
+              <div className="form-group">
+               <label htmlFor="Country">Country</label>
+               <div>
+                  <CountryDropdown
+                    name="country"
+                    value={country}
+                    onChange={(value)=> setCountry(value)} 
+                  />
+              </div>
               </div>
 
               <div className="form-group">
