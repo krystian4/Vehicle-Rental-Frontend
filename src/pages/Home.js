@@ -25,6 +25,8 @@ const Home = () => {
     );
   }, []);
 
+  console.log(content);
+
   return (
     <>
       <Hero> 

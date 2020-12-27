@@ -13,6 +13,7 @@ import BoardManager from "./pages/BoardManager";
 import BoardAdmin from "./pages/BoardAdmin";
 import FAQ from "./pages/FAQ";
 import Vehicles from "./pages/Vehicles"
+import SingleVehiclePage from "./pages/SingleVehiclePage"
 
 import Navbar from "./components/Navbar";
 
@@ -32,6 +33,7 @@ const App = () => {
           <Route path="/manager" component={BoardManager} />
           <Route path="/admin" component={BoardAdmin} />
           <Route path="/changepassword" component={BoardUser} />
+          <Route exact path="/vehicle" component={SingleVehiclePage} />
         </Switch>
         </>
   );

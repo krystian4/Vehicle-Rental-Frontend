@@ -1,9 +1,24 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Vehicle = ({id, brand, url, removeVehicle}) => {
+
+    const vehicle = {
+        id:id,
+        brand:brand,
+        url:url
+    };
+
+    const onClickVehicle = () =>{
+        console.log(vehicle);
+        sessionStorage.setItem("vehicle", JSON.stringify(vehicle));
+    };
+
     return(
         <article className='single-vehicle'>
-            <img src={url} alt={brand} className='photo-vehicle' />
+            <Link to={`/vehicle`} onClick={onClickVehicle}>
+                <img src={url} alt={brand} className='photo-vehicle'/>
+            </Link>
             <footer>
                 <div className='vehicle-info'>
                     <h4>{brand}</h4>

@@ -10,11 +10,10 @@ const Navbar = () =>{
 
   useEffect(() => {
     const user = AuthService.getCurrentUser();
-
     if (user) {
-      setCurrentUser(user);
-      setShowManagerBoard(user.roles.includes("ROLE_MANAGER"));
-      setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
+        setCurrentUser(user);
+        setShowManagerBoard(user.roles.includes("ROLE_MANAGER"));
+        setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
     }
   }, []);
 

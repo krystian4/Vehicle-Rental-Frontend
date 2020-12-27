@@ -3,7 +3,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
-import { CountryDropdown, RegionDropdown} from 'react-country-region-selector';
+import { CountryDropdown} from 'react-country-region-selector';
 
 import AuthService from "../services/auth.service";
 
