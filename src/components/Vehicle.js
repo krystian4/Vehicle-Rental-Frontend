@@ -10,7 +10,6 @@ const Vehicle = ({id, brand, url, removeVehicle}) => {
     };
 
     const onClickVehicle = () =>{
-        console.log(vehicle);
         sessionStorage.setItem("vehicle", JSON.stringify(vehicle));
     };
 

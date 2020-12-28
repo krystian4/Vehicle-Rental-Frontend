@@ -4,12 +4,11 @@ import Loading from '../components/Loading'
 const SingleVehiclePage = () => {
 
   const vehicle = JSON.parse(sessionStorage.getItem("vehicle"));
-  console.log(vehicle);
 
   return(
     <div className="container">
       <header className="jumbotron">
-        <img src={vehicle.url} />
+        <img src={vehicle.url} title={vehicle.url} />
         <h3>BRAND {vehicle.brand}</h3>
         <h3>Here will be car id= {vehicle.id} informations</h3>
 
