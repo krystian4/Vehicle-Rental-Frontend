@@ -22,10 +22,12 @@ const Navbar = () =>{
   };
     return(
         <nav className="navbar navbar-expand navbar-dark bg-dark">
+            
             <Link to={"/"} className="navbar-brand">
             VehicleRental
             </Link>
-            <div className="navbar-nav mr-auto">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
             <li className="nav-item">
                 <Link to={"/home"} className="nav-link">
                 Home
@@ -45,19 +47,38 @@ const Navbar = () =>{
             </li>
 
             {showManagerBoard && (
-                <li className="nav-item">
-                <Link to={"/manager"} className="nav-link">
-                    Manager Board
-                </Link>
-                </li>
+                <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Manager Board
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                   <Link to={"/manager"} class="dropdown-item">
+                           Manager Board
+                   </Link>
+                   <Link to={"/addVehicle"} class="dropdown-item">
+                           New vehicle
+                   </Link>
+                  <a class="dropdown-item" >Another action</a>
+                  <a class="dropdown-item">Something else here</a>
+                </div>
+              </li>
             )}
 
             {showAdminBoard && (
-                <li className="nav-item">
-                <Link to={"/admin"} className="nav-link">
-                    Admin Board
+                
+             <li class="nav-item dropdown">
+             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               Admin Board
+             </a>
+             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <Link to={"/admin"} class="dropdown-item">
+                        Admin Board
                 </Link>
-                </li>
+               <a class="dropdown-item" href="#">Another action</a>
+               <a class="dropdown-item" href="#">Something else here</a>
+             </div>
+           </li>
+
             )}
 
             {currentUser && (
@@ -67,6 +88,7 @@ const Navbar = () =>{
                 </Link>
                 </li>
             )}
+            </ul>
             </div>
 
             {currentUser ? (

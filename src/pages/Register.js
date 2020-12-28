@@ -264,7 +264,7 @@ const Register = (props) => {
               </div>
 
               <div className="form-group">
-               <label htmlFor="Country">Country</label>
+               <label htmlFor="country">Country</label>
                <div>
                   <CountryDropdown
                     name="country"

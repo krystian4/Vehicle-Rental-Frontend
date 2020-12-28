@@ -12,8 +12,8 @@ const register = (username, email, password, name, lastname, address, city, phon
     lastname,
     address,
     city,
-    phone,
     country,
+    phone,
   });
 };
 
