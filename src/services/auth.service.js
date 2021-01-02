@@ -2,11 +2,19 @@ import axios from "axios";
 
 const API_URL = "http://localhost:8080/api/auth/";
 
-const register = (username, email, password) => {
+const register = (username, email, password, firstName, lastName, address, city, phone, country, birthDate) => {
+  console.log(username, email, password, firstName, lastName, address, city, phone, country, birthDate);
   return axios.post(API_URL + "signup", {
     username,
     email,
     password,
+    firstName,
+    lastName,
+    address,
+    city,
+    country,
+    phone,
+    birthDate,
   });
 };
 
@@ -18,7 +26,7 @@ const login = (username, password) => {
     })
     .then((response) => {
       if (response.data.accessToken) {
-        localStorage.setItem("user", JSON.stringify(response.data));
+        sessionStorage.setItem("user", JSON.stringify(response.data));
       }
 
       return response.data;
@@ -26,11 +34,11 @@ const login = (username, password) => {
 };
 
 const logout = () => {
-  localStorage.removeItem("user");
+  sessionStorage.removeItem("user");
 };
 
 const getCurrentUser = () => {
-  return JSON.parse(localStorage.getItem("user"));
+  return JSON.parse(sessionStorage.getItem("user"));
 };
 
 export default {

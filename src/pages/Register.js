@@ -3,6 +3,8 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
+import { CountryDropdown} from 'react-country-region-selector';
+import DatePicker from "react-datepicker";
 
 import AuthService from "../services/auth.service";
 
@@ -46,13 +48,32 @@ const vpassword = (value) => {
   }
 };
 
+const rpassword = (value, props, components) => {
+  if(value !== components['password'][0].value) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        The passwords are not the same.
+      </div>
+    );
+  }
+};
+
 const Register = (props) => {
+
   const form = useRef();
   const checkBtn = useRef();
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [phone, setPhone] = useState("");
+  const [country, setCountry] = useState('');
+  const [birthDate, setBirthDate] = useState(new Date());
+
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -71,6 +92,31 @@ const Register = (props) => {
     setPassword(password);
   };
 
+  const onChangeName = (e) => {
+    const name = e.target.value;
+    setName(name);
+  };
+
+  const onChangeLastName = (e) => {
+    const lastname = e.target.value;
+    setLastName(lastname);
+  };
+
+  const onChangeAddress = (e) => {
+    const address = e.target.value;
+    setAddress(address);
+  };
+
+  const onChangeCity = (e) => {
+    const city = e.target.value;
+    setCity(city);
+  };
+
+  const onChangePhone = (e) => {
+    const phone = e.target.value;
+    setPhone(phone);
+  };
+
   const handleRegister = (e) => {
     e.preventDefault();
 
@@ -80,7 +126,7 @@ const Register = (props) => {
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
-      AuthService.register(username, email, password).then(
+      AuthService.register(username, email, password, name, lastname, address, city, phone, country, birthDate).then(
         (response) => {
           setMessage(response.data.message);
           setSuccessful(true);
@@ -102,7 +148,7 @@ const Register = (props) => {
 
   return (
     <div className="col-md-12">
-      <div className="card card-container">
+      <div className="card" style={{width: "425px"}}>
         <img
           src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
           alt="profile-img"
@@ -147,6 +193,92 @@ const Register = (props) => {
                   validations={[required, vpassword]}
                 />
               </div>
+
+              <div className="form-group">
+                <label htmlFor="rpassword">Repeat Password</label>
+                <Input
+                  type="password"
+                  className="form-control"
+                  name="repeat_password"
+                  validations={[required, rpassword]}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="name">Name</label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="name"
+                  value={name}
+                  onChange={onChangeName}
+                  validations={[required]}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="lastname">Last Name</label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="lastname"
+                  value={lastname}
+                  onChange={onChangeLastName}
+                  validations={[required]}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="address">Address</label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="address"
+                  value={address}
+                  onChange={onChangeAddress}
+                  validations={[required]}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="city">City</label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="city"
+                  value={city}
+                  onChange={onChangeCity}
+                  validations={[required]}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="phone">Phone Number</label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="phone"
+                  value={phone}
+                  onChange={onChangePhone}
+                  validations={[required]}
+                />
+              </div>
+
+              <div className="form-group">
+               <label htmlFor="country">Country</label>
+               <div>
+                  <CountryDropdown
+                    name="country"
+                    value={country}
+                    onChange={(value)=> setCountry(value)} 
+                  />
+              </div>
+              </div>
+
+              <div className="form-group">
+                <label style={{ marginRight: "5px" }}htmlFor="birthDate">Birth date:</label>
+                <DatePicker  dateFormat="dd/MM/yyyy" className="form-control" selected={birthDate} onChange={date => setBirthDate(date)} />
+            </div>
 
               <div className="form-group">
                 <button className="btn btn-primary btn-block">Sign Up</button>
