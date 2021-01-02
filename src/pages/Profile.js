@@ -13,40 +13,61 @@ const Profile = () => {
           <strong>{currentUser.username}</strong> Profile
         </h3>
       </header>
-      <p>
-        <strong>Token:</strong> {currentUser.accessToken.substring(0, 20)} ...{" "}
-        {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
-      </p>
-      <p>
-        <strong>Id:</strong> {currentUser.id}
-      </p>
-      <p>
-        <strong>Login:</strong> {currentUser.username}
-      </p>
-      <p>
-        <strong>Email:</strong> {currentUser.email}
-      </p>
-      <strong>Roles:</strong>
-      <ul style={{marginLeft:"20px"}}>
-        {currentUser.roles &&
-          currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
-      </ul>
-
-      <p>
-        <strong>First Name: </strong> {currentUser.firstName}<br />
-        <strong>Last Name: </strong> {currentUser.lastName}<br />
-        <strong>Phone Number: </strong> {currentUser.phone}<br />
-        <strong>Address: </strong> {currentUser.address}<br />
-        <strong>City: </strong> {currentUser.city}<br />
-        <strong>Country: </strong> {currentUser.country}<br />
-      </p>
-
-      <p>
-        <strong>Change password:</strong>
-        <div>
-        <Link to="/changepassword" className="btn btn-primary btn-block" style={{width:"200px"}}>Change Password</Link>
+      <div class="row">
+        <div class="col-md-2">
+          <strong>Token:</strong> 
         </div>
-      </p>
+        <div class="col-md-10">
+          {currentUser.accessToken.substring(0, 20)} ...{" "}
+        </div>
+
+        <div class="col-md-2">
+          <strong>Id:</strong>
+        </div>
+        <div class="col-md-10">
+          {currentUser.id}
+        </div>
+
+        <div class="col-md-2">
+          <strong>Login:</strong>
+        </div>
+        <div class="col-md-10">
+          {currentUser.username}
+        </div>
+        <div class="col-md-2">
+          <strong>Email:</strong>
+        </div>
+        <div class="col-md-10">
+          {currentUser.email}
+        </div>
+
+        <div class="col-md-2"><strong>First Name: </strong></div> <div class="col-md-10">{currentUser.firstName}</div>
+        <div class="col-md-2"><strong>Last Name: </strong></div> <div class="col-md-10">{currentUser.lastName}</div>
+        <div class="col-md-2"><strong>Phone Number: </strong></div> <div class="col-md-10">{currentUser.phone}</div>
+        <div class="col-md-2"><strong>Address: </strong></div> <div class="col-md-10">{currentUser.address}</div>
+        <div class="col-md-2"><strong>City: </strong></div> <div class="col-md-10">{currentUser.city}</div>
+        <div class="col-md-2"><strong>Country: </strong></div> <div class="col-md-10">{currentUser.country}</div>
+
+        <div class="col-md-2">
+          <strong>Roles:</strong>
+        </div>
+
+        <div class="col-md-10">
+          <ul>
+            {currentUser.roles &&
+              currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
+          </ul>
+        </div>
+
+        <div class="col-md-2">
+        <strong>Change password:</strong>
+      </div>
+      <div class="col-md-10">
+        <Link to="/changepassword" className="btn btn-primary btn-block" style={{width:"200px"}}>Change Password</Link>
+      </div>
+
+      </div>
+      
     </div>
   );
 };
