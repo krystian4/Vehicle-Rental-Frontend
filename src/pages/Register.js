@@ -4,6 +4,7 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 import { CountryDropdown} from 'react-country-region-selector';
+import DatePicker from "react-datepicker";
 
 import AuthService from "../services/auth.service";
 
@@ -71,7 +72,7 @@ const Register = (props) => {
   const [city, setCity] = useState("");
   const [phone, setPhone] = useState("");
   const [country, setCountry] = useState('');
-
+  const [birthDate, setBirthDate] = useState(new Date());
 
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
@@ -125,7 +126,7 @@ const Register = (props) => {
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
-      AuthService.register(username, email, password, name, lastname, address, city, phone, country).then(
+      AuthService.register(username, email, password, name, lastname, address, city, phone, country, birthDate).then(
         (response) => {
           setMessage(response.data.message);
           setSuccessful(true);
@@ -273,6 +274,11 @@ const Register = (props) => {
                   />
               </div>
               </div>
+
+              <div className="form-group">
+                <label style={{ marginRight: "5px" }}htmlFor="birthDate">Birth date:</label>
+                <DatePicker  dateFormat="dd/MM/yyyy" className="form-control" selected={birthDate} onChange={date => setBirthDate(date)} />
+            </div>
 
               <div className="form-group">
                 <button className="btn btn-primary btn-block">Sign Up</button>

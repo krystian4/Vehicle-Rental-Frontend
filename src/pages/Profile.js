@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 const Profile = () => {
   const currentUser = AuthService.getCurrentUser();
+  console.log(currentUser);
 
   return (
     <div className="container">
@@ -26,10 +27,20 @@ const Profile = () => {
         <strong>Email:</strong> {currentUser.email}
       </p>
       <strong>Roles:</strong>
-      <ul>
+      <ul style={{marginLeft:"20px"}}>
         {currentUser.roles &&
           currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
       </ul>
+
+      <p>
+        <strong>First Name: </strong> {currentUser.firstName}<br />
+        <strong>Last Name: </strong> {currentUser.lastName}<br />
+        <strong>Phone Number: </strong> {currentUser.phone}<br />
+        <strong>Address: </strong> {currentUser.address}<br />
+        <strong>City: </strong> {currentUser.city}<br />
+        <strong>Country: </strong> {currentUser.country}<br />
+      </p>
+
       <p>
         <strong>Change password:</strong>
         <div>

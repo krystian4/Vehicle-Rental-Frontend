@@ -3,6 +3,7 @@ import { Switch, Route} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/js/dist/dropdown';
 import "./App.css";
+import "react-datepicker/dist/react-datepicker.css";
 
 
 import Login from "./pages/Login";

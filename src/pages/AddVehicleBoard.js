@@ -5,6 +5,8 @@ import Select from "react-validation/build/select";
 import CheckButton from "react-validation/build/button";
 import { CountryDropdown} from 'react-country-region-selector';
 import VehicleService from "../services/vehicle.service";
+import DatePicker from "react-datepicker";
+import CurrencyInput from 'react-currency-input-field';
 
 const required = (value) => {
     if (!value) {
@@ -31,6 +33,7 @@ const AddVehicleBoard = () => {
     const checkBtn = useRef();
 
     const [brand, setBrand] = useState("");
+    const [category, setCategory] = useState("");
     const [model, setModel] = useState("");
     const [year, setYear] = useState("");
     const [country, setCountry] = useState('');
@@ -38,13 +41,22 @@ const AddVehicleBoard = () => {
     const [price, setPrice] = useState('');
     const [description, setDesc] = useState("");
     const [picture, setPicture] = useState('');
+    const [inStartDate, setInStartDate] = useState(new Date());
+    const [inExpDate, setInExpDate] = useState(new Date());
+    const [inPrice, setInPrice] = useState('');
+    const [carInStartDate, setCarInStartDate] = useState(new Date());
+    const [carInExpDate, setCarInExpDate] = useState(new Date());
+    const [carInPrice, setCarInPrice] = useState('');
 
-
-  
     const onChangeBrand = (e) => {
         const brand = e.target.value;
         setBrand(brand);
     }
+
+    const onChangeCategory = (e) => {
+      const category = e.target.value;
+      setCategory(category);
+  }
 
     const onChangeModel = (e) =>{
         const model = e.target.value;
@@ -59,10 +71,6 @@ const AddVehicleBoard = () => {
     const onChangePower = (e) =>{
         const power = e.target.value;
         setPower(power);
-    }
-    const onChangePrice = (e) =>{
-        const price = e.target.value;
-        setPrice(price);
     }
     const onChangeDesc = (e) =>{
         const description = e.target.value;
@@ -79,7 +87,7 @@ const AddVehicleBoard = () => {
 
         if (checkBtn.current.context._errors.length === 0 && country !== "" )  {
             console.log("dodano pojazd");
-            VehicleService.addVehicle(brand, model, year, country, power, price, description, picture);
+            VehicleService.addVehicle(brand, category, model, year, country, power, price, description, inStartDate, inExpDate, inPrice, carInStartDate, carInExpDate, carInPrice,picture);
         }
 
     }
@@ -105,6 +113,19 @@ const AddVehicleBoard = () => {
                         <option value='Mercedes'>Mercedes</option>
                         <option value='Nissan'>Nissan</option>
                         <option value='Volkswagen'>Volkswagen</option>
+                </Select>
+            </div>
+
+            <div class="form-group">
+                <label htmlFor="brand">
+                    Brand:
+                </label>
+                <Select className="form-control" name='brand' onChange={onChangeCategory} validations={[brandValidator]}>
+                        <option value=''>Choose category...</option>
+                        <option value='Hatchback'>Hatchback</option>
+                        <option value='Sedan'>Sedan</option>
+                        <option value='SUV'>SUV</option>
+                        <option value='Coupe'>Coupe</option>
                 </Select>
             </div>
 
@@ -158,24 +179,71 @@ const AddVehicleBoard = () => {
 
             <div className="form-group">
                 <label htmlFor="price">Price per Day</label>
-                <Input
-                  type="number"
+                <CurrencyInput
                   className="form-control w-25"
                   name="price"
-                  value={price}
-                  onChange={onChangePrice}
-                  validations={[required]}
-                />
+                  placeholder="PLN"
+                  allowDecimals={true}
+                  decimalsLimit={2}
+                  onChange={(value) => setPrice(value)}
+             />
             </div>
 
             <div className="form-group">
-                <label htmlFor="price">Description</label>
+                <label htmlFor="description">Description</label>
                 <textarea
                     className="form-control"
                     name="description"
                     value={description}
                     onChange={onChangeDesc}
                 />
+            </div>
+
+
+            <label htmlFor="insurance">INSURANCE</label>
+            <div className="form-group">
+                <label style={{ marginRight: "5px" }}htmlFor="insurance">Purchase date:</label>
+                <DatePicker  dateFormat="dd/MM/yyyy" className="form-control" selected={inStartDate} onChange={date => setInStartDate(date)} />
+            </div>
+
+            <div className="form-group">
+                <label style={{ marginRight: "5px" }}htmlFor="insuranceExp">Expiration date:</label>
+                <DatePicker  dateFormat="dd/MM/yyyy" className="form-control" selected={inExpDate} onChange={date => setInExpDate(date)} />
+            </div>
+
+            <div className="form-group">
+            <label htmlFor="inPrice">Price</label>
+            <CurrencyInput
+              className="form-control w-25"
+              name="inPrice"
+              placeholder="PLN"
+              allowDecimals={true}
+              decimalsLimit={2}
+              onChange={(value) => setInPrice(value)}
+            />
+            </div>
+
+            <label htmlFor="insurance">CAR INSPECTION</label>
+            <div className="form-group">
+                <label style={{ marginRight: "5px" }}htmlFor="inspection">Inspection date:</label>
+                <DatePicker  dateFormat="dd/MM/yyyy" className="form-control" selected={carInStartDate} onChange={date => setCarInStartDate(date)} />
+            </div>
+
+            <div className="form-group">
+                <label style={{ marginRight: "5px" }}htmlFor="insuranceExp">Expiration date:</label>
+                <DatePicker  dateFormat="dd/MM/yyyy" className="form-control" selected={carInExpDate} onChange={date => setCarInExpDate(date)} />
+            </div>
+
+            <div className="form-group">
+            <label htmlFor="carInPrice">Price</label>
+            <CurrencyInput
+              className="form-control w-25"
+              name="carInPrice"
+              placeholder="PLN"
+              allowDecimals={true}
+              decimalsLimit={2}
+              onChange={(value) => setCarInPrice(value)}
+            />
             </div>
 
             <div className="form-group">
