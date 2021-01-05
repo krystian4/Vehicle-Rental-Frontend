@@ -20,7 +20,7 @@ const Vehicles = () =>  {
             setLoading(false)
             setVehicles(vehicles)
         }catch(er){
-            setLoading(false)
+            setLoading(false);
             console.log(er)
         }
     }

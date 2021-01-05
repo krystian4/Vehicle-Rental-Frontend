@@ -48,6 +48,9 @@ const AddVehicleBoard = () => {
     const [carInExpDate, setCarInExpDate] = useState(new Date());
     const [carInPrice, setCarInPrice] = useState('');
 
+    const [successful, setSuccessful] = useState(false);
+    const [message, setMessage] = useState("");
+
     const onChangeBrand = (e) => {
         const brand = e.target.value;
         setBrand(brand);
@@ -84,13 +87,29 @@ const AddVehicleBoard = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         form.current.validateAll();
+        setMessage("");
+        setSuccessful(false);
 
         if (checkBtn.current.context._errors.length === 0 && country !== "" )  {
-            console.log("dodano pojazd");
-            VehicleService.addVehicle(brand, category, model, year, country, power, price, description, inStartDate, inExpDate, inPrice, carInStartDate, carInExpDate, carInPrice,picture);
-        }
+            VehicleService.addVehicle(brand, category, model, year, country, power, price, description, inStartDate, inExpDate, inPrice, carInStartDate, carInExpDate, carInPrice,picture).then(
+              (response) => {
+                setMessage(response.data.message);
+                setSuccessful(true);
+              },
+              (error) => {
+                const resMessage =
+                  (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                  error.message ||
+                  error.toString();
 
-    }
+          setMessage(resMessage);
+          setSuccessful(false);
+              }
+            );
+        }
+    };
 
   return (
     <div className="container">
@@ -263,6 +282,17 @@ const AddVehicleBoard = () => {
             <div className="form-group">
                 <button type="submit" className="btn btn-primary btn-block">Add new vehicle</button>
             </div>
+
+            {message && (
+            <div className="form-group">
+              <div
+                className={ successful ? "alert alert-success" : "alert alert-danger" }
+                role="alert"
+              >
+                {message}
+              </div>
+            </div>
+          )}
 
             <CheckButton style={{ display: "none" }} ref={checkBtn} />
 

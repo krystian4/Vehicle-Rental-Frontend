@@ -4,6 +4,7 @@ import AuthService from "../services/auth.service";
 
 
 const Navbar = () =>{
+  const [showEmployeeBoard, setShowEmployeeBoard] = useState(false);
   const [showManagerBoard, setShowManagerBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -12,6 +13,7 @@ const Navbar = () =>{
     const user = AuthService.getCurrentUser();
     if (user) {
         setCurrentUser(user);
+        setShowEmployeeBoard(user.roles.includes("ROLE_ADMIN"));
         setShowManagerBoard(user.roles.includes("ROLE_MANAGER"));
         setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
     }
@@ -46,6 +48,24 @@ const Navbar = () =>{
                 </Link>
             </li>
 
+            {showEmployeeBoard && (
+                <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Employee Board
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                   <Link to={"/employee"} class="dropdown-item">
+                           Employee
+                   </Link>
+                   <Link to={"/editFAQ"} class="dropdown-item">
+                           Edit FAQ
+                   </Link>
+                  <a class="dropdown-item" >Another action</a>
+                  <a class="dropdown-item">Something else here</a>
+                </div>
+              </li>
+            )}
+
             {showManagerBoard && (
                 <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -53,7 +73,7 @@ const Navbar = () =>{
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                    <Link to={"/manager"} class="dropdown-item">
-                           Manager Board
+                           Manager
                    </Link>
                    <Link to={"/addVehicle"} class="dropdown-item">
                            New vehicle
@@ -72,7 +92,7 @@ const Navbar = () =>{
              </a>
              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <Link to={"/admin"} class="dropdown-item">
-                        Admin Board
+                        Admin
                 </Link>
                <a class="dropdown-item" href="#">Another action</a>
                <a class="dropdown-item" href="#">Something else here</a>

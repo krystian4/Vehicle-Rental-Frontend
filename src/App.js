@@ -5,24 +5,26 @@ import 'bootstrap/js/dist/dropdown';
 import "./App.css";
 import "react-datepicker/dist/react-datepicker.css";
 
+import Navbar from "./components/Navbar";
 
-import Login from "./pages/Login";
-import Register from "./pages/Register";
 import Home from "./pages/Home";
-import Profile from "./pages/Profile";
-
-import BoardUser from "./pages/BoardUser";
-
-import BoardManager from "./pages/BoardManager";
-import AddVehicleBoard from "./pages/AddVehicleBoard";
-
-import BoardAdmin from "./pages/BoardAdmin";
-
 import FAQ from "./pages/FAQ";
 import Vehicles from "./pages/Vehicles"
 import SingleVehiclePage from "./pages/SingleVehiclePage"
 
-import Navbar from "./components/Navbar";
+import Profile from "./pages/Profile";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+
+import BoardUser from "./pages/BoardUser";
+
+import EditFaq from "./pages/employee/EditFaq";
+
+import BoardManager from "./pages/BoardManager";
+import AddVehicleBoard from "./pages/AddVehicleBoard";
+
+import BoardAdmin from "./pages/admin/BoardAdmin";
+
 
 const App = () => {
 
@@ -36,11 +38,16 @@ const App = () => {
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/profile" component={Profile} />
+
           <Route path="/user" component={BoardUser} />
+          <Route path="/changepassword" component={BoardUser} />
+
+          <Route path="/editFAQ" component={EditFaq} />
+
           <Route path="/manager" component={BoardManager} />
           <Route path="/addVehicle" component={AddVehicleBoard} />
+
           <Route path="/admin" component={BoardAdmin} />
-          <Route path="/changepassword" component={BoardUser} />
           <Route exact path="/vehicle" component={SingleVehiclePage} />
         </Switch>
         </>
