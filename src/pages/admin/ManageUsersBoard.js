@@ -46,7 +46,7 @@ const useStyles = makeStyles({
             setMessage("Connection error")
             setLoading(false);
         });
-    }
+    } 
 
     useEffect(() => {
       fetchUsers();

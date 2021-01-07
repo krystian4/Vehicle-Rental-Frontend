@@ -28,6 +28,8 @@ const brandValidator = (value) => {
     }
 }
 
+
+
 const AddVehicleBoard = () => {
     const form = useRef();
     const checkBtn = useRef();
@@ -141,10 +143,10 @@ const AddVehicleBoard = () => {
                 </label>
                 <Select className="form-control" name='brand' onChange={onChangeCategory} validations={[brandValidator]}>
                         <option value=''>Choose category...</option>
-                        <option value='Hatchback'>Hatchback</option>
-                        <option value='Sedan'>Sedan</option>
+                        <option value='HATCHBACK'>Hatchback</option>
+                        <option value='SEDAN'>Sedan</option>
                         <option value='SUV'>SUV</option>
-                        <option value='Coupe'>Coupe</option>
+                        <option value='COUPE'>Coupe</option>
                 </Select>
             </div>
 
