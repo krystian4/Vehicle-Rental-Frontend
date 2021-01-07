@@ -4,7 +4,7 @@ import Input from "react-validation/build/input";
 import Select from "react-validation/build/select";
 import CheckButton from "react-validation/build/button";
 import { CountryDropdown} from 'react-country-region-selector';
-import VehicleService from "../services/vehicle.service";
+import VehicleService from "../../services/vehicle.service";
 import DatePicker from "react-datepicker";
 import CurrencyInput from 'react-currency-input-field';
 
@@ -112,13 +112,13 @@ const AddVehicleBoard = () => {
     };
 
   return (
-    <div className="container">
-      <header className="jumbotron">
+    <div className="container" >
+      <header className="jumbotron" style={{marginBottom:0 , minWidth:"500px"}}>
         <h3>Add new Vehicle</h3>
       </header>
       
       <div className="col-md-12">
-      <div className="card w-50" >
+      <div className="card w-50" style={{marginTop:"5px", minWidth:"450px"}}>
         <Form ref={form} onSubmit={handleSubmit}>
             <div class="form-group">
                 <label htmlFor="brand">
@@ -276,7 +276,7 @@ const AddVehicleBoard = () => {
                   validations={[required]}
                 />
                 <br />
-                <img className="w-100" src={picture}></img>
+                <img className="w-100" src={picture} alt={picture}></img>
             </div>
 
             <div className="form-group">

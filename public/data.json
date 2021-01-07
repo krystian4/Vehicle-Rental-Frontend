@@ -1,15 +1,13 @@
-{
-"title" : "FAQ",
-"rows": [
+
+[
     {
       "id": 1,
-      "title": "Where are you located?",
-      "content": "Kraków"
+      "question": "Where are you located?",
+      "answer": "Kraków"
     },
     {
         "id": 2,
-        "title": "Can you transport car to me?",
-        "content" : "Yes, of course but you need to pay extra"
+        "question": "Can you transport car to me?",
+        "answer" : "Yes, of course but you need to pay extra"
     }
 ]
-}

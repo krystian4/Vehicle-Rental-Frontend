@@ -20,10 +20,11 @@ import BoardUser from "./pages/BoardUser";
 
 import EditFaq from "./pages/employee/EditFaq";
 
-import BoardManager from "./pages/BoardManager";
-import AddVehicleBoard from "./pages/AddVehicleBoard";
+import BoardManager from "./pages/manager/BoardManager";
+import AddVehicleBoard from "./pages/manager/AddVehicleBoard";
 
 import BoardAdmin from "./pages/admin/BoardAdmin";
+import ManageUsersBoard from "./pages/admin/ManageUsersBoard";
 
 
 const App = () => {
@@ -34,21 +35,24 @@ const App = () => {
         <Switch>
           <Route exact path={["/", "/home"]} component={Home} />
           <Route exact path="/vehicles" component={Vehicles} />
+          <Route exact path="/vehicle" component={SingleVehiclePage} />
           <Route exact path="/faq" component={FAQ} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/profile" component={Profile} />
 
+
           <Route path="/user" component={BoardUser} />
           <Route path="/changepassword" component={BoardUser} />
 
-          <Route path="/editFAQ" component={EditFaq} />
+          <Route exact path="/employee/editFAQ" component={EditFaq} />
 
-          <Route path="/manager" component={BoardManager} />
-          <Route path="/addVehicle" component={AddVehicleBoard} />
+          <Route exact path="/manager" component={BoardManager} />
+          <Route exact path="/manager/addVehicle" component={AddVehicleBoard} />
 
-          <Route path="/admin" component={BoardAdmin} />
-          <Route exact path="/vehicle" component={SingleVehiclePage} />
+          <Route exact path="/admin" component={BoardAdmin} />
+          <Route exact path="/admin/manageUsers" component={ManageUsersBoard} />
+
         </Switch>
         </>
   );

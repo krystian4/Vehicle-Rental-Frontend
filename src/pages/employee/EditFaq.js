@@ -1,42 +1,189 @@
 import React, { useState, useEffect } from "react";
-import FaqComp from "react-faq-component";
+import { makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Button from '@material-ui/core/Button';
+import Loading from "../../components/Loading";
+import DeleteFaqDialog from "./DeleteFaqDialog";
+import AddNewFAQModal from "./AddNewFAQModal";
+import FaqService from '../../services/faq.service';
 
-const BoardManager = () => {
-    const [arrayFAQs, setFAQs] = useState([])
-    const [loading, setLoading]= useState(true)
-    
-    const fetchFAQs = async () => {
-        setLoading(true)
-        try{
-            const response = await fetch('data.json')
-            const FAQs = await response.json()
-            console.log(response)
-            setLoading(false)
-            setFAQs(FAQs)
-        }catch(er){
-            setLoading(false);
-            console.log(er)
-        }
-    }
-    useEffect(() => {
-        fetchFAQs()
-        console.log(arrayFAQs)
-    }, [])
+const useRowStyles = makeStyles({
+  root: {
+    '& > *': {
+      borderBottom: 'unset',
+    },
+  },
+});
 
-    const styles = {
-        bgColor: 'white',
-        rowContentColor: 'grey',
-    };
+function Row(props) {
+  const { row } = props;
+  const [open, setOpen] = useState(false);
+  const classes = useRowStyles();
 
   return (
+    <React.Fragment>
+      <TableRow className={classes.root} >
+        <TableCell style={{width:"60px"}}>
+          <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell >
+
+        <TableCell align="left" component="th" scope="row">
+          <strong>Question:</strong>
+        </TableCell>
+        <TableCell style={{  padding: 0 }} align="right">
+              <IconButton aria-label="edit" className={classes.margin} onClick={()=>{
+                props.setAddNewFAQOPEN(true);
+                props.setFaqID(row.id);
+              }
+                }>
+                        <EditIcon />
+              </IconButton>
+              <IconButton aria-label="delete" className={classes.margin} onClick={()=>{
+                props.setDialogOpen(true);
+                props.setFaqID(row.id);
+              }
+                }>
+                        <DeleteIcon />
+              </IconButton>
+
+        </TableCell>
+      </TableRow>
+
+      <TableRow>
+        <TableCell align="left"></TableCell>
+        <TableCell align="left">{row.question}</TableCell>
+      </TableRow>
+      
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box margin={1}>
+              <Table size="small" aria-label="purchases">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Answer</TableCell>
+                  </TableRow>
+                </TableHead>
+
+                <TableBody>
+                  <TableRow>
+                    <TableCell align="left">{row.answer}</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </Box>
+          </Collapse>
+        </TableCell>
+      </TableRow>
+
+    </React.Fragment>
+  );
+}
+
+
+const EditFaq = () => {
+    const [arrayFAQs, setFAQs] = useState([])
+    const [loading, setLoading]= useState(true)
+    const [message, setMessage] = useState("No FAQs here")
+
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [addFaqOpen, setAddNewFAQOPEN] = useState(false);
+
+    const [FAQID, setFaqID] = useState(null);
+
+    
+
+    const fetchFaq = () =>{
+      FaqService.getFaqs()
+        .then((response) =>{
+          setFAQs(response);
+          setLoading(false);
+        })
+        .catch((err) =>{
+          console.log(err);
+            setMessage("Connection error")
+            setLoading(false);
+        });
+    }
+
+    useEffect(() => {
+      fetchFaq();
+    }, [])
+
+    if(loading){
+      return(
+          <div className='container'>
+              <Loading type='bars' color='grey' />
+          </div>
+      )
+  }
+  if(arrayFAQs.length === 0){
+    return(
+        <div className="container">
+        <header className="jumbotron">
+            <h2>{message}</h2>
+        </header>
+        </div>
+    )
+}
+
+  return (
+    
     <div className="container">
+
+          <DeleteFaqDialog
+              faqId={FAQID}
+              setOpen={setDialogOpen}
+              open={dialogOpen}
+          />
+    
       <header className="jumbotron">
         <h3>Edit FAQ</h3>
       </header>
-      <FaqComp  data={arrayFAQs} styles={styles} />
+      <div style={{paddingBottom:"0.5rem"}}>
+        <Button variant="contained" color="primary" onClick={()=>setAddNewFAQOPEN(true)}>
+          Add new FAQ
+        </Button>
+      </div>
+
+      <div>
+        <AddNewFAQModal 
+            setOpen={setAddNewFAQOPEN}
+            open={addFaqOpen}
+            arrayFAQs={arrayFAQs}
+            setFAQs={setFAQs}
+            fetchFaq={fetchFaq}
+        />
+      </div>
+
+      <TableContainer component={Paper}>
+        <Table aria-label="collapsible table">
+          <TableBody>
+            {arrayFAQs.map((row) => (
+              <Row key={row.id} row={row} setFaqID={setFaqID} setDialogOpen={setDialogOpen} setAddNewFAQOPEN={setAddNewFAQOPEN}/>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
     </div>
     
   );
 };
 
-export default BoardManager;
+export default EditFaq;

@@ -1,0 +1,38 @@
+[
+    {
+    "id": 1,
+    "username": "jakkow",
+    "email": "jankow@mail.com",
+    "password": "haslo123",
+    "firstName": "Jan",
+    "lastName": "Kowalski",
+    "address": "Skarbowa 5",
+    "city": "Krakow",
+    "country": "Poland",
+    "phone": "564545455"
+    },
+    {
+    "id": 2,
+    "username": "jakkow",
+    "email": "jankow@mail.com",
+    "password": "haslo123",
+    "firstName": "Jan",
+    "lastName": "Wojcik",
+    "address": "Skarbowa 5",
+    "city": "Krakow",
+    "country": "Poland",
+    "phone": "564545455"
+    },
+    {
+    "id": 3,
+    "username": "jakkow",
+    "email": "jankow@mail.com",
+    "password": "haslo123",
+    "firstName": "Jan",
+    "lastName": "Nowak",
+    "address": "Skarbowa 5",
+    "city": "Krakow",
+    "country": "Poland",
+    "phone": "564545455"
+    }
+]

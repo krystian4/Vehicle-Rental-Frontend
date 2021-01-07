@@ -2,8 +2,8 @@ import axios from "axios";
 
 const API_URL = "http://localhost:8080/api/auth/";
 
-const register = (username, email, password, firstName, lastName, address, city, phone, country, birthDate) => {
-  console.log(username, email, password, firstName, lastName, address, city, phone, country, birthDate);
+const register = (username, email, password, firstName, lastName, address, city, phone, country, birthdate) => {
+  console.log(username, email, password, firstName, lastName, address, city, phone, country, birthdate);
   return axios.post(API_URL + "signup", {
     username,
     email,
@@ -14,7 +14,7 @@ const register = (username, email, password, firstName, lastName, address, city,
     city,
     country,
     phone,
-    birthDate,
+    birthdate,
   });
 };
 
@@ -41,9 +41,11 @@ const getCurrentUser = () => {
   return JSON.parse(sessionStorage.getItem("user"));
 };
 
-export default {
+const exp = {
   register,
   login,
   logout,
   getCurrentUser,
-};
+}
+
+export default exp;

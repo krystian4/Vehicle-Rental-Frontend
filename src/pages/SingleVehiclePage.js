@@ -7,7 +7,7 @@ const SingleVehiclePage = () => {
   return(
     <div className="container">
       <header className="jumbotron">
-        <img className="w-100" src={vehicle.url} title={vehicle.url} />
+        <img className="w-100" src={vehicle.url} title={vehicle.url} alt={vehicle.url} />
         <h3>BRAND {vehicle.brand}</h3>
         <h3>Here will be car id= {vehicle.id} informations</h3>
 

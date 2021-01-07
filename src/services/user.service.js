@@ -19,9 +19,19 @@ const getAdminBoard = () => {
   return axios.get(API_URL + "admin", { headers: authHeader() });
 };
 
-export default {
+const getUsers = () => {
+  return axios.get('http://localhost:8081/usersData.json')
+  .then((response)=>{
+    return response.data
+  });
+};
+
+const exp = {
   getPublicContent,
   getUserBoard,
   getManagerBoard,
   getAdminBoard,
-};
+  getUsers,
+}
+
+export default exp;

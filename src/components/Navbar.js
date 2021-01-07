@@ -28,8 +28,8 @@ const Navbar = () =>{
             <Link to={"/"} className="navbar-brand">
             VehicleRental
             </Link>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav mr-auto">
             <li className="nav-item">
                 <Link to={"/home"} className="nav-link">
                 Home
@@ -49,53 +49,55 @@ const Navbar = () =>{
             </li>
 
             {showEmployeeBoard && (
-                <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <li className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle" href="/#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Employee Board
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                   <Link to={"/employee"} class="dropdown-item">
+                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                   <Link to={"/employee"} className="dropdown-item">
                            Employee
                    </Link>
-                   <Link to={"/editFAQ"} class="dropdown-item">
+                   <Link to={"/employee/editFAQ"} className="dropdown-item">
                            Edit FAQ
                    </Link>
-                  <a class="dropdown-item" >Another action</a>
-                  <a class="dropdown-item">Something else here</a>
+                  <a className="dropdown-item" href="/#">Another action</a>
+                  <a className="dropdown-item" href="/#">Something else here</a>
                 </div>
               </li>
             )}
 
             {showManagerBoard && (
-                <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <li className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle" id="navbarDropdown" href="/#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Manager Board
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                   <Link to={"/manager"} class="dropdown-item">
+                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                   <Link to={"/manager"} className="dropdown-item">
                            Manager
                    </Link>
-                   <Link to={"/addVehicle"} class="dropdown-item">
+                   <Link to={"/manager/addVehicle"} className="dropdown-item">
                            New vehicle
                    </Link>
-                  <a class="dropdown-item" >Another action</a>
-                  <a class="dropdown-item">Something else here</a>
+                  <a className="dropdown-item" href="/#" >Another action</a>
+                  <a className="dropdown-item" href="/#">Something else here</a>
                 </div>
               </li>
             )}
 
             {showAdminBoard && (
                 
-             <li class="nav-item dropdown">
-             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             <li className="nav-item dropdown">
+             <a className="nav-link dropdown-toggle" href="/#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                Admin Board
              </a>
-             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <Link to={"/admin"} class="dropdown-item">
+             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <Link to={"/admin"} className="dropdown-item">
                         Admin
                 </Link>
-               <a class="dropdown-item" href="#">Another action</a>
-               <a class="dropdown-item" href="#">Something else here</a>
+                <Link to={"/admin/manageUsers"} className="dropdown-item">
+                        Users
+                </Link>
+               <a className="dropdown-item" href="/#">Something else here</a>
              </div>
            </li>
 
