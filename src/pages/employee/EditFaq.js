@@ -18,6 +18,7 @@ import Button from '@material-ui/core/Button';
 import Loading from "../../components/Loading";
 import DeleteFaqDialog from "./DeleteFaqDialog";
 import AddNewFAQModal from "./AddNewFAQModal";
+import EditFAQModal from "./EditFAQModal";
 import FaqService from '../../services/faq.service';
 
 const useRowStyles = makeStyles({
@@ -43,12 +44,13 @@ function Row(props) {
         </TableCell >
 
         <TableCell align="left" component="th" scope="row">
-          <strong>Question:</strong>
+          Question:
         </TableCell>
         <TableCell style={{  padding: 0 }} align="right">
               <IconButton aria-label="edit" className={classes.margin} onClick={()=>{
-                props.setAddNewFAQOPEN(true);
+                props.setEditFAQOPEN(true);
                 props.setFaqID(row.id);
+                props.setFaq(row);
               }
                 }>
                         <EditIcon />
@@ -66,7 +68,7 @@ function Row(props) {
 
       <TableRow>
         <TableCell align="left"></TableCell>
-        <TableCell align="left">{row.question}</TableCell>
+        <TableCell style={{fontSize:22}} align="left">{row.question}</TableCell>
       </TableRow>
       
       <TableRow>
@@ -82,7 +84,7 @@ function Row(props) {
 
                 <TableBody>
                   <TableRow>
-                    <TableCell align="left">{row.answer}</TableCell>
+                    <TableCell style={{fontSize:22}} align="left">{row.answer}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -103,10 +105,11 @@ const EditFaq = () => {
 
     const [dialogOpen, setDialogOpen] = useState(false);
     const [addFaqOpen, setAddNewFAQOPEN] = useState(false);
+    const [editFaqOpen, setEditFAQOPEN] = useState(false);
+
+    const [faq, setFaq] = useState(null);
 
     const [FAQID, setFaqID] = useState(null);
-
-    
 
     const fetchFaq = () =>{
       FaqService.getFaqs()
@@ -138,20 +141,57 @@ const EditFaq = () => {
         <header className="jumbotron">
             <h2>{message}</h2>
         </header>
+
+        <div style={{paddingBottom:"0.5rem"}}>
+        <Button variant="contained" color="primary" onClick={()=>setAddNewFAQOPEN(true)}>
+          Add new FAQ
+        </Button>
+        </div>
+          {addFaqOpen && (
+            <AddNewFAQModal 
+                setOpen={setAddNewFAQOPEN}
+                open={addFaqOpen}
+                arrayFAQs={arrayFAQs}
+                setFAQs={setFAQs}
+                fetchFaq={fetchFaq}
+            />
+          )}
         </div>
     )
 }
 
   return (
     
+    
     <div className="container">
 
-          <DeleteFaqDialog
+      {dialogOpen && (
+        <DeleteFaqDialog
               faqId={FAQID}
               setOpen={setDialogOpen}
               open={dialogOpen}
           />
-    
+      )}
+          
+      {editFaqOpen && (
+        <EditFAQModal 
+            setOpen={setEditFAQOPEN}
+            open={editFaqOpen}
+            arrayFAQs={arrayFAQs}
+            faq={faq}
+        />
+      )}
+
+      {addFaqOpen && (
+        <AddNewFAQModal 
+            setOpen={setAddNewFAQOPEN}
+            open={addFaqOpen}
+            arrayFAQs={arrayFAQs}
+            setFAQs={setFAQs}
+            fetchFaq={fetchFaq}
+        />
+      )}
+
       <header className="jumbotron">
         <h3>Edit FAQ</h3>
       </header>
@@ -161,21 +201,11 @@ const EditFaq = () => {
         </Button>
       </div>
 
-      <div>
-        <AddNewFAQModal 
-            setOpen={setAddNewFAQOPEN}
-            open={addFaqOpen}
-            arrayFAQs={arrayFAQs}
-            setFAQs={setFAQs}
-            fetchFaq={fetchFaq}
-        />
-      </div>
-
       <TableContainer component={Paper}>
         <Table aria-label="collapsible table">
           <TableBody>
             {arrayFAQs.map((row) => (
-              <Row key={row.id} row={row} setFaqID={setFaqID} setDialogOpen={setDialogOpen} setAddNewFAQOPEN={setAddNewFAQOPEN}/>
+              <Row key={row.id} row={row} setFaq={setFaq} setFaqID={setFaqID} setDialogOpen={setDialogOpen} setEditFAQOPEN={setEditFAQOPEN}/>
             ))}
           </TableBody>
         </Table>

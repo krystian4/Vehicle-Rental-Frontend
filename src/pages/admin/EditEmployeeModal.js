@@ -1,19 +1,15 @@
-
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import React, { useState, useRef } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-import { isEmail, isNumeric } from "validator";
-import { CountryDropdown} from 'react-country-region-selector';
-import DatePicker from "react-datepicker";
+import { isEmail } from "validator";
 import Select from "react-validation/build/select";
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
-
 import AuthService from "../../services/auth.service";
 
 const required = (value) => {
@@ -36,41 +32,11 @@ const validEmail = (value) => {
   }
 };
 
-const validPhone = (value) => {
-  if (value.length !== 9 || !isNumeric(value)) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        This is not a valid phone number.
-      </div>
-    );
-  }
-};
-
 const vusername = (value) => {
   if (value.length < 3 || value.length > 20) {
     return (
       <div className="alert alert-danger" role="alert">
         The username must be between 3 and 20 characters.
-      </div>
-    );
-  }
-};
-
-const vpassword = (value) => {
-  if (value.length < 6 || value.length > 40) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        The password must be between 6 and 40 characters.
-      </div>
-    );
-  }
-};
-
-const rpassword = (value, props, components) => {
-  if(value !== components['password'][0].value) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        The passwords are not the same.
       </div>
     );
   }
@@ -119,25 +85,19 @@ function getModalStyle() {
     },
   }));
 
-export default function AddNewFAQModal (props){
+export default function EditEmployeeModal (props){
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
-
+    console.log("Editing: " + props.user.username + "Brithdate: " + props.user.birthdate);
     const form = useRef();
     const checkBtn = useRef();
 
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [name, setName] = useState("");
-    const [lastname, setLastName] = useState("");
-    const [address, setAddress] = useState("");
-    const [city, setCity] = useState("");
-    const [phone, setPhone] = useState("");
-    const [country, setCountry] = useState('');
-    const [birthDate, setBirthDate] = useState(new Date());
-    const [jobTitle, setPosition] = useState("");
-    const [bonus, setBonus] = useState('0');
+    const [username, setUsername] = useState(props.user.username);
+    const [email, setEmail] = useState(props.user.email);
+    const [name, setName] = useState(props.user.firstName);
+    const [lastname, setLastName] = useState(props.user.lastName);
+    const [jobTitle, setPosition] = useState(props.user.jobTitle);
+    const [bonus, setBonus] = useState(props.user.bonus);
 
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
@@ -150,10 +110,7 @@ export default function AddNewFAQModal (props){
         const email = e.target.value;
         setEmail(email);
     };
-    const onChangePassword = (e) => {
-        const password = e.target.value;
-        setPassword(password);
-    };
+
     const onChangeName = (e) => {
         const name = e.target.value;
         setName(name);
@@ -162,18 +119,7 @@ export default function AddNewFAQModal (props){
         const lastname = e.target.value;
         setLastName(lastname);
     };
-    const onChangeAddress = (e) => {
-        const address = e.target.value;
-        setAddress(address);
-    };
-    const onChangeCity = (e) => {
-        const city = e.target.value;
-        setCity(city);
-    };
-    const onChangePhone = (e) => {
-        const phone = e.target.value;
-        setPhone(phone);
-    };
+    
     const onChangePosition = (e) => {
       const temp = e.target.value;
       setPosition(temp);
@@ -198,29 +144,8 @@ export default function AddNewFAQModal (props){
 
   const employeeDto = {bonus, bossId, userId:-1, jobTitle};
 
-  const registerEmployee= () => {
-    console.log(employeeDto);
-    AuthService.registerEmployee(employeeDto).then(
-      (response) => {
-        console.log(response);
-        console.log("Udao sie!");
-      },
-      (error) => {
-        console.log("Nie zapisano employee!");
-        const resMessage =
-            (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-            error.message ||
-            error.toString();
-
-        setMessage(resMessage);
-        setSuccessful(false);
-        }
-    )
-  }
   
-    const handleRegister = (e) => {
+    const handleEdit = (e) => {
         e.preventDefault();
 
         setMessage("");
@@ -230,13 +155,12 @@ export default function AddNewFAQModal (props){
 
         if (checkBtn.current.context._errors.length === 0) {
           
-        AuthService.register(username, email, password, name, lastname, address, city, phone, country, birthDate).then(
+        AuthService.register(username, email, name, lastname).then(
             (response) => {
             console.log("User utworzony jego id: " + response.data.id);
             employeeDto.userId = response.data.id;
             setMessage(response.data.message);
             setSuccessful(true);
-            registerEmployee();
             },
             (error) => {
             const resMessage =
@@ -252,7 +176,6 @@ export default function AddNewFAQModal (props){
         }
     };
 
-
     const handleClose = () => {
         props.setOpen(false);
       };
@@ -267,7 +190,7 @@ export default function AddNewFAQModal (props){
             className="profile-img-card"
             />
 
-            <Form onSubmit={handleRegister} ref={form}>
+            <Form onSubmit={handleEdit} ref={form}>
             {!successful && (
                 <div>
                 <div className="form-group">
@@ -294,30 +217,7 @@ export default function AddNewFAQModal (props){
                     />
                 </div>
 
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <Input
-                    type="password"
-                    className="form-control"
-                    name="password"
-                    value={password}
-                    onChange={onChangePassword}
-                    validations={[required, vpassword]}
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="rpassword">Repeat Password</label>
-                    <Input
-                    type="password"
-                    className="form-control"
-                    name="repeat_password"
-                    validations={[required, rpassword]}
-                    />
-                </div>
-
                 <hr />
-
 
                 <div className="form-group">
                     <label htmlFor="name">Name</label>
@@ -343,61 +243,6 @@ export default function AddNewFAQModal (props){
                     />
                 </div>
 
-                <div className="form-group">
-                    <label htmlFor="address">Address</label>
-                    <Input
-                    type="text"
-                    className="form-control"
-                    name="address"
-                    value={address}
-                    onChange={onChangeAddress}
-                    validations={[required]}
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="city">City</label>
-                    <Input
-                    type="text"
-                    className="form-control"
-                    name="city"
-                    value={city}
-                    onChange={onChangeCity}
-                    validations={[required]}
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="phone">Phone Number</label>
-                    <Input
-                    type="text"
-                    className="form-control"
-                    name="phone"
-                    value={phone}
-                    onChange={onChangePhone}
-                    validations={[required, validPhone]}
-                    />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="country">Country</label>
-                  <div>
-                      <CountryDropdown 
-                          className="form-control"
-                          name="country"
-                          value={country}
-                          onChange={(value)=> setCountry(value)} 
-                      />
-                  </div>
-                </div>
-
-                
-
-                <div className="form-group">
-                    <label style={{ marginRight: "5px" }}htmlFor="birthDate">Birth date:</label>
-                    <DatePicker  dateFormat="dd/MM/yyyy" className="form-control" selected={birthDate} onChange={date => setBirthDate(date)} />
-                </div>
-                <hr />
                 <div className="form-group">
                   <label htmlFor="jobTitle">
                       Title
@@ -447,10 +292,7 @@ export default function AddNewFAQModal (props){
                     <button className="btn btn-primary btn-block">Sign Up</button>
                 </div>
 
-
               </div>
-
-
             )}
 
             {message && (

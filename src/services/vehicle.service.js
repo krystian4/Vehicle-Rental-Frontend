@@ -1,46 +1,27 @@
 import axios from "axios";
+import authHeader from "./auth-header";
 
 const API_URL = "http://localhost:8080/api/vehicle";
 
-
-
-const addVehicle = (brand, category, model, yearOfProduction, country, power, price, description, inStartDate, inExpDate, inPrice, carInStartDate, carInExpDate, carInPrice,pictureURL) =>{
-    const vehicleDto = {
-        brand:brand,
-        model:model,
-        yearOfProduction:yearOfProduction,
-        country:country,
-        power:power,
-        price:price,
-        description:description,
-        pictureURL:pictureURL,
-        category:category,
-    };
-    const inspectionDto = {
-        startDate: carInStartDate,
-        expirationDate: carInExpDate,
-        price: carInPrice,
-    }
-    
-    const insuranceDto = {
-        dateOfPurchase: inStartDate,
-        expirationDate: inExpDate,
-        price: inPrice,
-    }
+const addVehicle = (vehicleDto, inspectionDto, insuranceDto) =>{
     const output = {
-        vehicleDto:vehicleDto,
-        inspectionDto:inspectionDto,
-        insuranceDto:insuranceDto,
+        vehicleDto,
+        inspectionDto,
+        insuranceDto
     }
-    //console.log(sessionStorage.getItem("user"));
     console.log(output);
-    //console.log(brand, category, model, year, country, power, price, description, inStartDate, inExpDate, inPrice, carInStartDate, carInExpDate, carInPrice,pictureURL);
-    return axios.post(API_URL+"/add",output);
-    //return axios.post(API_URL+"/add",{brand, category, model, year, country, power, price, description, inStartDate, inExpDate, inPrice, carInStartDate, carInExpDate, carInPrice,pictureURL});
+    return axios.post(API_URL+"/add",output, { headers: authHeader() });
 };
 
 const getVehicles = () => {
-    return axios.get(API_URL+"/all")
+    return axios.get(API_URL+"/active")
+    .then((response)=>{
+        return response.data;
+    });
+};
+
+const getReservationDates = (carId) => {
+    return axios.get('http://localhost:8081/reservationDates.json')
     .then((response)=>{
         return response.data;
     });
@@ -49,6 +30,7 @@ const getVehicles = () => {
 const exp = {
     addVehicle,
     getVehicles,
+    getReservationDates,
 }
 
 export default exp;

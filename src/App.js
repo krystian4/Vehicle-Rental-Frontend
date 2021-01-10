@@ -9,8 +9,9 @@ import Navbar from "./components/Navbar";
 
 import Home from "./pages/Home";
 import FAQ from "./pages/FAQ";
-import Vehicles from "./pages/Vehicles"
-import SingleVehiclePage from "./pages/SingleVehiclePage"
+import Vehicles from "./pages/Vehicles";
+import SingleVehiclePage from "./pages/SingleVehiclePage";
+import CartPage from "./pages/CartPage";
 
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
@@ -19,12 +20,15 @@ import Register from "./pages/Register";
 import BoardUser from "./pages/BoardUser";
 
 import EditFaq from "./pages/employee/EditFaq";
+import DriverLicenses from "./pages/employee/DriverLicenses";
 
 import BoardManager from "./pages/manager/BoardManager";
 import AddVehicleBoard from "./pages/manager/AddVehicleBoard";
 
 import BoardAdmin from "./pages/admin/BoardAdmin";
 import ManageUsersBoard from "./pages/admin/ManageUsersBoard";
+import ManageEmployeesBoard from "./pages/admin/ManageEmployeesBoard";
+
 
 
 const App = () => {
@@ -40,18 +44,22 @@ const App = () => {
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/profile" component={Profile} />
+          <Route exact path="/cart" component={CartPage} />
 
 
           <Route path="/user" component={BoardUser} />
           <Route path="/changepassword" component={BoardUser} />
 
           <Route exact path="/employee/editFAQ" component={EditFaq} />
-
+          <Route exact path="/employee/verifyLicense" component={DriverLicenses} />
+          
           <Route exact path="/manager" component={BoardManager} />
           <Route exact path="/manager/addVehicle" component={AddVehicleBoard} />
 
           <Route exact path="/admin" component={BoardAdmin} />
           <Route exact path="/admin/manageUsers" component={ManageUsersBoard} />
+          <Route exact path="/admin/manageEmployees" component={ManageEmployeesBoard} />
+
 
         </Switch>
         </>

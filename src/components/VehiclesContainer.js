@@ -2,7 +2,6 @@ import React from 'react';
 import Vehicle from './Vehicle';
 
 const VehiclesContainer = ({vehicles, removeVehicle}) => {
-    console.log(vehicles);
     return(
         <section className='section'>
             <header className="jumbotron">

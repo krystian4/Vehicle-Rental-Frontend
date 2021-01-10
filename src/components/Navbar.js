@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import {Link} from "react-router-dom";
 import AuthService from "../services/auth.service";
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import IconButton from '@material-ui/core/IconButton';
+import { grey } from '@material-ui/core/colors';
+
 
 
 const Navbar = () =>{
@@ -13,7 +17,7 @@ const Navbar = () =>{
     const user = AuthService.getCurrentUser();
     if (user) {
         setCurrentUser(user);
-        setShowEmployeeBoard(user.roles.includes("ROLE_ADMIN"));
+        setShowEmployeeBoard(user.roles.includes("ROLE_REGULAR"));
         setShowManagerBoard(user.roles.includes("ROLE_MANAGER"));
         setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
     }
@@ -22,6 +26,7 @@ const Navbar = () =>{
   const logOut = () => {
     AuthService.logout();
   };
+  
     return(
         <nav className="navbar navbar-expand navbar-dark bg-dark">
             
@@ -60,7 +65,10 @@ const Navbar = () =>{
                    <Link to={"/employee/editFAQ"} className="dropdown-item">
                            Edit FAQ
                    </Link>
-                  <a className="dropdown-item" href="/#">Another action</a>
+
+                   <Link to={"/employee/verifyLicense"} className="dropdown-item">
+                           Verify License
+                   </Link>
                   <a className="dropdown-item" href="/#">Something else here</a>
                 </div>
               </li>
@@ -97,24 +105,44 @@ const Navbar = () =>{
                 <Link to={"/admin/manageUsers"} className="dropdown-item">
                         Users
                 </Link>
-               <a className="dropdown-item" href="/#">Something else here</a>
+                <Link to={"/admin/manageEmployees"} className="dropdown-item">
+                        Employees
+                </Link>
              </div>
            </li>
 
             )}
 
             {currentUser && (
-                <li className="nav-item">
-                <Link to={"/user"} className="nav-link">
-                    User
-                </Link>
-                </li>
+              <li className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle" href="/#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                User
+              </a>
+              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                 <Link to={"/user"} className="dropdown-item">
+                         User
+                 </Link>
+                 <Link to={"/user/drivingLicense"} className="dropdown-item">
+                         Driver License
+                 </Link>
+              </div>
+              </li>
             )}
+
             </ul>
             </div>
 
+
+
             {currentUser ? (
             <div className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <Link to={"/cart"} className="nav-link" style={{padding:0}}>
+                  <IconButton aria-label="cart" >
+                            <ShoppingCartIcon style={{ color: grey[50] }}/>
+                  </IconButton>
+                  </Link>
+                </li>
                 <li className="nav-item">
                 <Link to={"/profile"} className="nav-link">
                     {currentUser.username}

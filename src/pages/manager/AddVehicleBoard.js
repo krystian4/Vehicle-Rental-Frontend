@@ -93,7 +93,20 @@ const AddVehicleBoard = () => {
         setSuccessful(false);
 
         if (checkBtn.current.context._errors.length === 0 && country !== "" )  {
-            VehicleService.addVehicle(brand, category, model, year, country, power, price, description, inStartDate, inExpDate, inPrice, carInStartDate, carInExpDate, carInPrice,picture).then(
+          
+          const vehicleDto = {brand, model, yearOfProduction:year, country, power, price, description, pictureUrl:picture, category};
+          const inspectionDto = {
+            startDate: carInStartDate,
+            expirationDate: carInExpDate,
+            price: carInPrice,
+          };
+          const insuranceDto = {
+            dateOfPurchase: inStartDate,
+            expirationDate: inExpDate,
+            price: inPrice,
+          }
+
+            VehicleService.addVehicle(vehicleDto, inspectionDto, insuranceDto).then(
               (response) => {
                 setMessage(response.data.message);
                 setSuccessful(true);
@@ -122,7 +135,7 @@ const AddVehicleBoard = () => {
       <div className="col-md-12">
       <div className="card w-50" style={{marginTop:"5px", minWidth:"450px"}}>
         <Form ref={form} onSubmit={handleSubmit}>
-            <div class="form-group">
+            <div className="form-group">
                 <label htmlFor="brand">
                     Brand:
                 </label>
@@ -137,7 +150,7 @@ const AddVehicleBoard = () => {
                 </Select>
             </div>
 
-            <div class="form-group">
+            <div className="form-group">
                 <label htmlFor="brand">
                     Brand:
                 </label>

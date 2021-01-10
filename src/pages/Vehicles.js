@@ -42,7 +42,7 @@ const Vehicles = () =>  {
             </div>
         )
     }
-    console.log("Debuger2");
+
     return (   
             <div className="container">
             <main>

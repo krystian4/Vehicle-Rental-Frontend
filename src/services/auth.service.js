@@ -1,10 +1,11 @@
 import axios from "axios";
+import authHeader from "./auth-header";
 
-const API_URL = "http://localhost:8080/api/auth/";
+
+const API_URL = "http://localhost:8080/api/";
 
 const register = (username, email, password, firstName, lastName, address, city, phone, country, birthdate) => {
-  console.log(username, email, password, firstName, lastName, address, city, phone, country, birthdate);
-  return axios.post(API_URL + "signup", {
+  return axios.post(API_URL + "auth/signup", {
     username,
     email,
     password,
@@ -17,24 +18,33 @@ const register = (username, email, password, firstName, lastName, address, city,
     birthdate,
   });
 };
+const registerEmployee = (employeeDto) => {
+  return axios.post(API_URL + "employee/add", employeeDto, { headers: authHeader() });
+};
 
 const login = (username, password) => {
   return axios
-    .post(API_URL + "signin", {
+    .post(API_URL + "auth/signin", {
       username,
       password,
     })
     .then((response) => {
       if (response.data.accessToken) {
         sessionStorage.setItem("user", JSON.stringify(response.data));
+        const date = new Date().toLocaleString();
+        sessionStorage.setItem("loginDate", date);
+        var newArr = [];
+        sessionStorage.setItem("cart", JSON.stringify(newArr));
       }
 
       return response.data;
     });
 };
 
+
 const logout = () => {
   sessionStorage.removeItem("user");
+  return axios.post(API_URL + "auth/signout", sessionStorage.getItem("loginDate")); //lub klamerki
 };
 
 const getCurrentUser = () => {
@@ -43,6 +53,7 @@ const getCurrentUser = () => {
 
 const exp = {
   register,
+  registerEmployee,
   login,
   logout,
   getCurrentUser,

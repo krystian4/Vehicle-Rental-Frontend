@@ -1,13 +1,21 @@
 
 [
     {
-      "id": 1,
-      "question": "Where are you located?",
-      "answer": "Kraków"
+      "clientId": 1,
+      "licenseNumber": 123456,
+      "firstName": "Jan",
+      "lastName": "Kowalski",
+      "address": "Skarbowa 5",
+      "city": "Krakow",
+      "country": "Poland"
     },
     {
-        "id": 2,
-        "question": "Can you transport car to me?",
-        "answer" : "Yes, of course but you need to pay extra"
+      "clientId": 2,
+      "licenseNumber": 666777,
+      "firstName": "Adam",
+      "lastName": "Nowak",
+      "address": "Skarbowa 6",
+      "city": "Krakow",
+      "country": "Poland"
     }
 ]

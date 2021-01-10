@@ -1,4 +1,3 @@
-
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import React, { useState, useRef } from "react";
@@ -8,13 +7,11 @@ import CheckButton from "react-validation/build/button";
 import { isEmail, isNumeric } from "validator";
 import { CountryDropdown} from 'react-country-region-selector';
 import DatePicker from "react-datepicker";
-import Select from "react-validation/build/select";
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Checkbox from '@material-ui/core/Checkbox';
+import UserService from "../../services/user.service";
+import PasswordResetModal from "../../components/PasswordResetModal";
+import Button from '@material-ui/core/Button';
+import { parseISO } from 'date-fns';
 
-import AuthService from "../../services/auth.service";
 
 const required = (value) => {
   if (!value) {
@@ -56,36 +53,6 @@ const vusername = (value) => {
   }
 };
 
-const vpassword = (value) => {
-  if (value.length < 6 || value.length > 40) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        The password must be between 6 and 40 characters.
-      </div>
-    );
-  }
-};
-
-const rpassword = (value, props, components) => {
-  if(value !== components['password'][0].value) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        The passwords are not the same.
-      </div>
-    );
-  }
-};
-
-const positionValidator = (value) => {
-  if(value === ""){
-      return (
-          <div className="alert alert-danger" role="alert">
-            Choose Position!
-          </div>
-        );
-  }
-}
-
 function getModalStyle() {
     const top = 50;
     const left = 50;
@@ -119,28 +86,29 @@ function getModalStyle() {
     },
   }));
 
-export default function AddNewFAQModal (props){
+export default function EditUserModal (props){
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
-
+    console.log("Editing: " + props.user.username + "Brithdate: " + props.user.birthdate + "ID: " + props.user.id);
     const form = useRef();
     const checkBtn = useRef();
 
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [name, setName] = useState("");
-    const [lastname, setLastName] = useState("");
-    const [address, setAddress] = useState("");
-    const [city, setCity] = useState("");
-    const [phone, setPhone] = useState("");
-    const [country, setCountry] = useState('');
-    const [birthDate, setBirthDate] = useState(new Date());
-    const [jobTitle, setPosition] = useState("");
-    const [bonus, setBonus] = useState('0');
+    const [username, setUsername] = useState(props.user.username);
+    const [email, setEmail] = useState(props.user.email);
+    const [name, setName] = useState(props.user.firstName);
+    const [lastname, setLastName] = useState(props.user.lastName);
+    const [address, setAddress] = useState(props.user.address);
+    const [city, setCity] = useState(props.user.city);
+    const [phone, setPhone] = useState(props.user.phone);
+    const [country, setCountry] = useState(props.user.country);
+    const [birthDate, setBirthDate] = useState(parseISO(props.user.birthdate));
 
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
+
+    //change Password modal
+    const [changePassOpen, setChangePasswordModalOpen] = useState(false);
+
 
     const onChangeUsername = (e) => {
         const username = e.target.value;
@@ -149,10 +117,6 @@ export default function AddNewFAQModal (props){
     const onChangeEmail = (e) => {
         const email = e.target.value;
         setEmail(email);
-    };
-    const onChangePassword = (e) => {
-        const password = e.target.value;
-        setPassword(password);
     };
     const onChangeName = (e) => {
         const name = e.target.value;
@@ -174,53 +138,8 @@ export default function AddNewFAQModal (props){
         const phone = e.target.value;
         setPhone(phone);
     };
-    const onChangePosition = (e) => {
-      const temp = e.target.value;
-      setPosition(temp);
-    };
-    const onChangeBonus = (e) => {
-      const temp = e.target.value;
-      setBonus(temp);
-    };
-
-  const [roles, setRoles] = useState([])
-
-  const handleChangeRole = (event) => {
-    const roleExists = roles.find(role => role === event.target.name) !== undefined;
-    const newRoles = roleExists ? roles.filter(role => role !== event.target.name) : [...roles, event.target.name];
-    setRoles(newRoles);
-
-  };
-  const roleError = roles.filter((v) => v).length < 1;
-
-  const user = AuthService.getCurrentUser();
-  const bossId = user.id;
-
-  const employeeDto = {bonus, bossId, userId:-1, jobTitle};
-
-  const registerEmployee= () => {
-    console.log(employeeDto);
-    AuthService.registerEmployee(employeeDto).then(
-      (response) => {
-        console.log(response);
-        console.log("Udao sie!");
-      },
-      (error) => {
-        console.log("Nie zapisano employee!");
-        const resMessage =
-            (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-            error.message ||
-            error.toString();
-
-        setMessage(resMessage);
-        setSuccessful(false);
-        }
-    )
-  }
   
-    const handleRegister = (e) => {
+    const handleEdit = (e) => {
         e.preventDefault();
 
         setMessage("");
@@ -229,29 +148,11 @@ export default function AddNewFAQModal (props){
         form.current.validateAll();
 
         if (checkBtn.current.context._errors.length === 0) {
-          
-        AuthService.register(username, email, password, name, lastname, address, city, phone, country, birthDate).then(
-            (response) => {
-            console.log("User utworzony jego id: " + response.data.id);
-            employeeDto.userId = response.data.id;
-            setMessage(response.data.message);
-            setSuccessful(true);
-            registerEmployee();
-            },
-            (error) => {
-            const resMessage =
-                (error.response &&
-                error.response.data &&
-                error.response.data.message) ||
-                error.message ||
-                error.toString();
-              setMessage(resMessage);
-              setSuccessful(false);
-            }
-        )
+        // edit query
+        console.log("Edit button pressed. id: " + props.user.id)
+        UserService.editUser(props.user.id, username, email, name, lastname, birthDate, address, city, country, phone);
         }
     };
-
 
     const handleClose = () => {
         props.setOpen(false);
@@ -260,14 +161,24 @@ export default function AddNewFAQModal (props){
 
         
         const modalBody = (
+
+
             <div style={modalStyle} className={classes.paper}>
+
+            {changePassOpen && (<PasswordResetModal
+              open={changePassOpen}
+              setOpen={setChangePasswordModalOpen}
+              userId={props.user.id}
+              />
+            )}
+
             <img
             src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
             alt="profile-img"
             className="profile-img-card"
             />
 
-            <Form onSubmit={handleRegister} ref={form}>
+            <Form onSubmit={handleEdit} ref={form}>
             {!successful && (
                 <div>
                 <div className="form-group">
@@ -293,27 +204,10 @@ export default function AddNewFAQModal (props){
                     validations={[required, validEmail]}
                     />
                 </div>
-
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <Input
-                    type="password"
-                    className="form-control"
-                    name="password"
-                    value={password}
-                    onChange={onChangePassword}
-                    validations={[required, vpassword]}
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="rpassword">Repeat Password</label>
-                    <Input
-                    type="password"
-                    className="form-control"
-                    name="repeat_password"
-                    validations={[required, rpassword]}
-                    />
+                <div style={{paddingBottom:"0.5rem"}}>
+                  <Button variant="contained" color="primary" onClick={()=>setChangePasswordModalOpen(true)}>
+                    Change password
+                  </Button>
                 </div>
 
                 <hr />
@@ -391,60 +285,13 @@ export default function AddNewFAQModal (props){
                   </div>
                 </div>
 
-                
-
                 <div className="form-group">
                     <label style={{ marginRight: "5px" }}htmlFor="birthDate">Birth date:</label>
-                    <DatePicker  dateFormat="dd/MM/yyyy" className="form-control" selected={birthDate} onChange={date => setBirthDate(date)} />
-                </div>
-                <hr />
-                <div className="form-group">
-                  <label htmlFor="jobTitle">
-                      Title
-                  </label>
-                  <Select className="form-control" name='jobTitle' onChange={onChangePosition} validations={[positionValidator]}>
-                          <option value=''>Choose job title...</option>
-                          <option value='Employee'>Employee</option>
-                          <option value='Manager'>Manager</option>
-                          <option value='Admin'>Admin</option>
-                  </Select>
+                    <DatePicker  dateFormat="yyyy-MM-dd" className="form-control" selected={birthDate} onChange={date => setBirthDate(date)} />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="roles">
-                      Roles
-                  </label>
-                  <br />
-                <FormControl style ={{margin:0}} required error={roleError} component="fieldset" className={classes.formControl}>
-                    <FormControlLabel
-                      control={<Checkbox color="primary"  onChange={handleChangeRole} name="regular" />}
-                      label="regular"
-                    />
-                    <FormControlLabel
-                      control={<Checkbox color="primary" onChange={handleChangeRole} name="manager" />}
-                      label="manager"
-                    />
-                    <FormControlLabel
-                      control={<Checkbox color="primary" onChange={handleChangeRole} name="admin" />}
-                      label="admin"
-                    />
-                  <FormHelperText>Pick at least one.</FormHelperText>
-                </FormControl>
-                </div>
-
-                <div className="form-group">
-                <label htmlFor="bonus">Bonus</label>
-                <Input
-                  type="number"
-                  className="form-control w-25"
-                  name="bonus"
-                  value={bonus}
-                  onChange={onChangeBonus}
-                />
-            </div>
-
-                <div className="form-group">
-                    <button className="btn btn-primary btn-block">Sign Up</button>
+                    <button className="btn btn-primary btn-block">Edit</button>
                 </div>
 
 

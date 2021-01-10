@@ -39,13 +39,13 @@ function Row(props) {
         </TableCell >
 
         <TableCell align="left" component="th" scope="row">
-          <strong>Question:</strong>
+          Question:
         </TableCell>
       </TableRow>
 
       <TableRow>
         <TableCell align="left"></TableCell>
-        <TableCell align="left">{row.question}</TableCell>
+        <TableCell style={{fontSize:22}} align="left">{row.question}</TableCell>
       </TableRow>
       
       <TableRow>
@@ -61,7 +61,7 @@ function Row(props) {
 
                 <TableBody>
                   <TableRow>
-                    <TableCell align="left">{row.answer}</TableCell>
+                    <TableCell style={{fontSize:22}} align="left">{row.answer}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>

@@ -3,7 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
+import AuthService from '../../services/auth.service';
 import FaqService from "../../services/faq.service";
+
 
 
 function getModalStyle() {
@@ -28,17 +30,21 @@ function getModalStyle() {
     },
   }));
 
-export default function AddNewFAQModal (props){
+
+export default function EditFAQModal (props){
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
     const [fieldError, setFieldError] = React.useState(false);
-    const [helpText, setHelpText] = React.useState("");
     const [fieldError2, setFieldError2] = React.useState(false);
+    const [helpText, setHelpText] = React.useState("");
+    const [helpText2, setHelpText2] = React.useState("");
 
-    const user = JSON.parse(sessionStorage.getItem("user"));
-    const [question, setQuestion] = useState("");
-    const [answer, setAnswer] = useState("");
+    const faq = props.faq;
+    const [question, setQuestion] = useState(faq.question);
+    const [answer, setAnswer] = useState(faq.answer);
 
+    const user = AuthService.getCurrentUser();
+        
     const onChangeQuestion = (e) =>{
       const q = e.target.value;
       setQuestion(q);
@@ -49,7 +55,7 @@ export default function AddNewFAQModal (props){
       setAnswer(a);
     }
 
-    const handleAddFAQ = () =>{
+    const handleEditFAQ = () =>{
         if(question === ""){
             setFieldError(true);
             setHelpText("Field can't be empty!");
@@ -57,47 +63,47 @@ export default function AddNewFAQModal (props){
         else setFieldError(false);
         if(answer === ""){
             setFieldError2(true);
-            setHelpText("Field can't be empty!");
+            setHelpText2("Field can't be empty!");
         }
         else setFieldError2(false);
 
         if(question === "" || answer === ""){
             return;
         }
-        FaqService.addFaqToDatabase(user.idEmployee, question, answer).then(
+        //edit with server
+
+        //fetch new array after edit
+        //props.fetchFaq();
+        FaqService.editFaq(faq.id, question, answer).then(
           (response)=>{
-            window.alert("Dodano FAQ");
+            window.alert("Edited by userid: " + user.id);
           },
           (error)=>{
             console.log(error);
           }
         )
 
-        //fetch new array after add
-        //props.fetchFaq();
-        
-        //adding without server
-        // const newArr = props.arrayFAQs;
-        // newArr.push({id:3, "question":question, "answer":answer});
-        // props.setFAQs([...newArr]);
-        // //==========================
-        // console.log("Added by " + sessionStorage.getItem("user"));
-        // console.log(props.arrayFAQs);
+        //==========================
         props.setOpen(false);
       }
 
       const handleClose = () => {
+        setFieldError(false);
+        setFieldError2(false);
+        setHelpText("");
+        setHelpText2("");
+
         props.setOpen(false);
       };
     
       const modalBody = (
         <div style={modalStyle} className={classes.paper}>
-          <h2 id="simple-modal-title">Add new FAQ</h2>
-          <form className={classes.root} noValidate autoComplete="off">
-          <TextField error={fieldError} helperText={helpText} id="standard-basic" style={{minWidth:"500px"}} label="Question" onChange={onChangeQuestion}/>
-          <TextField error={fieldError2} helperText={helpText} id="standard-basic" style={{minWidth:"500px"}} label="Answer" onChange={onChangeAnswer}/> <br /><br />
-          <Button variant="contained" color="primary" onClick={() => handleAddFAQ()}>
-            Add
+          <h2 id="simple-modal-title">Edit FAQ</h2>
+        <form className={classes.root} noValidate autoComplete="off">
+          <TextField error={fieldError} helperText={helpText} id="standard-basic" style={{minWidth:"500px"}} label="Question" onChange={onChangeQuestion} defaultValue={faq.question} />
+          <TextField error={fieldError2} helperText={helpText2} id="standard-basic" style={{minWidth:"500px"}} label="Answer" onChange={onChangeAnswer} defaultValue={faq.answer}/> <br /><br />
+          <Button variant="contained" color="primary" onClick={() => handleEditFAQ()}>
+            Edit
           </Button>
         </form>
           

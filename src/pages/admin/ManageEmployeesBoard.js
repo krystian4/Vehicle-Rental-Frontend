@@ -11,10 +11,10 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Loading from "../../components/Loading";
+import Button from '@material-ui/core/Button';
 import DeleteUserDialog from './DeleteUserDialog';
 import AddNewUserModal from './AddNewUserModal';
-import EditUserModal from './EditUserModal';
-import Button from '@material-ui/core/Button';
+import EditEmployeeModal from './EditEmployeeModal';
 
 import UserService from "../../services/user.service"
 
@@ -28,12 +28,8 @@ const useStyles = makeStyles({
     const classes = useStyles();
     
     const [users, setUsers] = useState([])
-    const [activeList, setActiveList] = useState([])
-    const [isCustomersList, setIsCustomerList] = useState(false);
-
     const [user, setUser] = useState("")
-
-
+    
     const [loading, setLoading]= useState(true)
     const [message, setMessage] = useState("No users here")
     const [userId, setUserId] = useState("");
@@ -47,32 +43,19 @@ const useStyles = makeStyles({
       UserService.getActiveUsers()
         .then((response) =>{
           setUsers(response);
-          setActiveList(response);
           setLoading(false);
+          console.log(response);
         })
         .catch((err) =>{
           console.log(err);
             setMessage("Connection error")
             setLoading(false);
         });
-    }
+    } 
 
     useEffect(() => {
       fetchUsers();
   }, [])      
-
-  const handleUsersChange = () =>{
-    if(!isCustomersList){
-      const newCustomers = users.filter((v) => v.roles.includes("ROLE_USER"));
-      console.log(newCustomers);
-      setActiveList(newCustomers);
-      setIsCustomerList(true);
-    }
-    else{
-      setActiveList(users);
-      setIsCustomerList(false);
-    }
-  }
 
 
   if(loading){
@@ -96,13 +79,9 @@ const useStyles = makeStyles({
   return (
     <div className="container">
       <header className="jumbotron">
-        <h3>Users</h3>
+        <h3>Employees</h3>
       </header>
-      <div style={{paddingBottom:"0.5rem"}}>
-        <Button variant="contained" color="primary" onClick={()=>handleUsersChange()}>
-          {isCustomersList ? "Show All" : "Show Customers"}
-        </Button>
-      </div>
+
       <DeleteUserDialog
               userId={userId}
               setOpen={setDelDialogOpen}
@@ -114,12 +93,20 @@ const useStyles = makeStyles({
           open={addUserModalOpen}
       />
       {editModalOpen && (
-        <EditUserModal
+        <EditEmployeeModal
           setOpen={setEditModalOpen}
           open={editModalOpen}
           user={user}
         />
       )}
+      
+
+
+      <div style={{paddingBottom:"0.5rem"}}>
+        <Button variant="contained" color="primary" onClick={()=>setAddUserModalOpen(true)}>
+          Add Employee
+        </Button>
+      </div>
 
       <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
@@ -128,25 +115,23 @@ const useStyles = makeStyles({
             <TableCell>ID</TableCell>
             <TableCell align="right">First Name</TableCell>
             <TableCell align="right">Last Name</TableCell>
-            <TableCell align="right">Username</TableCell>
             <TableCell align="right">E-mail</TableCell>
-            <TableCell align="right">Address</TableCell>
-            <TableCell align="right">City</TableCell>
-            <TableCell align="center">Actions</TableCell>
+            <TableCell align="right">Position</TableCell>
+            <TableCell align="right">Bonus</TableCell>
+            <TableCell align="right">Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {activeList.map((user) => (
+          {users.map((user) => (
             <TableRow key={user.id}>
               <TableCell component="th" scope="row">
-                {user.id} 
+                {user.id}  
               </TableCell>
-              <TableCell align="right">{user.firstName} </TableCell>
-              <TableCell align="right">{user.lastName} </TableCell>
-              <TableCell align="right">{user.username}</TableCell>
+              <TableCell align="right">{user.firstName}</TableCell>
+              <TableCell align="right">{user.lastName}</TableCell>
               <TableCell align="right">{user.email}</TableCell>
-              <TableCell align="right">{user.address}</TableCell>
-              <TableCell align="right">{user.city}</TableCell>
+              <TableCell align="right">{user.jobTitle}</TableCell>
+              <TableCell align="right">{user.bonus}</TableCell>
               <TableCell align="center">
               <IconButton aria-label="edit" className={classes.margin} onClick={()=>{
                 setEditModalOpen(true);
