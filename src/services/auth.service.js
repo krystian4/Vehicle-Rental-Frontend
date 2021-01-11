@@ -4,7 +4,7 @@ import authHeader from "./auth-header";
 
 const API_URL = "http://localhost:8080/api/";
 
-const register = (username, email, password, firstName, lastName, address, city, phone, country, birthdate) => {
+const register = (username, email, password, firstName, lastName, address, city, phone, country, birthdate, role) => {
   return axios.post(API_URL + "auth/signup", {
     username,
     email,
@@ -16,6 +16,7 @@ const register = (username, email, password, firstName, lastName, address, city,
     country,
     phone,
     birthdate,
+    role,
   });
 };
 const registerEmployee = (employeeDto) => {
@@ -42,14 +43,19 @@ const login = (username, password) => {
 };
 
 
-const logout = () => {
-  sessionStorage.removeItem("user");
-  return axios.post(API_URL + "auth/signout", sessionStorage.getItem("loginDate")); //lub klamerki
+const logout = (userId) => {
+  const out={
+    userId,
+    startDate:sessionStorage.getItem("loginDate"),
+  };
+  console.log(out);
+  return axios.post(API_URL + "user/logOut", out, { headers: authHeader() }); //lub klamerki
 };
 
 const getCurrentUser = () => {
   return JSON.parse(sessionStorage.getItem("user"));
 };
+
 
 const exp = {
   register,

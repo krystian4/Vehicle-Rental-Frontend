@@ -11,6 +11,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 import AuthService from "../../services/auth.service";
+import EmpService from "../../services/employee.service";
 
 const required = (value) => {
   if (!value) {
@@ -88,14 +89,13 @@ function getModalStyle() {
 export default function EditEmployeeModal (props){
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
-    console.log("Editing: " + props.user.username + "Brithdate: " + props.user.birthdate);
     const form = useRef();
     const checkBtn = useRef();
 
     const [username, setUsername] = useState(props.user.username);
     const [email, setEmail] = useState(props.user.email);
-    const [name, setName] = useState(props.user.firstName);
-    const [lastname, setLastName] = useState(props.user.lastName);
+    const [firstName, setName] = useState(props.user.firstName);
+    const [lastName, setLastName] = useState(props.user.lastName);
     const [jobTitle, setPosition] = useState(props.user.jobTitle);
     const [bonus, setBonus] = useState(props.user.bonus);
 
@@ -142,7 +142,7 @@ export default function EditEmployeeModal (props){
   const user = AuthService.getCurrentUser();
   const bossId = user.id;
 
-  const employeeDto = {bonus, bossId, userId:-1, jobTitle};
+  const employeeDto = {userId:props.user.userId, username,email, firstName, lastName, jobTitle, roles, bonus};
 
   
     const handleEdit = (e) => {
@@ -154,25 +154,15 @@ export default function EditEmployeeModal (props){
         form.current.validateAll();
 
         if (checkBtn.current.context._errors.length === 0) {
-          
-        AuthService.register(username, email, name, lastname).then(
-            (response) => {
-            console.log("User utworzony jego id: " + response.data.id);
-            employeeDto.userId = response.data.id;
-            setMessage(response.data.message);
-            setSuccessful(true);
+          console.log(employeeDto);
+          EmpService.editEmployee(employeeDto).then(
+            (response)=>{
+              console.log(response);
             },
-            (error) => {
-            const resMessage =
-                (error.response &&
-                error.response.data &&
-                error.response.data.message) ||
-                error.message ||
-                error.toString();
-              setMessage(resMessage);
-              setSuccessful(false);
+            (error)=>{
+              console.log(error);
             }
-        )
+          )
         }
     };
 
@@ -220,12 +210,12 @@ export default function EditEmployeeModal (props){
                 <hr />
 
                 <div className="form-group">
-                    <label htmlFor="name">Name</label>
+                    <label htmlFor="firstName">Name</label>
                     <Input
                     type="text"
                     className="form-control"
-                    name="name"
-                    value={name}
+                    name="firstName"
+                    value={firstName}
                     onChange={onChangeName}
                     validations={[required]}
                     />
@@ -237,7 +227,7 @@ export default function EditEmployeeModal (props){
                     type="text"
                     className="form-control"
                     name="lastname"
-                    value={lastname}
+                    value={lastName}
                     onChange={onChangeLastName}
                     validations={[required]}
                     />
@@ -262,7 +252,7 @@ export default function EditEmployeeModal (props){
                   <br />
                 <FormControl style ={{margin:0}} required error={roleError} component="fieldset" className={classes.formControl}>
                     <FormControlLabel
-                      control={<Checkbox color="primary"  onChange={handleChangeRole} name="regular" />}
+                      control={<Checkbox color="primary"  onChange={handleChangeRole} name="employee" />}
                       label="regular"
                     />
                     <FormControlLabel
@@ -289,7 +279,7 @@ export default function EditEmployeeModal (props){
             </div>
 
                 <div className="form-group">
-                    <button className="btn btn-primary btn-block">Sign Up</button>
+                    <button className="btn btn-primary btn-block">Edit Employee</button>
                 </div>
 
               </div>

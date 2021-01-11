@@ -189,6 +189,7 @@ export default function AddNewFAQModal (props){
     const roleExists = roles.find(role => role === event.target.name) !== undefined;
     const newRoles = roleExists ? roles.filter(role => role !== event.target.name) : [...roles, event.target.name];
     setRoles(newRoles);
+    console.log(newRoles);
 
   };
   const roleError = roles.filter((v) => v).length < 1;
@@ -230,7 +231,7 @@ export default function AddNewFAQModal (props){
 
         if (checkBtn.current.context._errors.length === 0) {
           
-        AuthService.register(username, email, password, name, lastname, address, city, phone, country, birthDate).then(
+        AuthService.register(username, email, password, name, lastname, address, city, phone, country, birthDate, roles).then(
             (response) => {
             console.log("User utworzony jego id: " + response.data.id);
             employeeDto.userId = response.data.id;
@@ -417,8 +418,8 @@ export default function AddNewFAQModal (props){
                   <br />
                 <FormControl style ={{margin:0}} required error={roleError} component="fieldset" className={classes.formControl}>
                     <FormControlLabel
-                      control={<Checkbox color="primary"  onChange={handleChangeRole} name="regular" />}
-                      label="regular"
+                      control={<Checkbox color="primary"  onChange={handleChangeRole} name="employee" />}
+                      label="employee"
                     />
                     <FormControlLabel
                       control={<Checkbox color="primary" onChange={handleChangeRole} name="manager" />}

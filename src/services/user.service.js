@@ -35,10 +35,23 @@ const getActiveUsers = () => {
   });
 };
 
-const editUser = (id, username, email, firstName, lastName, birthDate, address, city, country, phone) => {
-  const out ={id, username, email, firstName, lastName, birthDate, address, city, country, phone};
-  return axios.post(API_URL + "user/edit", out, { headers: authHeader() })
+const getEmployees = () => {
+  return axios.get(API_URL + "employee/active", { headers: authHeader() })
+  .then((response)=>{
+    return response.data
+  });
 };
+
+const editUser = (id, username, email, firstName, lastName, birthdate, address, city, country, phone) => {
+  const out ={id, username, email, firstName, lastName, birthdate, address, city, country, phone};
+  console.log(out);
+  return axios.post(API_URL + "user/update", out, { headers: authHeader() })
+};
+
+const changePassword = (id, password) => {
+  const out = {id, password};
+  return axios.post(API_URL + "user/password", out, { headers: authHeader() });
+}
 
 const deactivateUser = (id) => {
   return axios.post(API_URL + "user/deactivate", {id}, { headers: authHeader() })
@@ -51,13 +64,29 @@ const deactivateUser = (id) => {
 const getUsersPersonalInformation = () => {
   return axios.get(API_URL + "personalinformation/all", { headers: authHeader() })
   .then((response)=>{
+    return response.data
+  });
+};
+
+const updateLicenseNumber = (userId, drivingLicenseNumber) => {
+  const out={
+    userId, drivingLicenseNumber,
+  }
+  return axios.post(API_URL + "customer/update", out, { headers: authHeader() })
+  .then((response)=>{
     console.log(response.data);
     return response.data
   });
 };
 
 const getDriverLicensesToVerification = () => {
-    return axios.get('http://localhost:8081/data.json', { headers: authHeader() })
+    // return axios.get('http://localhost:8081/data.json', { headers: authHeader() })
+    return axios.get(API_URL + "customer/unverified", { headers: authHeader() })
+    .then((response)=>{
+      console.log(response.data);
+      return response.data
+    });
+
 };
 
 const exp = {
@@ -67,10 +96,13 @@ const exp = {
   getAdminBoard,
   getUsers,
   getActiveUsers,
+  getEmployees,
   getUsersPersonalInformation,
   deactivateUser,
   editUser,
+  changePassword,
   getDriverLicensesToVerification,
+  updateLicenseNumber,
 }
 
 export default exp;

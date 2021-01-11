@@ -18,6 +18,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 
 import BoardUser from "./pages/BoardUser";
+import UserDrivingLicense from "./pages/user/UserDrivingLicense";
 
 import EditFaq from "./pages/employee/EditFaq";
 import DriverLicenses from "./pages/employee/DriverLicenses";
@@ -47,8 +48,8 @@ const App = () => {
           <Route exact path="/cart" component={CartPage} />
 
 
-          <Route path="/user" component={BoardUser} />
-          <Route path="/changepassword" component={BoardUser} />
+          <Route exact path="/user" component={BoardUser} />
+          <Route exact path="/user/drivingLicense" component={UserDrivingLicense} /> 
 
           <Route exact path="/employee/editFAQ" component={EditFaq} />
           <Route exact path="/employee/verifyLicense" component={DriverLicenses} />

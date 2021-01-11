@@ -186,7 +186,6 @@ const EditFaq = () => {
         <AddNewFAQModal 
             setOpen={setAddNewFAQOPEN}
             open={addFaqOpen}
-            arrayFAQs={arrayFAQs}
             setFAQs={setFAQs}
             fetchFaq={fetchFaq}
         />

@@ -25,15 +25,28 @@ const DriverLicenses = () => {
     const [driverLicenses, setDriverLicenses] = useState([]);
     const [verifyDialogOpen, setOpenVerifyDialog] = useState(false);
     const [licenseNumber, setLicenseNumber] = useState('');
+    const [userId, setUserId] = useState('');
+
+
   useEffect(() => {
     //get licenses to verification
     UserService.getDriverLicensesToVerification().then(
         (response)=>{
-            setDriverLicenses(response.data);
-            console.log(response.data);
+            setDriverLicenses(response);
+            console.log(response);
         }
     )
   }, []);
+
+  useEffect(() => {
+    //get licenses to verification
+    UserService.getDriverLicensesToVerification().then(
+        (response)=>{
+            setDriverLicenses(response);
+            console.log(response);
+        }
+    )
+  }, [verifyDialogOpen]);
 
   return (
     <div className="container">
@@ -46,6 +59,7 @@ const DriverLicenses = () => {
           setOpen={setOpenVerifyDialog}
           open={verifyDialogOpen}
           licenseNumber={licenseNumber}
+          userId={userId}
           />
       )}
 
@@ -55,8 +69,8 @@ const DriverLicenses = () => {
             <Grid key={value.clientId} item xs={12} sm={6}>
               <Paper className={classes.paper}>
                   <ul style={{listStyleType:"none"}}>
-                      <li>ClientId: {value.clientId}</li>
-                      <li>License number: {value.licenseNumber}</li>
+                      <li>UserId: {value.id}</li>
+                      <li>License number: {value.drivingLicenseNumber}</li>
                       <li>First Name: {value.firstName}</li>
                       <li>Last Name: {value.lastName}</li>
                       <li>Address: {value.address}</li>
@@ -65,6 +79,7 @@ const DriverLicenses = () => {
                   </ul>
                     <Button variant="contained" color="primary" onClick={()=>{
                         setLicenseNumber(value.licenseNumber);
+                        setUserId(value.id)
                         setOpenVerifyDialog(true);
                     }}>
                         Verify

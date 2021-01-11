@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 import AuthService from '../services/auth.service';
+import UserService from "../services/user.service";
 
 
 function getModalStyle() {
@@ -79,6 +80,14 @@ export default function EditFAQModal (props){
           return;
         }
         //edit with server
+        UserService.changePassword(userId, password).then(
+          (response)=>{
+            console.log(response);
+          },
+          (error)=>{
+            console.log(error);
+          }
+        )
 
         //fetch new array after edit
         //props.fetchFaq();
@@ -99,7 +108,7 @@ export default function EditFAQModal (props){
     
       const modalBody = (
         <div style={modalStyle} className={classes.paper}>
-          <h2 id="simple-modal-title">Edit FAQ</h2>
+          <h2 id="simple-modal-title">Change Password</h2>
         <form className={classes.root} noValidate autoComplete="off">
           <TextField error={fieldError} type="password" helperText={helpText} id="standard-basic" style={{minWidth:"500px"}} label="Password" onChange={onChangePassword} />
           <TextField error={fieldError2} type="password" helperText={helpText2} id="standard-basic2" style={{minWidth:"500px"}} label="Repeat password" onChange={onChangeRPassword}/> <br /><br />

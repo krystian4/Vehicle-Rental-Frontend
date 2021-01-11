@@ -5,7 +5,7 @@ const API_URL = "http://localhost:8080/api/";
 
 const getFaqs = () => {
     //return axios.get('http://localhost:8081/data.json', { headers: authHeader() })
-    return axios.get(API_URL + 'faq/all', { headers: authHeader() })
+    return axios.get(API_URL + 'faq/active', { headers: authHeader() })
     .then((response)=>{
       return response.data
     });
@@ -23,7 +23,7 @@ const getFaqs = () => {
     };
 
   const deleteFaq = (id) =>{
-    return axios.post(API_URL + "deleteFaq",{id}, { headers: authHeader() });
+    return axios.post(API_URL + "faq/deactivate",{id}, { headers: authHeader() });
   };
 
   const exp = {

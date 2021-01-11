@@ -40,7 +40,7 @@ const useStyles = makeStyles({
     
 
     const fetchUsers = () =>{
-      UserService.getActiveUsers()
+      UserService.getEmployees()
         .then((response) =>{
           setUsers(response);
           setLoading(false);
@@ -113,25 +113,29 @@ const useStyles = makeStyles({
         <TableHead>
           <TableRow>
             <TableCell>ID</TableCell>
+            <TableCell align="right">employeeId</TableCell>
             <TableCell align="right">First Name</TableCell>
             <TableCell align="right">Last Name</TableCell>
             <TableCell align="right">E-mail</TableCell>
             <TableCell align="right">Position</TableCell>
+            <TableCell align="right">Salary</TableCell>
             <TableCell align="right">Bonus</TableCell>
             <TableCell align="right">Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {users.map((user) => (
-            <TableRow key={user.id}>
+            <TableRow key={user.userId}>
               <TableCell component="th" scope="row">
-                {user.id}  
+                {user.userId}  
               </TableCell>
+              <TableCell align="right">{user.employeeId}</TableCell>
               <TableCell align="right">{user.firstName}</TableCell>
               <TableCell align="right">{user.lastName}</TableCell>
               <TableCell align="right">{user.email}</TableCell>
               <TableCell align="right">{user.jobTitle}</TableCell>
-              <TableCell align="right">{user.bonus}</TableCell>
+              <TableCell align="right">{user.salary}PLN</TableCell>
+              <TableCell align="right">{user.bonus}PLN</TableCell>
               <TableCell align="center">
               <IconButton aria-label="edit" className={classes.margin} onClick={()=>{
                 setEditModalOpen(true);

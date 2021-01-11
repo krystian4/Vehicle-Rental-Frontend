@@ -5,12 +5,14 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import EmpService from "../../services/employee.service";
 
 export default function VerifyLicenseDialog (props){
 
   const handleVerify = () => {
     console.log("Verified license: " + props.licenseNumber);
     //send delete request
+    EmpService.verifyLicense(props.userId);
     props.setOpen(false);
   };
   const handleClose = () => {

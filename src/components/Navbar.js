@@ -17,6 +17,7 @@ const Navbar = () =>{
     const user = AuthService.getCurrentUser();
     if (user) {
         setCurrentUser(user);
+        console.log(user);
         setShowEmployeeBoard(user.roles.includes("ROLE_REGULAR"));
         setShowManagerBoard(user.roles.includes("ROLE_MANAGER"));
         setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
@@ -24,7 +25,8 @@ const Navbar = () =>{
   }, []);
 
   const logOut = () => {
-    AuthService.logout();
+    AuthService.logout(currentUser.id);
+    sessionStorage.removeItem("user");
   };
   
     return(
@@ -62,12 +64,17 @@ const Navbar = () =>{
                    <Link to={"/employee"} className="dropdown-item">
                            Employee
                    </Link>
+
                    <Link to={"/employee/editFAQ"} className="dropdown-item">
                            Edit FAQ
                    </Link>
 
                    <Link to={"/employee/verifyLicense"} className="dropdown-item">
                            Verify License
+                   </Link>
+
+                   <Link to={"/employee/manageVehicles"} className="dropdown-item">
+                           Manage Vehicles
                    </Link>
                   <a className="dropdown-item" href="/#">Something else here</a>
                 </div>
