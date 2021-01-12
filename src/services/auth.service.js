@@ -4,7 +4,7 @@ import authHeader from "./auth-header";
 
 const API_URL = "http://localhost:8080/api/";
 
-const register = (username, email, password, firstName, lastName, address, city, phone, country, birthdate, role) => {
+const register = (username, email, password, firstName, lastName, address, city, phone, country, birthdate) => {
   return axios.post(API_URL + "auth/signup", {
     username,
     email,
@@ -16,7 +16,6 @@ const register = (username, email, password, firstName, lastName, address, city,
     country,
     phone,
     birthdate,
-    role,
   });
 };
 const registerEmployee = (employeeDto) => {

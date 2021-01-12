@@ -8,17 +8,15 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
 import { format } from "date-fns";
 import Button from '@material-ui/core/Button';
-
+import Checkout from "./user/checkout/Checkout";
 
 const CartPage = () => {
   const [cart, setCart] = useState(JSON.parse(sessionStorage.getItem("cart")));
+  const [payButtonClicked, setPayButtonClicked] = useState(false);
   
   const cartTotal = cart.reduce((total, { resPrice = 0 }) => total + resPrice, 0);
-
-  const addToCart = (item) => setCart((currentCart) => [...currentCart, item]);
 
   const removeFromCart = (item) => {
     console.log("removing: " + item.id);
@@ -35,10 +33,17 @@ const CartPage = () => {
         sessionStorage.setItem("cart", JSON.stringify(newCart));
       return newCart;
     });
-    
   };
 
-  const amountOfItems = (id) => cart.filter((item) => item.id === id).length;
+  const handlePay = () =>{
+    setPayButtonClicked(true);
+  }
+
+  if(payButtonClicked){
+    return(
+      <Checkout />
+    )
+  }
 
   return (
 
@@ -69,7 +74,7 @@ const CartPage = () => {
                 <TableCell align="right">{vehicle.model}</TableCell>
                 <TableCell align="right">{format(new Date(vehicle.startDate), "yyyy-MM-dd")}</TableCell>
                 <TableCell align="right">{format(new Date(vehicle.endDate), "yyyy-MM-dd")}</TableCell>
-                <TableCell align="right">{vehicle.resPrice}</TableCell>
+                <TableCell align="right">{vehicle.resPrice}.00</TableCell>
 
 
                 {/* <TableCell align="right">{format(new Date(vehicle.endDate), "yyyy-MM-dd")}</TableCell>
@@ -90,7 +95,7 @@ const CartPage = () => {
         </Table>
         </TableContainer>
         <div className="row" style={{margin:0}}>
-          <Button style={{ marginLeft:"auto", width:"16%", marginTop:"5px"}} variant="contained" color="primary" onClick={()=> {console.log("Pay button clicked)")}}>
+          <Button style={{ marginLeft:"auto", width:"16%", marginTop:"5px", marginBottom:"10px"}} variant="contained" color="primary" onClick={()=> handlePay()}>
                             Pay
           </Button>
         </div>

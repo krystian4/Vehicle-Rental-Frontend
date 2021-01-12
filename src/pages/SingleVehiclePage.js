@@ -51,7 +51,8 @@ const SingleVehiclePage = () => {
 
 
   useEffect(() => {
-    VehicleService.getReservationDates().then((response)=>{
+    VehicleService.getReservationDates(vehicle.id).then(
+      (response)=>{
       setDates(response);
        console.log("Basket: ");
        console.log(cart);
@@ -143,6 +144,7 @@ const SingleVehiclePage = () => {
 
             <KeyboardDatePicker
               value={startDate}
+              minDate={startDate}
               onChange={handleStartDateChange}
               format="yyyy-MM-dd"
               shouldDisableDate={filterDates}

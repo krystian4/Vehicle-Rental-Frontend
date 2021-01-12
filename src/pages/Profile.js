@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import AuthService from "../services/auth.service";
-import { Link } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import PasswordResetModal from "../components/PasswordResetModal";
 

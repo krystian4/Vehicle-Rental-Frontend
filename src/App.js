@@ -22,6 +22,7 @@ import UserDrivingLicense from "./pages/user/UserDrivingLicense";
 
 import EditFaq from "./pages/employee/EditFaq";
 import DriverLicenses from "./pages/employee/DriverLicenses";
+import ManageVehicleBoard from "./pages/employee/ManageVehiclesBoard";
 
 import BoardManager from "./pages/manager/BoardManager";
 import AddVehicleBoard from "./pages/manager/AddVehicleBoard";
@@ -47,12 +48,12 @@ const App = () => {
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/cart" component={CartPage} />
 
-
           <Route exact path="/user" component={BoardUser} />
           <Route exact path="/user/drivingLicense" component={UserDrivingLicense} /> 
 
           <Route exact path="/employee/editFAQ" component={EditFaq} />
           <Route exact path="/employee/verifyLicense" component={DriverLicenses} />
+          <Route exact path="/employee/manageVehicles" component={ManageVehicleBoard} />
           
           <Route exact path="/manager" component={BoardManager} />
           <Route exact path="/manager/addVehicle" component={AddVehicleBoard} />
@@ -60,7 +61,6 @@ const App = () => {
           <Route exact path="/admin" component={BoardAdmin} />
           <Route exact path="/admin/manageUsers" component={ManageUsersBoard} />
           <Route exact path="/admin/manageEmployees" component={ManageEmployeesBoard} />
-
 
         </Switch>
         </>

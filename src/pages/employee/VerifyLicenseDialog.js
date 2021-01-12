@@ -12,8 +12,11 @@ export default function VerifyLicenseDialog (props){
   const handleVerify = () => {
     console.log("Verified license: " + props.licenseNumber);
     //send delete request
-    EmpService.verifyLicense(props.userId);
-    props.setOpen(false);
+    EmpService.verifyLicense(props.userId).then(
+      ()=>{
+        props.setOpen(false);
+      }
+    )
   };
   const handleClose = () => {
     props.setOpen(false);

@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
@@ -10,7 +10,6 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
-import AuthService from "../../services/auth.service";
 import EmpService from "../../services/employee.service";
 
 const required = (value) => {
@@ -102,6 +101,8 @@ export default function EditEmployeeModal (props){
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
 
+    const [roles, setRoles] = useState([])
+
     const onChangeUsername = (e) => {
         const username = e.target.value;
         setUsername(username);
@@ -129,18 +130,15 @@ export default function EditEmployeeModal (props){
       setBonus(temp);
     };
 
-  const [roles, setRoles] = useState([])
 
   const handleChangeRole = (event) => {
+
     const roleExists = roles.find(role => role === event.target.name) !== undefined;
     const newRoles = roleExists ? roles.filter(role => role !== event.target.name) : [...roles, event.target.name];
     setRoles(newRoles);
 
   };
   const roleError = roles.filter((v) => v).length < 1;
-
-  const user = AuthService.getCurrentUser();
-  const bossId = user.id;
 
   const employeeDto = {userId:props.user.userId, username,email, firstName, lastName, jobTitle, roles, bonus};
 
@@ -158,6 +156,7 @@ export default function EditEmployeeModal (props){
           EmpService.editEmployee(employeeDto).then(
             (response)=>{
               console.log(response);
+              handleClose();
             },
             (error)=>{
               console.log(error);
@@ -237,7 +236,7 @@ export default function EditEmployeeModal (props){
                   <label htmlFor="jobTitle">
                       Title
                   </label>
-                  <Select className="form-control" name='jobTitle' onChange={onChangePosition} validations={[positionValidator]}>
+                  <Select className="form-control" name='jobTitle' value={jobTitle} onChange={onChangePosition} validations={[positionValidator]}>
                           <option value=''>Choose job title...</option>
                           <option value='Employee'>Employee</option>
                           <option value='Manager'>Manager</option>
@@ -250,9 +249,9 @@ export default function EditEmployeeModal (props){
                       Roles
                   </label>
                   <br />
-                <FormControl style ={{margin:0}} required error={roleError} component="fieldset" className={classes.formControl}>
+                <FormControl style ={{margin:0}} required error={roleError} value={roles} component="fieldset" className={classes.formControl}>
                     <FormControlLabel
-                      control={<Checkbox color="primary"  onChange={handleChangeRole} name="employee" />}
+                      control={<Checkbox color="primary" onChange={handleChangeRole} name="employee" />}
                       label="regular"
                     />
                     <FormControlLabel

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import UserService from "../../services/user.service";
 import AuthService from "../../services/auth.service";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import AddLicenseModal from "./AddLicenseModal";
+import CustomerService from "../../services/customer.service";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,7 +28,27 @@ const UserDrivingLicense = () => {
     const [licenseNumber, setLicenseNumber] = useState(false);
 
     useEffect(()=>{
+      CustomerService.getCustomerDriverLicense(user.idCustomer).then(
+        (response) => {
+          console.log(response.idCustomer);
+          setLicenseNumber(response.idCustomer);
+        },
+        (error)=>{
+          console.log(error);
+        }
+      )
     })
+    useEffect(()=>{
+      CustomerService.getCustomerDriverLicense(user.idCustomer).then(
+        (response) => {
+          console.log(response.idCustomer);
+          setLicenseNumber(response.idCustomer);
+        },
+        (error)=>{
+          console.log(error);
+        }
+      )
+    }, [licenseModalOpen])
 
   return (
     <div className="container">

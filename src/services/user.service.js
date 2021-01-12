@@ -44,7 +44,6 @@ const getEmployees = () => {
 
 const editUser = (id, username, email, firstName, lastName, birthdate, address, city, country, phone) => {
   const out ={id, username, email, firstName, lastName, birthdate, address, city, country, phone};
-  console.log(out);
   return axios.post(API_URL + "user/update", out, { headers: authHeader() })
 };
 
@@ -83,7 +82,6 @@ const getDriverLicensesToVerification = () => {
     // return axios.get('http://localhost:8081/data.json', { headers: authHeader() })
     return axios.get(API_URL + "customer/unverified", { headers: authHeader() })
     .then((response)=>{
-      console.log(response.data);
       return response.data
     });
 

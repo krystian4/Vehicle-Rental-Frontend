@@ -33,7 +33,6 @@ export default function AddLicenseModal (props){
     const [modalStyle] = React.useState(getModalStyle);
     const [fieldError, setFieldError] = React.useState(false);
     const [helpText, setHelpText] = React.useState("");
-    const [fieldError2, setFieldError2] = React.useState(false);
 
     const user = JSON.parse(sessionStorage.getItem("user"));
     const [licenseNumber, setNumber] = useState(null);

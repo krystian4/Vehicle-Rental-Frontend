@@ -12,7 +12,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Loading from "../../components/Loading";
 import DeleteUserDialog from './DeleteUserDialog';
-import AddNewUserModal from './AddNewUserModal';
 import EditUserModal from './EditUserModal';
 import Button from '@material-ui/core/Button';
 
@@ -38,7 +37,6 @@ const useStyles = makeStyles({
     const [message, setMessage] = useState("No users here")
     const [userId, setUserId] = useState("");
 
-    const [addUserModalOpen, setAddUserModalOpen] = useState(false);
     const [deleteDialogOpen, setDelDialogOpen] = useState(false);
     const [editModalOpen, setEditModalOpen] = useState(false);
     
@@ -60,6 +58,10 @@ const useStyles = makeStyles({
     useEffect(() => {
       fetchUsers();
   }, [])      
+
+    useEffect(() => {
+      fetchUsers();
+    }, [deleteDialogOpen, editModalOpen])
 
   const handleUsersChange = () =>{
     if(!isCustomersList){
@@ -103,16 +105,15 @@ const useStyles = makeStyles({
           {isCustomersList ? "Show All" : "Show Customers"}
         </Button>
       </div>
-      <DeleteUserDialog
+      {deleteDialogOpen && (
+        <DeleteUserDialog
               userId={userId}
               setOpen={setDelDialogOpen}
               open={deleteDialogOpen}
           />
+      )}
       
-      <AddNewUserModal
-          setOpen={setAddUserModalOpen}
-          open={addUserModalOpen}
-      />
+
       {editModalOpen && (
         <EditUserModal
           setOpen={setEditModalOpen}

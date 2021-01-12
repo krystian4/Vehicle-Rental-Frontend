@@ -44,7 +44,6 @@ const useStyles = makeStyles({
         .then((response) =>{
           setUsers(response);
           setLoading(false);
-          console.log(response);
         })
         .catch((err) =>{
           console.log(err);
@@ -55,7 +54,11 @@ const useStyles = makeStyles({
 
     useEffect(() => {
       fetchUsers();
-  }, [])      
+  }, [])     
+
+    useEffect(() => {
+      fetchUsers();
+  }, [addUserModalOpen, deleteDialogOpen, editModalOpen])  
 
 
   if(loading){

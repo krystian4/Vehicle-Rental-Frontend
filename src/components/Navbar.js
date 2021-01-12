@@ -76,7 +76,7 @@ const Navbar = () =>{
                    <Link to={"/employee/manageVehicles"} className="dropdown-item">
                            Manage Vehicles
                    </Link>
-                  <a className="dropdown-item" href="/#">Something else here</a>
+                   
                 </div>
               </li>
             )}

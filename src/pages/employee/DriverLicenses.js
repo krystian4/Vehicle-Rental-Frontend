@@ -28,24 +28,22 @@ const DriverLicenses = () => {
     const [userId, setUserId] = useState('');
 
 
-  useEffect(() => {
-    //get licenses to verification
-    UserService.getDriverLicensesToVerification().then(
+    const fetchDriverLicenses = () =>{
+      UserService.getDriverLicensesToVerification().then(
         (response)=>{
             setDriverLicenses(response);
             console.log(response);
         }
     )
+    }
+  useEffect(() => {
+    //get licenses to verification
+    fetchDriverLicenses();
   }, []);
 
   useEffect(() => {
     //get licenses to verification
-    UserService.getDriverLicensesToVerification().then(
-        (response)=>{
-            setDriverLicenses(response);
-            console.log(response);
-        }
-    )
+    fetchDriverLicenses();
   }, [verifyDialogOpen]);
 
   return (
@@ -66,10 +64,10 @@ const DriverLicenses = () => {
       <Grid item xs={12}>
         <Grid container justify="center" spacing={3}>
           {driverLicenses.map((value) => (
-            <Grid key={value.clientId} item xs={12} sm={6}>
+            <Grid key={value.id} item xs={12} sm={6}>
               <Paper className={classes.paper}>
                   <ul style={{listStyleType:"none"}}>
-                      <li>UserId: {value.id}</li>
+                      <li>CustomerId: {value.id}</li>
                       <li>License number: {value.drivingLicenseNumber}</li>
                       <li>First Name: {value.firstName}</li>
                       <li>Last Name: {value.lastName}</li>

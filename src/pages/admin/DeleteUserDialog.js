@@ -15,7 +15,6 @@ export default function DeleteFaqDialog (props){
     //send delete request
     UserService.deactivateUser(userId).then(
       (response) =>{
-        console.log("Deleted userId:" + userId);
         console.log(response);
       },
       (error) => {
@@ -23,7 +22,7 @@ export default function DeleteFaqDialog (props){
         console.log(error);
       },
     )
-    props.setOpen(false);
+    handleClose();
   };
   const handleClose = () => {
     props.setOpen(false);

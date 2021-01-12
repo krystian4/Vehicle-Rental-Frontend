@@ -149,11 +149,10 @@ export default function EditUserModal (props){
 
         if (checkBtn.current.context._errors.length === 0) {
         // edit query
-        console.log("Edit button pressed. id: " + props.user.id)
         UserService.editUser(props.user.id, username, email, name, lastname, birthDate, address, city, country, phone).then(
           (response)=>{
-            console.log("Edytowano!");
-            console.log("Data ktora poszla: " + birthDate);
+            console.log(response);
+            handleClose();
           },
           (error)=>{
             console.log(error);
@@ -169,8 +168,6 @@ export default function EditUserModal (props){
 
         
         const modalBody = (
-
-
             <div style={modalStyle} className={classes.paper}>
 
             {changePassOpen && (<PasswordResetModal

@@ -127,6 +127,10 @@ const EditFaq = () => {
     useEffect(() => {
       fetchFaq();
     }, [])
+    
+    useEffect(() => {
+      fetchFaq();
+    }, [dialogOpen, addFaqOpen, editFaqOpen])
 
     if(loading){
       return(
