@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import UserService from "../../services/user.service";
+import EmpService from "../../services/employee.service";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import VerifyLicenseDialog from './VerifyLicenseDialog'
+import VerifyPaymentDialog from './VerifyPaymentDialog'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -22,65 +22,68 @@ const useStyles = makeStyles((theme) => ({
 
 const DriverLicenses = () => {
     const classes = useStyles();
-    const [driverLicenses, setDriverLicenses] = useState([]);
+    const [payments, setPayments] = useState([]);
     const [verifyDialogOpen, setOpenVerifyDialog] = useState(false);
-    const [licenseNumber, setLicenseNumber] = useState('');
-    const [userId, setUserId] = useState('');
+    const [orderID, setOrderID] = useState('');
 
 
     const fetchDriverLicenses = () =>{
-      UserService.getDriverLicensesToVerification().then(
+        EmpService.getUnpaidOrders().then(
         (response)=>{
-            setDriverLicenses(response);
+            setPayments(response);
             console.log(response);
         }
     )
     }
-  useEffect(() => {
-    //get licenses to verification
-    fetchDriverLicenses();
-  }, []);
 
   useEffect(() => {
     //get licenses to verification
     fetchDriverLicenses();
   }, [verifyDialogOpen]);
 
+  if(payments.length === 0){
+    return(
+        <div className="container">
+    <header className="jumbotron">
+      <h3>No pending payments.</h3>
+    </header>
+    </div>
+    );
+  }
+
   return (
     <div className="container">
       <header className="jumbotron">
-        <h3>Driver Licenses verification</h3>
+        <h3>Payments</h3>
       </header>
 
       {verifyDialogOpen &&(
-          <VerifyLicenseDialog
+          <VerifyPaymentDialog
           setOpen={setOpenVerifyDialog}
           open={verifyDialogOpen}
-          licenseNumber={licenseNumber}
-          userId={userId}
+          orderId={orderID}
           />
       )}
 
       <Grid item xs={12}>
         <Grid container justify="center" spacing={3}>
-          {driverLicenses.map((value) => (
-            <Grid key={value.id} item xs={12} sm={6}>
-              <Paper noWrap className={classes.paper} >
+          {payments.map((value) => (
+            <Grid key={value.orderId} item xs={12} sm={6}>
+              <Paper style={{flexWrap:"wrap", wordWrap:"break-word"}} className={classes.paper}>
                   <ul style={{listStyleType:"none"}}>
-                      <li><strong>CustomerId: </strong> {value.id}</li>
-                      <li><strong>License number: </strong>{value.drivingLicenseNumber}</li>
+                      <li><strong>CustomerId: </strong>{value.customerId}</li>
+                      <li><strong>OrderId: </strong>{value.orderId}</li>
                       <li><strong>First Name: </strong>{value.firstName}</li>
                       <li><strong>Last Name: </strong>{value.lastName}</li>
-                      <li><strong>Address: </strong>{value.address}</li>
-                      <li><strong>City: </strong>{value.city}</li>
-                      <li><strong>Country: </strong>{value.country}</li>
+                      <li><strong>Date: </strong>{value.date}</li>
+                      <li><strong>Total cost: </strong>{value.cost}.00PLN</li>
+                      <li><strong>Additional info: </strong><br />{value.comments}</li>
                   </ul>
                     <Button variant="contained" color="primary" onClick={()=>{
-                        setLicenseNumber(value.licenseNumber);
-                        setUserId(value.id)
+                        setOrderID(value.orderId);
                         setOpenVerifyDialog(true);
                     }}>
-                        Verify
+                        Finish
                     </Button>
               </Paper>
             </Grid>

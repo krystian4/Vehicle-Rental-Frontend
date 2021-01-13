@@ -76,6 +76,14 @@ const Navbar = () =>{
                    <Link to={"/employee/manageVehicles"} className="dropdown-item">
                            Manage Vehicles
                    </Link>
+
+                   <Link to={"/employee/fees"} className="dropdown-item">
+                           Vehicle fees
+                   </Link>
+
+                   <Link to={"/employee/payments"} className="dropdown-item">
+                           Payments
+                   </Link>
                    
                 </div>
               </li>

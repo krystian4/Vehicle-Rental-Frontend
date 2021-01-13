@@ -23,6 +23,8 @@ import UserDrivingLicense from "./pages/user/UserDrivingLicense";
 import EditFaq from "./pages/employee/EditFaq";
 import DriverLicenses from "./pages/employee/DriverLicenses";
 import ManageVehicleBoard from "./pages/employee/ManageVehiclesBoard";
+import CarFeeList from "./pages/employee/CarFeeList";
+import Payments from "./pages/employee/Payments";
 
 import BoardManager from "./pages/manager/BoardManager";
 import AddVehicleBoard from "./pages/manager/AddVehicleBoard";
@@ -54,6 +56,10 @@ const App = () => {
           <Route exact path="/employee/editFAQ" component={EditFaq} />
           <Route exact path="/employee/verifyLicense" component={DriverLicenses} />
           <Route exact path="/employee/manageVehicles" component={ManageVehicleBoard} />
+          <Route exact path="/employee/fees" component={CarFeeList} />
+          <Route exact path="/employee/payments" component={Payments} />
+
+
           
           <Route exact path="/manager" component={BoardManager} />
           <Route exact path="/manager/addVehicle" component={AddVehicleBoard} />

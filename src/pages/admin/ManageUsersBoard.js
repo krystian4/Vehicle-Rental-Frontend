@@ -32,14 +32,12 @@ const useStyles = makeStyles({
 
     const [user, setUser] = useState("")
 
-
     const [loading, setLoading]= useState(true)
     const [message, setMessage] = useState("No users here")
     const [userId, setUserId] = useState("");
 
     const [deleteDialogOpen, setDelDialogOpen] = useState(false);
     const [editModalOpen, setEditModalOpen] = useState(false);
-    
 
     const fetchUsers = () =>{
       UserService.getActiveUsers()
@@ -76,7 +74,6 @@ const useStyles = makeStyles({
     }
   }
 
-
   if(loading){
       return(
           <div className='container'>
@@ -112,7 +109,6 @@ const useStyles = makeStyles({
               open={deleteDialogOpen}
           />
       )}
-      
 
       {editModalOpen && (
         <EditUserModal

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
+import CustomerService from "../../../services/customer.service";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -51,34 +52,52 @@ const useStyles = makeStyles((theme) => ({
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
 const card = {cash:false, cardName:"", cardNumber:"", expDate:"", cvv:""};
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <AddressForm />;
-    case 1:
-      return <PaymentForm card={card} />;
-    case 2:
-      return <Review card={card}/>;
-    default:
-      throw new Error('Unknown step');
-  }
-}
-
 export default function Checkout() {
   const classes = useStyles();
+  const [info, setInfo] = useState("");
+
+    function getStepContent(step) {
+        switch (step) {
+            case 0:
+            return <AddressForm />;
+            case 1:
+            return <PaymentForm card={card} />;
+            case 2:
+            return <Review card={card} setInfo={setInfo}/>;
+            default:
+            throw new Error('Unknown step');
+        }
+        }
+
   const [activeStep, setActiveStep] = React.useState(0);
   const handleNext = () => {
+    if(activeStep + 1 === steps.length){
+        console.log("Order has been finalized");
+        console.log(info);
+        let payment;
+
+        if(card.cash){
+            payment = "cash"
+        }
+        else payment = "card"
+
+        CustomerService.confirmOrder(info, payment).then(
+          (response)=>{
+              console.log("w srodku confirmOrder");
+              console.log(response);
+          },
+          (error)=>{
+              console.log(error);
+          }
+        )
+    }
+
     setActiveStep(activeStep + 1);
-    console.log(card);
   };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-  
-  if(activeStep === steps.length){
-      console.log("Order has been finalized");
-  }
 
   return (
     <React.Fragment>

@@ -6,15 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
 import { format } from "date-fns";
-
-
-
-const payments = [
-  { name: 'Card type', detail: 'Visa' },
-  { name: 'Card holder', detail: 'Mr John Smith' },
-  { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-  { name: 'Expiry date', detail: '04/2024' },
-];
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -34,6 +26,10 @@ export default function Review(props) {
 
   const [cart, setCart] = React.useState(JSON.parse(sessionStorage.getItem("cart")));
   const cartTotal = cart.reduce((total, { resPrice = 0 }) => total + resPrice, 0);
+  
+  const handleAddInfChange = (event) =>{
+      props.setInfo(event.target.value);
+  }
 
   return (
     <React.Fragment>
@@ -107,8 +103,9 @@ export default function Review(props) {
                     </Grid>
                 </Grid>
               )}
-                
         </Grid>
+        <Typography variant="h6" gutterBottom className={classes.title}>Additional Informations</Typography>
+        <TextareaAutosize onChange={handleAddInfChange} style={{width:"100%"}} rowsMin="5" />
       </Grid>
     </React.Fragment>
   );

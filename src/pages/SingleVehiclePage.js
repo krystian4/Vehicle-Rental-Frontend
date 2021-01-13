@@ -40,12 +40,10 @@ const SingleVehiclePage = () => {
   }, [startDate, endDate]);
 
   const handleStartDateChange = (date) => {
-    //console.log(format(date, "yyyy-MM-dd"));
     setStartDate(date);
   };
 
   const handleEndDateChange = (date) => {
-    //console.log(format(date, "yyyy-MM-dd"));
     setEndDate(date);
   };
 
