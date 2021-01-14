@@ -101,7 +101,10 @@ const Navbar = () =>{
                    <Link to={"/manager/addVehicle"} className="dropdown-item">
                            New vehicle
                    </Link>
-                  <a className="dropdown-item" href="/#" >Another action</a>
+                  
+                   <Link to={"/manager/rentalsHistory"} className="dropdown-item">
+                           Rentals history
+                   </Link>
                   <a className="dropdown-item" href="/#">Something else here</a>
                 </div>
               </li>

@@ -74,7 +74,7 @@ const CartPage = () => {
                 <TableCell align="right">{vehicle.model}</TableCell>
                 <TableCell align="right">{format(new Date(vehicle.startDate), "yyyy-MM-dd")}</TableCell>
                 <TableCell align="right">{format(new Date(vehicle.endDate), "yyyy-MM-dd")}</TableCell>
-                <TableCell align="right">{vehicle.resPrice}.00</TableCell>
+                <TableCell align="right">{vehicle.resPrice.toFixed(2)}</TableCell>
 
 
                 {/* <TableCell align="right">{format(new Date(vehicle.endDate), "yyyy-MM-dd")}</TableCell>

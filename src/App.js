@@ -28,6 +28,7 @@ import Payments from "./pages/employee/Payments";
 
 import BoardManager from "./pages/manager/BoardManager";
 import AddVehicleBoard from "./pages/manager/AddVehicleBoard";
+import RentalsHistoryPage from "./pages/manager/RentalsHistoryPage";
 
 import BoardAdmin from "./pages/admin/BoardAdmin";
 import ManageUsersBoard from "./pages/admin/ManageUsersBoard";
@@ -59,10 +60,10 @@ const App = () => {
           <Route exact path="/employee/fees" component={CarFeeList} />
           <Route exact path="/employee/payments" component={Payments} />
 
-
-          
           <Route exact path="/manager" component={BoardManager} />
           <Route exact path="/manager/addVehicle" component={AddVehicleBoard} />
+          <Route exact path="/manager/rentalsHistory" component={RentalsHistoryPage} />
+
 
           <Route exact path="/admin" component={BoardAdmin} />
           <Route exact path="/admin/manageUsers" component={ManageUsersBoard} />

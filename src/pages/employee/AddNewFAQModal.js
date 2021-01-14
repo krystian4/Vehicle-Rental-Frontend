@@ -67,22 +67,12 @@ export default function AddNewFAQModal (props){
         FaqService.addFaqToDatabase(user.idEmployee, question, answer).then(
           (response)=>{
             window.alert("Dodano FAQ");
+            props.fetchFaq();
           },
           (error)=>{
             console.log(error);
           }
         )
-
-        //fetch new array after add
-        //props.fetchFaq();
-        
-        //adding without server
-        // const newArr = props.arrayFAQs;
-        // newArr.push({id:3, "question":question, "answer":answer});
-        // props.setFAQs([...newArr]);
-        // //==========================
-        // console.log("Added by " + sessionStorage.getItem("user"));
-        // console.log(props.arrayFAQs);
         props.setOpen(false);
       }
 
