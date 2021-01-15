@@ -19,12 +19,14 @@ import Register from "./pages/Register";
 
 import BoardUser from "./pages/BoardUser";
 import UserDrivingLicense from "./pages/user/UserDrivingLicense";
+import UserOrdersPage from "./pages/user/UserOrdersPage";
 
 import EditFaq from "./pages/employee/EditFaq";
 import DriverLicenses from "./pages/employee/DriverLicenses";
 import ManageVehicleBoard from "./pages/employee/ManageVehiclesBoard";
 import CarFeeList from "./pages/employee/CarFeeList";
 import Payments from "./pages/employee/Payments";
+import Offers from "./pages/employee/Offers";
 
 import BoardManager from "./pages/manager/BoardManager";
 import AddVehicleBoard from "./pages/manager/AddVehicleBoard";
@@ -53,12 +55,16 @@ const App = () => {
 
           <Route exact path="/user" component={BoardUser} />
           <Route exact path="/user/drivingLicense" component={UserDrivingLicense} /> 
+          <Route exact path="/user/orders" component={UserOrdersPage} /> 
+
 
           <Route exact path="/employee/editFAQ" component={EditFaq} />
           <Route exact path="/employee/verifyLicense" component={DriverLicenses} />
           <Route exact path="/employee/manageVehicles" component={ManageVehicleBoard} />
           <Route exact path="/employee/fees" component={CarFeeList} />
           <Route exact path="/employee/payments" component={Payments} />
+          <Route exact path="/employee/offers" component={Offers} />
+
 
           <Route exact path="/manager" component={BoardManager} />
           <Route exact path="/manager/addVehicle" component={AddVehicleBoard} />

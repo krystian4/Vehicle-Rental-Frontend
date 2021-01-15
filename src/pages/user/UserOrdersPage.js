@@ -12,10 +12,11 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import VisibilityIcon from '@material-ui/icons/Visibility';
 import Loading from "../../components/Loading";
-import VehicleService from "../../services/vehicle.service";
-import VehicleRentalHistoryModal from "./VehicleRentalHistoryModal";
+import UserService from "../../services/user.service";
+import AuthService from "../../services/auth.service";
+import { format } from "date-fns";
+import ErrorIcon from '@material-ui/icons/Error';
 
 
 const useRowStyles = makeStyles({
@@ -27,94 +28,90 @@ const useRowStyles = makeStyles({
   });
   
   function Row(props) {
-    const { vehicle } = props;
+    const { order } = props;
     const [open, setOpen] = useState(false);
     const classes = useRowStyles();
     const [historyModalisOpen, setHistoryModalIsOpen] = useState(false);
     const [vehicleId, setVehicleId] = useState('');
   
     return (
-      
 
-      <React.Fragment>
-        <TableRow className={classes.root} >
+      <React.Fragment >
+         <TableRow className={classes.root} >
           <TableCell style={{width:"60px"}}>
             <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </TableCell >
           <TableCell align="left" component="th" scope="row">
-            <strong>ID: </strong>{vehicle.id}
+            <strong>ID: </strong>{order.id}
           </TableCell>
           <TableCell align="left" >
-            <strong>Brand: </strong>{vehicle.brand}
-          </TableCell>
-          <TableCell align="left"  >
-            <strong>Model: </strong>{vehicle.model}
-          </TableCell>
-          <TableCell align="left" >
-          <strong>Category: </strong>{vehicle.category}
+            <strong>Order Date: </strong>{format(new Date(order.date), "yyyy-MM-dd")}
           </TableCell>
           <TableCell align="right" >
-          <strong>Price: </strong>{vehicle.price.toFixed(2)}PLN
-          </TableCell>
-          <TableCell style={{  padding: 0 }} align="right">
-                <IconButton aria-label="edit" className={classes.margin} onClick={()=>{
-                  setHistoryModalIsOpen(true);
-                  setVehicleId(vehicle.id);
-                }}>
-                  <VisibilityIcon />
-                </IconButton>
-                
+          <strong>Total Cost: </strong>{order.cost.toFixed(2)}PLN
           </TableCell>
         </TableRow>
 
-        <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={10}>
+        <TableRow >
+          <TableCell  colSpan={10} style={{paddingBottom: 0, paddingTop: 0, backgroundColor:"rgba(122,121,122, 0.1)"}}>
             <Collapse in={open} timeout="auto" unmountOnExit>
-              <Box margin={1}>
+              <Box margin={1} >
                 <Table size="small" aria-label="purchases">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Details</TableCell>
+                <TableHead>
+                  <TableRow >
+                    <TableCell style={{borderBottom: '1px solid black'}}>Pos.</TableCell>
+                      <TableCell colSpan={4} style={{borderBottom: '1px solid black'}}>Details</TableCell>
+                      <TableCell style={{borderBottom: '1px solid black'}} align="right">Complaint</TableCell>
                     </TableRow>
                   </TableHead>
   
-                  <TableBody>
-                    <TableRow>
-                            <TableCell style={{borderBottom:"unset"}} align="left"><img style={{width:"10rem"}} src={vehicle.pictureUrl} alt="Vehicle" title={vehicle.pictureUrl} /></TableCell>
-                            <TableCell style={{borderBottom:"unset"}} align="left"><strong>Production country:</strong><br />{vehicle.country}</TableCell>
-                            <TableCell style={{borderBottom:"unset"}} align="left"><strong>Production year:</strong><br />{vehicle.yearOfProduction}</TableCell>
-                            <TableCell style={{borderBottom:"unset"}} align="left"><strong>Power:</strong><br />{vehicle.power}HP</TableCell>
-                            <TableCell style={{borderBottom:"unset"}} align="right"><strong>Description:</strong><br /> {vehicle.description}</TableCell>
-                    </TableRow>
+                  <TableBody >
+                    {order.rentals.map((rental, index)=>(
+                      <TableRow >
+                            {/* <TableCell style={{borderBottom:"unset"}} align="left"><img style={{width:"10rem"}} src={vehicle.pictureUrl} alt="Vehicle" title={vehicle.pictureUrl} /></TableCell> */}
+                            <TableCell style={{borderBottom:"unset"}} align="left"><strong>{index}</strong></TableCell>
+                            <TableCell style={{borderBottom:"unset"}} align="left"><strong>Brand:</strong><br />{rental.brand}</TableCell>
+                            <TableCell style={{borderBottom:"unset"}} align="left"><strong>Model:</strong><br />{rental.model}</TableCell>
+                            <TableCell style={{borderBottom:"unset"}} align="left"><strong>Period:</strong><br />{rental.startDate} - {rental.endDate}</TableCell>
+                            
+
+                            <TableCell style={{borderBottom:"unset"}} align="right"><strong>Cost:</strong><br /> {rental.resPrice.toFixed(2)}</TableCell>
+                            <TableCell style={{borderBottom:"unset", width:"50px"}} align="right">
+                              <IconButton >
+                                <ErrorIcon style={{color:"red"}} />
+                              </IconButton>
+                            </TableCell>
+
+                      </TableRow>
+                    ))}
+                    
                   </TableBody>
                 </Table>
               </Box>
             </Collapse>
           </TableCell>
-        </TableRow>
+        </TableRow> 
 
-        {historyModalisOpen && (
-        <VehicleRentalHistoryModal open={historyModalisOpen} setOpen={setHistoryModalIsOpen} vehicleId={vehicleId} />
-      )}
-  
       </React.Fragment>
     );
   }
 
-  const RentalsHistoryPage = () => {
-    const [vehicles, setVehicles] = useState([])
+  const UserOrdersPage = () => {
+    const [orders, setOrders] = useState([])
     const [loading, setLoading]= useState(true)
     const [message, setMessage] = useState("No FAQs here")
     const [vehicle, setVehicle] = useState(null);
+    const user = AuthService.getCurrentUser();
 
     //const [dialogOpen, setDialogOpen] = useState(false);
     const [editVehicleOpen, setEditVehicleOpen] = useState(false);
 
-    const fetchVehicles = () =>{
-      VehicleService.getVehicles().then((response)=>{
-        setVehicles(response);
+    const fetchOrders = () =>{
+      console.log(user.idCustomer);
+      UserService.getUserOrders(user.idCustomer).then((response)=>{
+        setOrders(response);
         console.log(response);
         setLoading(false);
     })
@@ -125,11 +122,11 @@ const useRowStyles = makeStyles({
     }) 
     }
     useEffect(() => {
-      fetchVehicles();
+      fetchOrders();
     }, [])
 
     useEffect(() => {
-      fetchVehicles();
+      fetchOrders();
     }, [editVehicleOpen])
 
     if(loading){
@@ -139,7 +136,7 @@ const useRowStyles = makeStyles({
           </div>
       )
   }
-  if(vehicles.length === 0){
+  if(orders.length === 0){
     return(
         <div className="container">
         <header className="jumbotron">
@@ -164,14 +161,14 @@ const useRowStyles = makeStyles({
 
 
       <header className="jumbotron">
-        <h3>Vehicles rental history</h3>
+        <h3>Your orders</h3>
       </header>
 
       <TableContainer component={Paper}>
         <Table aria-label="collapsible table">
           <TableBody>
-            {vehicles.map((vehicle) => (
-              <Row key={vehicle.id} vehicle={vehicle} setVehicle={setVehicle} setEditVehicleOpen={setEditVehicleOpen}/>
+            {orders.map((order) => (
+              <Row  key={order.id} order={order}/>
             ))}
           </TableBody>
         </Table>
@@ -182,4 +179,4 @@ const useRowStyles = makeStyles({
   );
 };
 
-export default RentalsHistoryPage;
+export default UserOrdersPage;

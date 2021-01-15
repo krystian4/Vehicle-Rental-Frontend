@@ -12,6 +12,7 @@ const Navbar = () =>{
   const [showManagerBoard, setShowManagerBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
+  const userCart = JSON.parse(sessionStorage.getItem("cart"));
 
   useEffect(() => {
     const user = AuthService.getCurrentUser();
@@ -61,9 +62,6 @@ const Navbar = () =>{
                   Employee Board
                 </a>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                   <Link to={"/employee"} className="dropdown-item">
-                           Employee
-                   </Link>
 
                    <Link to={"/employee/editFAQ"} className="dropdown-item">
                            Edit FAQ
@@ -84,6 +82,10 @@ const Navbar = () =>{
                    <Link to={"/employee/payments"} className="dropdown-item">
                            Payments
                    </Link>
+
+                   <Link to={"/employee/offers"} className="dropdown-item">
+                           Offers
+                   </Link>
                    
                 </div>
               </li>
@@ -95,9 +97,7 @@ const Navbar = () =>{
                   Manager Board
                 </a>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                   <Link to={"/manager"} className="dropdown-item">
-                           Manager
-                   </Link>
+
                    <Link to={"/manager/addVehicle"} className="dropdown-item">
                            New vehicle
                    </Link>
@@ -105,7 +105,6 @@ const Navbar = () =>{
                    <Link to={"/manager/rentalsHistory"} className="dropdown-item">
                            Rentals history
                    </Link>
-                  <a className="dropdown-item" href="/#">Something else here</a>
                 </div>
               </li>
             )}
@@ -117,9 +116,7 @@ const Navbar = () =>{
                Admin Board
              </a>
              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <Link to={"/admin"} className="dropdown-item">
-                        Admin
-                </Link>
+
                 <Link to={"/admin/manageUsers"} className="dropdown-item">
                         Users
                 </Link>
@@ -137,11 +134,11 @@ const Navbar = () =>{
                 User
               </a>
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                 <Link to={"/user"} className="dropdown-item">
-                         User
-                 </Link>
                  <Link to={"/user/drivingLicense"} className="dropdown-item">
                          Driver License
+                 </Link>
+                 <Link to={"/user/orders"} className="dropdown-item">
+                         Your Orders
                  </Link>
               </div>
               </li>
@@ -157,7 +154,7 @@ const Navbar = () =>{
                 <li className="nav-item">
                   <Link to={"/cart"} className="nav-link" style={{padding:0}}>
                   <IconButton aria-label="cart" >
-                            <ShoppingCartIcon style={{ color: grey[50] }}/>
+                            {(userCart.length === 0) ? <ShoppingCartIcon style={{ color: grey[50] }}/> : <ShoppingCartIcon style={{ color: "red" }}/> }
                   </IconButton>
                   </Link>
                 </li>

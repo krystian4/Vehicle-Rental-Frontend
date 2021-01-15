@@ -84,8 +84,21 @@ const getDriverLicensesToVerification = () => {
     .then((response)=>{
       return response.data
     });
-
 };
+
+const getUserOrders = (id) => {
+  return axios.post(API_URL + "order/customerOrders", {id}, { headers: authHeader() })
+  .then((response)=>{
+    return response.data;
+  })
+}
+
+const postUserComment = (comment) =>{
+  return axios.post(API_URL + "comment/add", comment, { headers: authHeader() })
+  .then((response)=>{
+    return response.data;
+  })
+}
 
 const exp = {
   getPublicContent,
@@ -96,11 +109,13 @@ const exp = {
   getActiveUsers,
   getEmployees,
   getUsersPersonalInformation,
+  getUserOrders,
   deactivateUser,
   editUser,
   changePassword,
   getDriverLicensesToVerification,
   updateLicenseNumber,
+  postUserComment,
 }
 
 export default exp;

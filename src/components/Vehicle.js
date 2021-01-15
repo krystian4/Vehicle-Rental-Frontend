@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 
 
-const Vehicle = ({id, brand, category, model, yearOfProduction, country, power, price, description, inStartDate, inExpDate, inPrice, carInStartDate, carInExpDate, carInPrice,pictureUrl, removeVehicle}) => {
+const Vehicle = ({id, brand, category, model, yearOfProduction, country, power, price, description,pictureUrl, discount, removeVehicle}) => {
 
     const vehicle = {
         id,
@@ -12,11 +12,19 @@ const Vehicle = ({id, brand, category, model, yearOfProduction, country, power, 
         yearOfProduction,
         country,
         power:power,
-        price:price,
+        price:(100 - discount)/100 * price,
         description,
         pictureUrl,
         category,
+        discount,
     };
+
+    React.useEffect(()=>{
+        if(discount !== 0){
+            //vehicle.price = ;
+            console.log(vehicle.price);
+        }
+    }, [])
 
     const onClickVehicle = () =>{
         sessionStorage.setItem("vehicle", JSON.stringify(vehicle));
@@ -30,7 +38,7 @@ const Vehicle = ({id, brand, category, model, yearOfProduction, country, power, 
             <footer>
                 <div className='vehicle-info'>
                     <h4>{brand}</h4>
-                    <h5>Day cost: {price}PLN</h5>
+                    <h5 style={vehicle.discount === 0 ? {} : {color:"red"}}>Day cost: {vehicle.price.toFixed(2)}PLN</h5>
                     <h5>{category.name}</h5>
                     <Link to={`/vehicle`} onClick={onClickVehicle}>
                         <Button style={{width:"100%"}} variant="contained" color="primary" >

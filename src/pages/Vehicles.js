@@ -18,6 +18,7 @@ const Vehicles = () =>  {
          VehicleService.getVehicles().then((response)=>{
             setVehicles(response);
             setLoading(false);
+            console.log(response);
         })
         .catch((err) =>{
             console.log(err);

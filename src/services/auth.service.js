@@ -36,7 +36,6 @@ const login = (username, password) => {
         var newArr = [];
         sessionStorage.setItem("cart", JSON.stringify(newArr));
       }
-
       return response.data;
     });
 };

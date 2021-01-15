@@ -57,7 +57,7 @@ const Login = (props) => {
             error.toString();
 
           setLoading(false);
-          setMessage(resMessage);
+          setMessage("Incorrect username or password");
         }
       );
     } else {

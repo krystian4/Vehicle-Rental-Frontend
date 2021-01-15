@@ -67,11 +67,31 @@ const getUnpaidOrders = () =>{
   })
 }
 
+const getActiveOffers = () =>{
+  return axios.get(API_URL + "offer/active", { headers: authHeader() })
+  .then((response)=>{
+    console.log(response.data);
+    return response.data;
+  })
+}
+
 const verifyPayment = (orderId) => {
   return axios.post(API_URL + "order/payment", {orderId}, { headers: authHeader() })
 };
 
+const addOffer = (discount, description, employeeId, vehicleIds) => {
+  return axios.post(API_URL + "offer/add", {discount, description, employeeId, vehicleIds}, { headers: authHeader() })
+  .then((response)=>{
+    return response.data;
+  })
+};
 
+const deleteOffer = (id) => {
+  return axios.post(API_URL + "offer/deactivate", {id}, { headers: authHeader() })
+  .then((response)=>{
+    return response.data;
+  })
+};
 
 const exp = {
     verifyLicense,
@@ -79,9 +99,12 @@ const exp = {
     editEmployee,
     getInsurances,
     getInspections,
+    getActiveOffers,
+    getUnpaidOrders,
     addInsurance,
     addInspection,
-    getUnpaidOrders,
+    addOffer,
+    deleteOffer,
   }
   
   export default exp;

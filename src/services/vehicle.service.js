@@ -40,11 +40,19 @@ const getRentalHistory = (id) =>{
     });
 }
 
+const getVehicleComments = (id) =>{
+    return axios.post(API_URL + "comment/all", {id})
+    .then((response)=>{
+        return response.data;
+    });
+}
+
 const exp = {
     addVehicle,
     getVehicles,
     getReservationDates,
     getRentalHistory,
+    getVehicleComments,
     updateVehicle,
 }
 

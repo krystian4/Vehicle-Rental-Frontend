@@ -31,6 +31,7 @@ const CartPage = () => {
         console.log("cart after delete: ");
         console.log(newCart);
         sessionStorage.setItem("cart", JSON.stringify(newCart));
+        window.location.reload(false);
       return newCart;
     });
   };
