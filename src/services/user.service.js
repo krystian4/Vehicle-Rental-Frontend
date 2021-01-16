@@ -67,9 +67,9 @@ const getUsersPersonalInformation = () => {
   });
 };
 
-const updateLicenseNumber = (userId, drivingLicenseNumber) => {
+const updateLicenseNumber = (id, drivingLicenseNumber) => {
   const out={
-    userId, drivingLicenseNumber,
+    id, drivingLicenseNumber,
   }
   return axios.post(API_URL + "customer/update", out, { headers: authHeader() })
   .then((response)=>{
@@ -100,6 +100,13 @@ const postUserComment = (comment) =>{
   })
 }
 
+const addComplaint = (rentalId, description) =>{
+  return axios.post(API_URL + "complaint/add", {rentalId, description}, { headers: authHeader() })
+  .then((response)=>{
+    return response.data;
+  })
+}
+
 const exp = {
   getPublicContent,
   getUserBoard,
@@ -116,6 +123,7 @@ const exp = {
   getDriverLicensesToVerification,
   updateLicenseNumber,
   postUserComment,
+  addComplaint,
 }
 
 export default exp;

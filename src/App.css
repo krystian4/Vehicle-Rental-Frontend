@@ -42,7 +42,7 @@
 
 /* Hero */
 .defaultHero {
-  min-height: calc(100vh - 500px);
+  min-height: calc(100vh - 65px);
   background: url("./images/homeCarRent.jpg") center/cover no-repeat;
   display: flex;
   align-items: center;

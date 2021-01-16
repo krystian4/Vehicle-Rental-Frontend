@@ -63,10 +63,6 @@ const SingleVehiclePage = () => {
       })
   }, [])
 
-  // useEffect(() =>{
-  //   countPrice();
-  // }, [resPrice]);
-
   function filterDates(date) {
     const found = dates.find(res => res.startDate <= format(date, "yyyy-MM-dd") && res.endDate >= format(date, "yyyy-MM-dd"))
     if (found === undefined) {
@@ -115,69 +111,101 @@ const SingleVehiclePage = () => {
 
       </header>
 
-      <img className="w-100" src={vehicle.pictureUrl} title={vehicle.pictureUrl} alt={vehicle.pictureUrl} />
-      <h3>Here will be car id= {vehicle.id} informations</h3>
+      {/* <img className="w-100" src={vehicle.pictureUrl} title={vehicle.pictureUrl} alt={vehicle.pictureUrl} /> */}
       <div className="row" style={{ margin: 0 }}>
-        <div className="col-md-2 h3"><strong>Brand: </strong></div>
-        <div className="col-md-10 h3">{vehicle.brand}</div>
+        <div className="col-lg-6" style={{ padding: 0 }}><img className="w-100" style={{ minWidth: "450px" }} src={vehicle.pictureUrl} title={vehicle.pictureUrl} alt={vehicle.pictureUrl} /></div>
+        <div className="col-lg-6">
+          <div className="row">
+          
 
-        <div className="col-md-2"><strong>Model: </strong></div>
-        <div className="col-md-10">{vehicle.model}</div>
+            <div className="col h3"><strong>Brand: </strong></div>
+            <div className="col h3" style={{textAlign:"right"}}>{vehicle.brand}</div>
+          </div>
+          <hr style={{margin:0}}></hr>
 
-        <div className="col-md-2"><strong>HorsePower: </strong></div>
-        <div className="col-md-10">{vehicle.power}HP</div>
+          <div className="row">
+            <div className="col h4"><strong>Model: </strong></div>
+            <div className="col h4" style={{textAlign:"right"}}>{vehicle.model}</div>
+          </div>
+          <hr style={{margin:0}}></hr>
 
-        <div className="col-md-2"><strong>Production country: </strong></div>
-        <div className="col-md-10">{vehicle.country}</div>
+          <div className="row">
+            <div className="col"><strong>HorsePower: </strong></div>
+            <div className="col" style={{textAlign:"right"}}>{vehicle.power}HP</div>
+          </div>
+          <hr style={{margin:0}}></hr>
 
-        <div className="col-md-2"><strong>Production year: </strong></div>
-        <div className="col-md-10">{vehicle.yearOfProduction}</div>
+          <div className="row">
+            <div className="col"><strong>Production country: </strong></div>
+            <div className="col" style={{textAlign:"right"}}>{vehicle.country}</div>
+          </div>
+          <hr style={{margin:0}}></hr>
 
-        <div className="col-md-2"><strong>Category: </strong></div>
-        <div className="col-md-10">{vehicle.category}</div>
-        <br />
-        <br />
-        <div className="col-md-2"><strong>Start Date: </strong></div>
-        <div className="col-md-10">
+          <div className="row">
+            <div className="col"><strong>Production year: </strong></div>
+            <div className="col" style={{textAlign:"right"}}>{vehicle.yearOfProduction}</div>
+          </div>
+          <hr style={{margin:0}}></hr>
 
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <div className="row">
+            <div className="col"><strong>Category: </strong></div>
+            <div className="col" style={{textAlign:"right"}}>{vehicle.category}</div>
+          </div>
+          <hr style={{margin:0}}></hr>
 
-            <KeyboardDatePicker
-              value={startDate}
-              minDate={startDate}
-              onChange={handleStartDateChange}
-              format="yyyy-MM-dd"
-              shouldDisableDate={filterDates}
-            />
+          <br />
+          <br />
+          <p style={{margin:0, color:"rgb(51, 77, 77)"}}><i>Reservation</i> </p>
+          <hr style={{margin:0}}></hr>
+          <div className="row">
+            <div className="col"><strong>Start Date: </strong></div>
+            <div className="col">
 
-          </MuiPickersUtilsProvider>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+
+                <KeyboardDatePicker
+                  value={startDate}
+                  minDate={startDate}
+                  onChange={handleStartDateChange}
+                  format="yyyy-MM-dd"
+                  shouldDisableDate={filterDates}
+                />
+
+              </MuiPickersUtilsProvider>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col"><strong>End Date: </strong></div>
+            <div className="col">
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+
+                <KeyboardDatePicker
+                  value={endDate}
+                  onChange={handleEndDateChange}
+                  format="yyyy-MM-dd"
+                  shouldDisableDate={filterEndDates}
+                  minDate={startDate}
+                />
+
+              </MuiPickersUtilsProvider>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col"><strong>Price: </strong></div>
+            <div className="col">{resPrice}.00 PLN</div>
+          </div>
+
         </div>
-
-        <div className="col-md-2"><strong>End Date: </strong></div>
-        <div className="col-md-10">
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-
-            <KeyboardDatePicker
-              value={endDate}
-              onChange={handleEndDateChange}
-              format="yyyy-MM-dd"
-              shouldDisableDate={filterEndDates}
-              minDate={startDate}
-            />
-
-          </MuiPickersUtilsProvider>
-        </div>
-        <br />
-        <br />
-        <div className="col-md-2"><strong>Price: </strong></div>
-        <div className="col-md-10">{resPrice}.00 PLN</div>
-
-        <Button style={{ marginLeft: "auto" }} variant="contained" color="primary" onClick={handleAddToCart}>
-          Add to Cart
-          </Button>
-
       </div>
-      <br /><br /><br />
+
+      <div className="row" style={{margin:0}}>
+        <Button style={{ marginLeft: "auto", marginTop:"20px" }} variant="contained" color="primary" onClick={handleAddToCart}>
+          Add to Cart
+        </Button>
+      </div>
+      <br />
       <VehicleComments vehicleId={vehicle.id} />
 
     </div>

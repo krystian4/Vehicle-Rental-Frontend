@@ -11,6 +11,7 @@ const Navbar = () =>{
   const [showEmployeeBoard, setShowEmployeeBoard] = useState(false);
   const [showManagerBoard, setShowManagerBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
+  const [showCustomerMenu, setShowCustomerMenu] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
   const userCart = JSON.parse(sessionStorage.getItem("cart"));
 
@@ -22,6 +23,7 @@ const Navbar = () =>{
         setShowEmployeeBoard(user.roles.includes("ROLE_REGULAR"));
         setShowManagerBoard(user.roles.includes("ROLE_MANAGER"));
         setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
+        setShowCustomerMenu(user.roles.includes("ROLE_USER"));
     }
   }, []);
 
@@ -86,6 +88,10 @@ const Navbar = () =>{
                    <Link to={"/employee/offers"} className="dropdown-item">
                            Offers
                    </Link>
+
+                   <Link to={"/employee/complaints"} className="dropdown-item">
+                           Complaints
+                   </Link>
                    
                 </div>
               </li>
@@ -128,7 +134,7 @@ const Navbar = () =>{
 
             )}
 
-            {currentUser && (
+            {showCustomerMenu && (
               <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="/#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 User

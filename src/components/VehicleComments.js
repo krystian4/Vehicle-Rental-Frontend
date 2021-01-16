@@ -55,8 +55,7 @@ const VehicleComments = (props) => {
         <div>
             <h1>Comments</h1>
             <br />
-            <Paper justify="space-between" style={{ padding: "0 20px" }}>
-                <br />
+            <Paper justify="space-between" style={{ padding: "10px 20px 40px 20px" }}>
                 <h5>Add your comment</h5>
                 <TextareaAutosize onChange={handleComment} style={{ width: "100%", paddingLeft: "5px" }} rowsMin="5" />
                 <Button style={{float:"right"}} variant="contained" color="primary" onClick={handlePostComment} >

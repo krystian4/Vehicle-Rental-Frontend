@@ -27,6 +27,7 @@ import ManageVehicleBoard from "./pages/employee/ManageVehiclesBoard";
 import CarFeeList from "./pages/employee/CarFeeList";
 import Payments from "./pages/employee/Payments";
 import Offers from "./pages/employee/Offers";
+import ComplaintsList from './pages/employee/ComplaintsList';
 
 import BoardManager from "./pages/manager/BoardManager";
 import AddVehicleBoard from "./pages/manager/AddVehicleBoard";
@@ -64,6 +65,8 @@ const App = () => {
           <Route exact path="/employee/fees" component={CarFeeList} />
           <Route exact path="/employee/payments" component={Payments} />
           <Route exact path="/employee/offers" component={Offers} />
+          <Route exact path="/employee/complaints" component={ComplaintsList} />
+
 
 
           <Route exact path="/manager" component={BoardManager} />

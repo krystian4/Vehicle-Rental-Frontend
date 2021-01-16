@@ -2,7 +2,7 @@ import React, { useState} from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
-import TextField from '@material-ui/core/TextField';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import UserService from "../../services/user.service";
 
 
@@ -20,7 +20,7 @@ function getModalStyle() {
   const useStyles = makeStyles((theme) => ({
     paper: {
       position: 'absolute',
-      width: 500,
+      width: 550,
       backgroundColor: theme.palette.background.paper,
       border: '2px solid #000',
       boxShadow: theme.shadows[5],
@@ -28,37 +28,32 @@ function getModalStyle() {
     },
   }));
 
-export default function AddLicenseModal (props){
+export default function AddComplaintModal(props){
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
-    const [fieldError, setFieldError] = React.useState(false);
-    const [helpText, setHelpText] = React.useState("");
+    const [helpText, setHelpText] = React.useState("Describe your problem please");
 
     const user = JSON.parse(sessionStorage.getItem("user"));
-    const [licenseNumber, setNumber] = useState(null);
+    const [complaint, setComplaint] = useState("");
 
-    const onChangeNumber = (e) =>{
+    const onChangeComplaint = (e) =>{
       const q = e.target.value;
-      setNumber(q);
+      setComplaint(q);
     }
 
-    const handleAddLicense = () =>{
-        if(licenseNumber === ""){
-            setFieldError(true);
+    const handleAddComplaint = () =>{
+        if(complaint === ""){
             setHelpText("Field can't be empty!");
             return;
         }
-        else setFieldError(false);
-        console.log(licenseNumber);
-        console.log(user.idCustomer);
-        props.setLicenseNumber(licenseNumber);
-        UserService.updateLicenseNumber(user.idCustomer, licenseNumber).then(
-            (response)=>{
-                console.log(response);
-            },
-            (error)=>{
-                console.log(error);
-            }
+        UserService.addComplaint(props.rentalId, complaint).then(
+          (response)=>{
+            console.log(response);
+            window.alert("New complaint created");
+          },
+          (error)=>{
+            console.log(error);
+          }
         )
         props.setOpen(false);
       }
@@ -69,14 +64,13 @@ export default function AddLicenseModal (props){
     
       const modalBody = (
         <div style={modalStyle} className={classes.paper}>
-          <h2 id="simple-modal-title">Add License Number</h2>
-          <form className={classes.root} noValidate autoComplete="off">
-          <TextField error={fieldError} type="number" helperText={helpText} id="standard-basic" style={{minWidth:"400px"}} label="License Number" onChange={onChangeNumber}/>
-          <br /><br />
-          <Button variant="contained" color="primary" onClick={() => handleAddLicense()}>
-            Add
+          <h2 id="simple-modal-title">Create complaint for rental #{props.rentalId}</h2>
+          
+          <TextareaAutosize placeholder={helpText} id="standard-basic" style={{ width: "100%", paddingLeft: "5px", border:"1px solid black" }} rowsMin="5" onChange={onChangeComplaint}/>
+
+          <Button variant="contained" color="primary" onClick={() => handleAddComplaint()}>
+            Make a complain
           </Button>
-        </form>
           
         </div>
       );

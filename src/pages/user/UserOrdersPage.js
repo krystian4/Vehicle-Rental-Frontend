@@ -17,6 +17,7 @@ import UserService from "../../services/user.service";
 import AuthService from "../../services/auth.service";
 import { format } from "date-fns";
 import ErrorIcon from '@material-ui/icons/Error';
+import AddComplaintModal from "./AddComplaintModal";
 
 
 const useRowStyles = makeStyles({
@@ -79,7 +80,10 @@ const useRowStyles = makeStyles({
 
                             <TableCell style={{borderBottom:"unset"}} align="right"><strong>Cost:</strong><br /> {rental.resPrice.toFixed(2)}</TableCell>
                             <TableCell style={{borderBottom:"unset", width:"50px"}} align="right">
-                              <IconButton >
+                              <IconButton onClick={()=> {
+                                props.setAddComplaintModelOpen(true);
+                                props.setRentalId(rental.id);
+                              }}>
                                 <ErrorIcon style={{color:"red"}} />
                               </IconButton>
                             </TableCell>
@@ -103,6 +107,8 @@ const useRowStyles = makeStyles({
     const [loading, setLoading]= useState(true)
     const [message, setMessage] = useState("No FAQs here")
     const [vehicle, setVehicle] = useState(null);
+    const [addModalOpen, setAddComplaintModelOpen] = useState(false);
+    const [rentalId, setRentalId] = useState('');
     const user = AuthService.getCurrentUser();
 
     //const [dialogOpen, setDialogOpen] = useState(false);
@@ -168,12 +174,15 @@ const useRowStyles = makeStyles({
         <Table aria-label="collapsible table">
           <TableBody>
             {orders.map((order) => (
-              <Row  key={order.id} order={order}/>
+              <Row  key={order.id} order={order} setAddComplaintModelOpen={setAddComplaintModelOpen} setRentalId={setRentalId} />
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-
+        
+        {addModalOpen && (
+          <AddComplaintModal open={addModalOpen} setOpen={setAddComplaintModelOpen} rentalId={rentalId}/>
+        )}
     </div>
     
   );

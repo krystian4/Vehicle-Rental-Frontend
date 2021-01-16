@@ -11,7 +11,6 @@ const verifyLicense = (userId) =>{
     }
     return axios.post(API_URL + "customer/update", out, { headers: authHeader() })
     .then((response)=>{
-      console.log(response.data);
       return response.data
     });
 }
@@ -19,7 +18,6 @@ const verifyLicense = (userId) =>{
 const getInsurances = () =>{
   return axios.get(API_URL + "insurance/active", { headers: authHeader() })
   .then((response)=>{
-    console.log(response.data);
     return response.data;
   })
 }
@@ -36,7 +34,6 @@ const addInsurance = (vehicleId, dateOfPurchase, expirationDate, price) =>{
 const getInspections = () =>{
   return axios.get(API_URL + "inspection/active", { headers: authHeader() })
   .then((response)=>{
-    console.log(response.data);
     return response.data;
   })
 }
@@ -62,7 +59,6 @@ const editEmployee = (employeeDto) => {
 const getUnpaidOrders = () =>{
   return axios.get(API_URL + "order/unpaid", { headers: authHeader() })
   .then((response)=>{
-    console.log(response.data);
     return response.data;
   })
 }
@@ -70,7 +66,6 @@ const getUnpaidOrders = () =>{
 const getActiveOffers = () =>{
   return axios.get(API_URL + "offer/active", { headers: authHeader() })
   .then((response)=>{
-    console.log(response.data);
     return response.data;
   })
 }
@@ -93,6 +88,20 @@ const deleteOffer = (id) => {
   })
 };
 
+const getComplaints = () =>{
+  return axios.get(API_URL + "complaint/active", { headers: authHeader() })
+  .then((response)=>{
+    return response.data;
+  })
+}
+
+const deleteComplaint = (id) => {
+  return axios.post(API_URL + "complaint/deactivate", {id}, { headers: authHeader() })
+  .then((response)=>{
+    return response.data;
+  })
+};
+
 const exp = {
     verifyLicense,
     verifyPayment,
@@ -105,6 +114,8 @@ const exp = {
     addInspection,
     addOffer,
     deleteOffer,
+    getComplaints,
+    deleteComplaint,
   }
   
   export default exp;

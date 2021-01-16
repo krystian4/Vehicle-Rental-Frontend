@@ -123,7 +123,7 @@ const useStyles = makeStyles({
             <TableCell align="right">Position</TableCell>
             <TableCell align="right">Salary</TableCell>
             <TableCell align="right">Bonus</TableCell>
-            <TableCell align="right">Action</TableCell>
+            <TableCell align="center">Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

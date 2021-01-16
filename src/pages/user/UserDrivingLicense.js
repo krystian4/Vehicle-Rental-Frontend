@@ -61,7 +61,7 @@ const UserDrivingLicense = () => {
             <Grid item xs={12} sm={6}>
               <Paper className={classes.paper}>
                   <ul style={{listStyleType:"none"}}>
-                      <li><strong>License number:</strong> {licenseNumber ? licenseNumber: "EMPTY"}</li>
+                      <li style={licenseNumber ? {} : { color: "red" }} ><strong>License number:</strong> {licenseNumber ? licenseNumber: "EMPTY"}</li>
                       <li><strong>First Name:</strong> {user.firstName}</li>
                       <li><strong>Last Name: </strong>{user.lastName}</li>
                       <li><strong>Address: </strong>{user.address}</li>

@@ -25,3 +25,7 @@ yarn-error.log*
 #test
 .eslintcache
 debug.log
+.VSCodeCounter/2021-01-15_20-16-57/results.txt
+.VSCodeCounter/2021-01-15_20-16-57/details.md
+.VSCodeCounter/2021-01-15_20-16-57/results.csv
+.VSCodeCounter/2021-01-15_20-16-57/results.md

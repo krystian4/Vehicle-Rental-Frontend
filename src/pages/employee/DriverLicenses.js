@@ -76,7 +76,7 @@ const DriverLicenses = () => {
                       <li><strong>Country: </strong>{value.country}</li>
                   </ul>
                     <Button variant="contained" color="primary" onClick={()=>{
-                        setLicenseNumber(value.licenseNumber);
+                        setLicenseNumber(value.drivingLicenseNumber);
                         setUserId(value.id)
                         setOpenVerifyDialog(true);
                     }}>

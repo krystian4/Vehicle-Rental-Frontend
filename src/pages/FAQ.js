@@ -44,8 +44,8 @@ function Row(props) {
       </TableRow>
 
       <TableRow>
-        <TableCell align="left"></TableCell>
-        <TableCell style={{fontSize:22}} align="left">{row.question}</TableCell>
+        <TableCell align="left" style={{paddingTop:0}}></TableCell>
+        <TableCell style={{fontSize:22, paddingTop:0}} align="left" >{row.question}</TableCell>
       </TableRow>
       
       <TableRow>
