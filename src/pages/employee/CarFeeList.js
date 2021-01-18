@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import AddNewInsModal from "./AddNewInsModal";
+import { format } from "date-fns";
 
 import EmpService from "../../services/employee.service";
 
@@ -119,13 +120,13 @@ const CarFeeList = () => {
                 <TableCell align="center">Model</TableCell>
                 <TableCell align="center">Production country</TableCell>
                 <TableCell align="center">Purchase Date</TableCell>
-                <TableCell align="center">Expiration Date</TableCell>
+                <TableCell align="center" >Expiration Date</TableCell>
                 <TableCell align="right">Price</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {activeList.map((item) => (
-                <TableRow key={item.id}>
+                <TableRow key={item.id} style={item.expirationDate > (format(new Date(), "yyyy-MM-dd")) ? {}:{backgroundColor:"rgba(255, 44, 44, 0.7)"}}>
                   <TableCell component="th" scope="row">
                     {item.vehicleId} 
                   </TableCell>
@@ -133,7 +134,7 @@ const CarFeeList = () => {
                     <TableCell align="right">{item.model} </TableCell>
                     <TableCell align="right">{item.country}</TableCell>
                     <TableCell align="right">{isInsurancesList ? item.dateOfPurchase : item.startDate}</TableCell>
-                    <TableCell align="right">{item.expirationDate}</TableCell>
+                    <TableCell align="right" >{item.expirationDate}</TableCell>
                     <TableCell align="right">{item.price}.00PLN</TableCell>
                     <TableCell align="center">
                   </TableCell>

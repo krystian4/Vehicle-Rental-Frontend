@@ -107,6 +107,7 @@ const useStyles = makeStyles({
               userId={userId}
               setOpen={setDelDialogOpen}
               open={deleteDialogOpen}
+              fetchUsers={fetchUsers}
           />
       )}
 

@@ -56,11 +56,17 @@ const VehicleComments = (props) => {
             <h1>Comments</h1>
             <br />
             <Paper justify="space-between" style={{ padding: "10px 20px 40px 20px" }}>
+
+            {user !== null && (
+                <div>
                 <h5>Add your comment</h5>
                 <TextareaAutosize onChange={handleComment} style={{ width: "100%", paddingLeft: "5px" }} rowsMin="5" />
                 <Button style={{float:"right"}} variant="contained" color="primary" onClick={handlePostComment} >
                     Post comment
                 </Button>
+                </div>
+            )}
+                
                 {comments.map((comment) => (
                     <React.Fragment>
                         <Grid container wrap="nowrap" spacing={2} style={{ paddingTop: "20px" }}>

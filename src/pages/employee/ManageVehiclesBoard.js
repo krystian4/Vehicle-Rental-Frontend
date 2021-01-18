@@ -63,9 +63,9 @@ const useRowStyles = makeStyles({
                 }>
                           <EditIcon />
                 </IconButton>
-                <IconButton aria-label="delete" className={classes.margin}>
+                {/* <IconButton aria-label="delete" className={classes.margin}>
                           <DeleteIcon />
-                </IconButton>
+                </IconButton> */}
           </TableCell>
         </TableRow>
 

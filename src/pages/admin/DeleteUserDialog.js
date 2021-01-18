@@ -16,6 +16,7 @@ export default function DeleteFaqDialog (props){
     UserService.deactivateUser(userId).then(
       (response) =>{
         console.log(response);
+        props.fetchUsers();
       },
       (error) => {
         console.log("User not deleted");

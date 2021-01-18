@@ -67,7 +67,6 @@ export default function AddNewFAQModal (props){
         FaqService.addFaqToDatabase(user.idEmployee, question, answer).then(
           (response)=>{
             console.log(response);
-            window.alert("Dodano FAQ");
             props.fetchFaq();
           },
           (error)=>{

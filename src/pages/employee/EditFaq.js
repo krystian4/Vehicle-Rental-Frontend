@@ -183,6 +183,7 @@ const EditFaq = () => {
             open={editFaqOpen}
             arrayFAQs={arrayFAQs}
             faq={faq}
+            fetchFaq={fetchFaq}
         />
       )}
 

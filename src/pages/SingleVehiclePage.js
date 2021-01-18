@@ -10,6 +10,7 @@ import VehicleComments from "../components/VehicleComments";
 
 const SingleVehiclePage = () => {
   const vehicle = JSON.parse(sessionStorage.getItem("vehicle"));
+  const user = JSON.parse(sessionStorage.getItem("user"));
 
   // const [startDate, setStartDate] = useState(format(new Date(), "yyyy-MM-dd"));
   // const [endDate, setEndDate] = useState(format(new Date(), "yyyy-MM-dd"));
@@ -42,6 +43,9 @@ const SingleVehiclePage = () => {
 
   const handleStartDateChange = (date) => {
     setStartDate(date);
+    if(endDate < date){
+      setEndDate(date);
+    }
   };
 
   const handleEndDateChange = (date) => {
@@ -94,6 +98,11 @@ const SingleVehiclePage = () => {
     }
     else {
       console.log("Cart existed: ");
+      const found = cart.find(item => (item.id === cartItem.id));
+      if(found !== undefined){
+        window.alert("Vehicle already in cart!");
+        return;
+      }
       cart.push(cartItem);
       console.log(cart);
     }
@@ -194,17 +203,19 @@ const SingleVehiclePage = () => {
 
           <div className="row">
             <div className="col"><strong>Price: </strong></div>
-            <div className="col">{resPrice}.00 PLN</div>
+            <div className="col">{resPrice.toFixed(2)} PLN</div>
           </div>
 
         </div>
       </div>
-
-      <div className="row" style={{margin:0}}>
+      {user !== null && resPrice>0 && (
+        <div className="row" style={{margin:0}}>
         <Button style={{ marginLeft: "auto", marginTop:"20px" }} variant="contained" color="primary" onClick={handleAddToCart}>
           Add to Cart
         </Button>
       </div>
+      )} 
+      
       <br />
       <VehicleComments vehicleId={vehicle.id} />
 

@@ -40,7 +40,7 @@ const useRowStyles = makeStyles({
             </IconButton>
           </TableCell >
           <TableCell align="left" component="th" scope="row">
-            <strong>ID: </strong><br />{complaint.complaintId}
+            <strong>Rental ID: </strong><br />{complaint.rentalId}
           </TableCell>
           <TableCell align="left" >
             <strong>Customer: </strong><br />{complaint.firstName} {complaint.lastName}

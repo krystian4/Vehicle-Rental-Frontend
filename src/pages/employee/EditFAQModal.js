@@ -76,7 +76,8 @@ export default function EditFAQModal (props){
         //props.fetchFaq();
         FaqService.editFaq(faq.id, question, answer).then(
           (response)=>{
-            window.alert("Edited by userid: " + user.id);
+            console.log(response);
+            props.fetchFaq();
           },
           (error)=>{
             console.log(error);
