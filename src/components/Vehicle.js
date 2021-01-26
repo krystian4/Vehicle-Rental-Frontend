@@ -37,7 +37,7 @@ const Vehicle = ({ id, brand, category, model, yearOfProduction, country, power,
 
     return (
         <div className={classes.root}>
-            <Paper elevation={3} style={{paddingBottom:"0.4rem"}}>
+            <Paper elevation={10} style={{paddingBottom:"0.4rem"}}>
                 <Link to={`/vehicle`} onClick={onClickVehicle}>
                     <img src={pictureUrl} alt={brand} className='photo-vehicle' style={{borderRadius:"1%"}} />
                 </Link>

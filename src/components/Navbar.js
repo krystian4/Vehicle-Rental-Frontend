@@ -157,13 +157,16 @@ const Navbar = () =>{
 
             {currentUser ? (
             <div className="navbar-nav ml-auto">
-                <li className="nav-item">
+              {showCustomerMenu && (
+                  <li className="nav-item">
                   <Link to={"/cart"} className="nav-link" style={{padding:0}}>
                   <IconButton aria-label="cart" >
                             {(userCart.length === 0) ? <ShoppingCartIcon style={{ color: grey[50] }}/> : <ShoppingCartIcon style={{ color: "red" }}/> }
                   </IconButton>
                   </Link>
                 </li>
+              )}
+
                 <li className="nav-item">
                 <Link to={"/profile"} className="nav-link">
                     {currentUser.username}

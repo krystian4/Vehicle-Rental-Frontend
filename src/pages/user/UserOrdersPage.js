@@ -72,7 +72,7 @@ const useRowStyles = makeStyles({
                     {order.rentals.map((rental, index)=>(
                       <TableRow >
                             {/* <TableCell style={{borderBottom:"unset"}} align="left"><img style={{width:"10rem"}} src={vehicle.pictureUrl} alt="Vehicle" title={vehicle.pictureUrl} /></TableCell> */}
-                            <TableCell style={{borderBottom:"unset"}} align="left"><strong>{index}</strong></TableCell>
+                            <TableCell style={{borderBottom:"unset"}} align="left"><strong>{index+1}</strong></TableCell>
                             <TableCell style={{borderBottom:"unset"}} align="left"><strong>Brand:</strong><br />{rental.brand}</TableCell>
                             <TableCell style={{borderBottom:"unset"}} align="left"><strong>Model:</strong><br />{rental.model}</TableCell>
                             <TableCell style={{borderBottom:"unset"}} align="left"><strong>Period:</strong><br />{rental.startDate} - {rental.endDate}</TableCell>

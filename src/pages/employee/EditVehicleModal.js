@@ -173,6 +173,7 @@ const EditVehicleModal = (props) => {
                         <option value='SEDAN'>Sedan</option>
                         <option value='SUV'>SUV</option>
                         <option value='COUPE'>Coupe</option>
+                        <option value='SPORTS'>Sports</option>
                 </Select>
             </div>
 

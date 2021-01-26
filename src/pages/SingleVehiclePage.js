@@ -6,6 +6,7 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/picker
 import VehicleService from "../services/vehicle.service"
 import Button from '@material-ui/core/Button';
 import VehicleComments from "../components/VehicleComments";
+import CustomerService from "../services/customer.service";
 
 
 const SingleVehiclePage = () => {
@@ -52,6 +53,18 @@ const SingleVehiclePage = () => {
     setEndDate(date);
   };
 
+  const [status, setStatus] = useState(false);
+  const fetchStatus = () =>{
+    CustomerService.getLicenseVerificationStatus(user.idCustomer).then(
+      (response) => {
+        console.log(response);
+        setStatus(response.status);
+      },
+      (error)=>{
+        console.log(error);
+      }
+    )
+  }
 
   useEffect(() => {
     VehicleService.getReservationDates(vehicle.id).then(
@@ -65,6 +78,7 @@ const SingleVehiclePage = () => {
       .catch((err) => {
         console.log(err);
       })
+      fetchStatus();
   }, [])
 
   function filterDates(date) {
@@ -208,7 +222,7 @@ const SingleVehiclePage = () => {
 
         </div>
       </div>
-      {user !== null && resPrice>0 && (
+      {user.roles.includes("ROLE_USER") && resPrice>0 && status && (
         <div className="row" style={{margin:0}}>
         <Button style={{ marginLeft: "auto", marginTop:"20px" }} variant="contained" color="primary" onClick={handleAddToCart}>
           Add to Cart

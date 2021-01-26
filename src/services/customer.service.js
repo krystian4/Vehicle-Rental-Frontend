@@ -5,7 +5,15 @@ const API_URL = "http://localhost:8080/api/";
 
 
 const getCustomerDriverLicense = (id) => {
-    return axios.post(API_URL + "customer/license", {id}, { headers: authHeader() })//rola usera
+    return axios.post(API_URL + "customer/license", {id}, { headers: authHeader() })
+    .then(
+        (response)=>{
+            return response.data;
+        }
+    )};
+
+const getLicenseVerificationStatus = (id) => {
+    return axios.post(API_URL + "customer/getCustomersStatus", {id}, { headers: authHeader() })
     .then(
         (response)=>{
             return response.data;
@@ -28,6 +36,7 @@ const confirmOrder = (comments, payment) => {
 
 const exp = {
     getCustomerDriverLicense,
+    getLicenseVerificationStatus,
     confirmOrder,
   }
   

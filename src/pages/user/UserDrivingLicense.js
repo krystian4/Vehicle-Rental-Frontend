@@ -26,29 +26,35 @@ const UserDrivingLicense = () => {
     const classes = useStyles();
     const [licenseModalOpen, setOpenAddLicenseModal] = useState(false);
     const [licenseNumber, setLicenseNumber] = useState(false);
+    const [status, setStatus] = useState(false);
+
+    const fetchLicense = () =>{
+      CustomerService.getCustomerDriverLicense(user.idCustomer).then(
+        (response) => {
+          console.log(response.idCustomer);
+          setLicenseNumber(response.idCustomer);
+        },
+        (error)=>{
+          console.log(error);
+        }
+      )
+    }
+    const fetchStatus = () =>{
+      CustomerService.getLicenseVerificationStatus(user.idCustomer).then(
+        (response) => {
+          console.log(response);
+          setStatus(response.status);
+        },
+        (error)=>{
+          console.log(error);
+        }
+      )
+    }
 
     useEffect(()=>{
-      CustomerService.getCustomerDriverLicense(user.idCustomer).then(
-        (response) => {
-          console.log(response.idCustomer);
-          setLicenseNumber(response.idCustomer);
-        },
-        (error)=>{
-          console.log(error);
-        }
-      )
-    })
-    useEffect(()=>{
-      CustomerService.getCustomerDriverLicense(user.idCustomer).then(
-        (response) => {
-          console.log(response.idCustomer);
-          setLicenseNumber(response.idCustomer);
-        },
-        (error)=>{
-          console.log(error);
-        }
-      )
-    }, [licenseModalOpen])
+      fetchLicense();
+      fetchStatus();
+    }, [])
 
   return (
     <div className="container">
@@ -67,6 +73,8 @@ const UserDrivingLicense = () => {
                       <li><strong>Address: </strong>{user.address}</li>
                       <li><strong>City: </strong>{user.city}</li>
                       <li><strong>Country: </strong>{user.country}</li>
+                      <li style={status ? {color: "green"} : { color: "red" }} ><strong>Status:</strong> {status ? "VERIFIED": "NOT VERIFIED"}</li>
+
                   </ul>
                     {!licenseNumber && 
                       <Button variant="contained" color="primary" onClick={()=>{
