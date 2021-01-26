@@ -78,7 +78,9 @@ const SingleVehiclePage = () => {
       .catch((err) => {
         console.log(err);
       })
-      fetchStatus();
+      if(user !== null){
+        fetchStatus();
+      }
   }, [])
 
   function filterDates(date) {
@@ -222,7 +224,7 @@ const SingleVehiclePage = () => {
 
         </div>
       </div>
-      {user.roles.includes("ROLE_USER") && resPrice>0 && status && (
+      {user !== null && user.roles.includes("ROLE_USER") && resPrice>0 && status && (
         <div className="row" style={{margin:0}}>
         <Button style={{ marginLeft: "auto", marginTop:"20px" }} variant="contained" color="primary" onClick={handleAddToCart}>
           Add to Cart
