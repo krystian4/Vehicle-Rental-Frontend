@@ -1,9 +1,10 @@
 # Vehicle-Rental-Backend
-Vehicle-Rental - a web application that is designed to support the work of the vehicle rental company. It enables employees to manage rental resources faster, and customers - convenient and easy access to offers. Its backend was made in Java Spring Boot, and its frontend in React.js. It was a final application for the design part of subjects related to databases, programming engineering, object-oriented technologies and programming in JAVA at my university - it was made in cooperation with [PawelPabianczyk](https://github.com/PawelPabianczyk) ([backend](https://github.com/PawelPabianczyk/Vehicle-Rental-Backend)).
+Vehicle-Rental - a web application that is designed to support the work of the vehicle rental company. It enables employees to manage rental resources faster, and customers - convenient and easy access to offers. Its backend was made in Java Spring Boot, and its frontend in React.js. It was made in cooperation with [PawelPabianczyk](https://github.com/PawelPabianczyk) ([backend](https://github.com/PawelPabianczyk/Vehicle-Rental-Backend)).
 
 ### Built With
 * [React.js](https://reactjs.org/)
 * [Material-UI](https://material-ui.com/)
+* [Bootstrap](https://getbootstrap.com/)
 
 ### Tools Used
 * [Visual Studio Code](https://code.visualstudio.com/)
