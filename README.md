@@ -9,7 +9,8 @@ Vehicle-Rental - a web application that is designed to support the work of the v
 ### Tools Used
 * [Visual Studio Code](https://code.visualstudio.com/)
 
-### [Screenschots](https://github.com/krystian4/Vehicle-Rental-Frontend/tree/main/application_screens)
+### Screenschots
+* [Look here](https://github.com/krystian4/Vehicle-Rental-Frontend/tree/main/application_screens)
 
 # Getting Started with Create React App
 
