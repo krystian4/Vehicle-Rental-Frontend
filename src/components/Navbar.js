@@ -4,10 +4,11 @@ import AuthService from "../services/auth.service";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import IconButton from '@material-ui/core/IconButton';
 import { grey } from '@material-ui/core/colors';
-
+import { useTranslation } from 'react-i18next';
 
 
 const Navbar = () =>{
+  const { t, i18n } = useTranslation('navbar');
   const [showEmployeeBoard, setShowEmployeeBoard] = useState(false);
   const [showManagerBoard, setShowManagerBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -42,7 +43,7 @@ const Navbar = () =>{
             <ul className="navbar-nav mr-auto">
             <li className="nav-item">
                 <Link to={"/home"} className="nav-link">
-                Home
+                {t('home-button')}
                 </Link>
             </li>
 
