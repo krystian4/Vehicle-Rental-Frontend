@@ -6,8 +6,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import EmpService from "../../services/employee.service";
+import { useTranslation } from 'react-i18next';
 
 export default function VerifyLicenseDialog (props){
+  const { t } = useTranslation('navbar');
 
   const handleVerify = () => {
     console.log("Verified order: " + props.orderId);
@@ -33,15 +35,15 @@ export default function VerifyLicenseDialog (props){
         <DialogTitle id="alert-dialog-title">{"Verification"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Payment finished? {props.licenseNumber}
+          {t('payment-finished')}? {props.licenseNumber}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleVerify} color="primary">
-            Accept
+          {t('accept')}
           </Button>
           <Button onClick={handleClose} color="primary" autoFocus>
-            Cancel
+          {t('cancel')}
           </Button>
         </DialogActions>
       </Dialog>

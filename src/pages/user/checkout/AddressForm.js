@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import AuthService from "../../../services/auth.service"
 import { withStyles } from "@material-ui/core/styles";
+import { useTranslation } from 'react-i18next';
 
 const DarkerDisabledTextField = withStyles({
   root: {
@@ -15,11 +16,13 @@ const DarkerDisabledTextField = withStyles({
 })(TextField);
 
 export default function AddressForm() {
+  const { t } = useTranslation('navbar');
+
   const user = AuthService.getCurrentUser();
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
-        Your address
+      {t('your-address')}
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
@@ -28,7 +31,7 @@ export default function AddressForm() {
             value={user.firstName}
             id="firstName"
             name="firstName"
-            label="First name"
+            label={t('name')}
             fullWidth
           />
         </Grid>
@@ -38,7 +41,7 @@ export default function AddressForm() {
             value={user.lastName}
             id="lastName"
             name="lastName"
-            label="Last name"
+            label={t('last-name')}
             fullWidth
           />
         </Grid>
@@ -48,7 +51,7 @@ export default function AddressForm() {
             value={user.address}
             id="address"
             name="address"
-            label="Address line 1"
+            label={t('adress')}
             fullWidth
             autoComplete="shipping address-line1"
           />
@@ -59,7 +62,7 @@ export default function AddressForm() {
             value={user.city}
             id="city"
             name="city"
-            label="City"
+            label={t('city')}
             fullWidth
             autoComplete="shipping address-level2"
           />
@@ -71,7 +74,7 @@ export default function AddressForm() {
             value={user.country}
             id="country"
             name="country"
-            label="Country"
+            label={t('country')}
             fullWidth
             autoComplete="shipping country"
           />

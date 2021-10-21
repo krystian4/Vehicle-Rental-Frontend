@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import AddNewInsModal from "./AddNewInsModal";
 import { format } from "date-fns";
+import { useTranslation } from 'react-i18next';
 
 import EmpService from "../../services/employee.service";
 
@@ -20,6 +21,8 @@ const useStyles = makeStyles({
   });
 
 const CarFeeList = () => {
+  const { t } = useTranslation('navbar');
+
     const classes = useStyles();
     const [isInsurancesList, setIsInsurancesList] = useState(true);
     const [insurances, setInsurances] = useState([]);
@@ -89,7 +92,7 @@ const CarFeeList = () => {
     return (
         <div className="container">
           <header className="jumbotron">
-            <h3>Vehicle fees</h3>
+            <h3>{t('vehicle-fees')}</h3>
           </header> 
           {addModalOpen && (
             <AddNewInsModal
@@ -103,11 +106,11 @@ const CarFeeList = () => {
 
           <div style={{paddingBottom:"0.5rem"}}>
             <Button variant="contained" color="primary" onClick={handleListChange}>
-              {isInsurancesList ? "Show Inspections" : "Show Insurances"}
+              {isInsurancesList ?  t('show-inspections') : t('show-insurances')}
             </Button>
 
             <Button style={{marginLeft:"5px" }} variant="contained" color="primary" onClick={handleAddModal}>
-              {isInsurancesList ? "Add new insurance" : "Add new inspection"}
+              {isInsurancesList ? t('add-insurance') : t('add-inspection')}
             </Button>
           </div>
     
@@ -115,13 +118,13 @@ const CarFeeList = () => {
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Vehicle ID</TableCell>
-                <TableCell align="center">Brand</TableCell>
+                <TableCell>{t('vehicleid')}</TableCell>
+                <TableCell align="center">{t('brand')}</TableCell>
                 <TableCell align="center">Model</TableCell>
-                <TableCell align="center">Production country</TableCell>
-                <TableCell align="center">Purchase Date</TableCell>
-                <TableCell align="center" >Expiration Date</TableCell>
-                <TableCell align="right">Price</TableCell>
+                <TableCell align="center">{t('prod-country')}</TableCell>
+                <TableCell align="center">{t('purchase-date')}</TableCell>
+                <TableCell align="center" >{t('exp-date')}</TableCell>
+                <TableCell align="right">{t('price')}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

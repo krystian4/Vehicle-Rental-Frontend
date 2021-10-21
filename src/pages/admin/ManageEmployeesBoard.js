@@ -15,6 +15,7 @@ import Button from '@material-ui/core/Button';
 import DeleteUserDialog from './DeleteUserDialog';
 import AddNewUserModal from './AddNewUserModal';
 import EditEmployeeModal from './EditEmployeeModal';
+import { useTranslation } from 'react-i18next';
 
 import UserService from "../../services/user.service"
 
@@ -25,13 +26,15 @@ const useStyles = makeStyles({
   });
 
   const ManageUsersBoard = () => {
+  const { t } = useTranslation('navbar');
     const classes = useStyles();
     
     const [users, setUsers] = useState([])
     const [user, setUser] = useState("")
     
     const [loading, setLoading]= useState(true)
-    const [message, setMessage] = useState("No users here")
+    let msg = t('no-users-here');
+    const [message, setMessage] = useState(msg);
     const [userId, setUserId] = useState("");
 
     const [addUserModalOpen, setAddUserModalOpen] = useState(false);
@@ -75,6 +78,15 @@ const useStyles = makeStyles({
         <header className="jumbotron">
             <h2>{message}</h2>
         </header>
+        <AddNewUserModal
+          setOpen={setAddUserModalOpen}
+          open={addUserModalOpen}
+      />
+        <div style={{paddingBottom:"0.5rem"}}>
+        <Button variant="contained" color="primary" onClick={()=>setAddUserModalOpen(true)}>
+        {t('add-employee')}
+        </Button>
+      </div>
         </div>
     )
 }
@@ -82,7 +94,7 @@ const useStyles = makeStyles({
   return (
     <div className="container">
       <header className="jumbotron">
-        <h3>Employees</h3>
+        <h3>{t('employees')}</h3>
       </header>
 
       <DeleteUserDialog
@@ -107,7 +119,7 @@ const useStyles = makeStyles({
 
       <div style={{paddingBottom:"0.5rem"}}>
         <Button variant="contained" color="primary" onClick={()=>setAddUserModalOpen(true)}>
-          Add Employee
+        {t('add-employee')}
         </Button>
       </div>
 
@@ -116,14 +128,14 @@ const useStyles = makeStyles({
         <TableHead>
           <TableRow>
             <TableCell>ID</TableCell>
-            <TableCell align="right">employeeId</TableCell>
-            <TableCell align="right">First Name</TableCell>
-            <TableCell align="right">Last Name</TableCell>
+            <TableCell align="right">{t('employeeID')}</TableCell>
+            <TableCell align="right">{t('name')}</TableCell>
+            <TableCell align="right">{t('last-name')}</TableCell>
             <TableCell align="right">E-mail</TableCell>
-            <TableCell align="right">Position</TableCell>
-            <TableCell align="right">Salary</TableCell>
+            <TableCell align="right">{t('position')}</TableCell>
+            <TableCell align="right">{t('salary')}</TableCell>
             <TableCell align="right">Bonus</TableCell>
-            <TableCell align="center">Action</TableCell>
+            <TableCell align="center">{t('action')}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

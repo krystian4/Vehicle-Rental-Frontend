@@ -10,8 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import VehicleService from "../../services/vehicle.service";
 import { format } from "date-fns";
-
-
+import { useTranslation } from 'react-i18next';
 
 function getModalStyle() {
     const top = 50;
@@ -46,6 +45,7 @@ formControl: {
 }));
 
 const EditVehicleModal = (props) => {
+    const { t } = useTranslation('navbar');
     const vehicleId = props.vehicleId;
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
@@ -75,9 +75,9 @@ const modalBody = (
                 <TableHead>
                     <TableRow>
                         <TableCell>ID</TableCell>
-                        <TableCell align="right">Start Date</TableCell>
-                        <TableCell align="right">End Date</TableCell>
-                        <TableCell align="right">Price</TableCell>
+                        <TableCell align="right">{t('start-date')}</TableCell>
+                        <TableCell align="right">{t('end-date')}</TableCell>
+                        <TableCell align="right">{t('price')}</TableCell>
                     </TableRow>
                 </TableHead>
 

@@ -9,9 +9,11 @@ import UserService from "../services/user.service";
 import Button from '@material-ui/core/Button';
 import { Divider, Avatar, Grid, Paper } from "@material-ui/core";
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import { useTranslation } from 'react-i18next';
 
 
 const VehicleComments = (props) => {
+    const { t } = useTranslation('navbar');
     const [comments, setComments] = useState([]);
     const [userComment, setUserComment] = useState("");
     const user = AuthService.getCurrentUser();
@@ -53,16 +55,16 @@ const VehicleComments = (props) => {
 
     return (
         <div>
-            <h1>Comments</h1>
+            <h1>{t('comments')}</h1>
             <br />
             <Paper justify="space-between" style={{ padding: "10px 20px 40px 20px" }}>
 
             {user !== null && (
                 <div>
-                <h5>Add your comment</h5>
+                <h5>{t('add-your-comment')}</h5>
                 <TextareaAutosize onChange={handleComment} style={{ width: "100%", paddingLeft: "5px" }} rowsMin="5" />
                 <Button style={{float:"right"}} variant="contained" color="primary" onClick={handlePostComment} >
-                    Post comment
+                {t('add-comment')}
                 </Button>
                 </div>
             )}
@@ -79,7 +81,7 @@ const VehicleComments = (props) => {
                                     {comment.message}
                                 </p>
                                 <p style={{ fontSize: "small", textAlign: "right", color: "gray" }}>
-                                    posted {format(new Date(comment.date), "yyyy-MM-dd, HH:mm:ss")}
+                                {t('posted')} {format(new Date(comment.date), "yyyy-MM-dd, HH:mm:ss")}
                                  </p>
                             </Grid>
                         </Grid>

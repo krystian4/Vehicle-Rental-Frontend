@@ -11,6 +11,7 @@ import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
 import CustomerService from "../../../services/customer.service";
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -49,12 +50,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
 const card = {cash:false, cardName:"", cardNumber:"", expDate:"", cvv:""};
 
 export default function Checkout() {
+  const { t } = useTranslation('navbar');
+
   const classes = useStyles();
   const [info, setInfo] = useState("");
+  const steps = [t('shipping-address'), t('payment-details'), t('review-order')];
 
     function getStepContent(step) {
         switch (step) {
@@ -106,7 +109,7 @@ export default function Checkout() {
       <main className={classes.layout}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="center">
-            Checkout
+          {t('checkout')}
           </Typography>
           <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map((label) => (
@@ -119,7 +122,7 @@ export default function Checkout() {
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
+                {t('thank-you-for-order')}
                 </Typography>
               </React.Fragment>
             ) : (
@@ -128,7 +131,7 @@ export default function Checkout() {
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>
-                      Back
+                      {t('back')}
                     </Button>
                   )}
                   <Button
@@ -137,7 +140,7 @@ export default function Checkout() {
                     onClick={handleNext}
                     className={classes.button}
                   >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                    {activeStep === steps.length - 1 ? t('place-order') : t('next')}
                   </Button>
                 </div>
               </React.Fragment>

@@ -17,6 +17,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Loading from "../../components/Loading";
 import VehicleService from "../../services/vehicle.service";
 import EditVehicleModal from "./EditVehicleModal";
+import { useTranslation } from 'react-i18next';
 
 
 const useRowStyles = makeStyles({
@@ -28,6 +29,8 @@ const useRowStyles = makeStyles({
   });
   
   function Row(props) {
+  const { t } = useTranslation('navbar');
+
     const { vehicle } = props;
     const [open, setOpen] = useState(false);
     const classes = useRowStyles();
@@ -44,16 +47,16 @@ const useRowStyles = makeStyles({
             <strong>ID: </strong>{vehicle.id}
           </TableCell>
           <TableCell align="left" >
-            <strong>Brand: </strong>{vehicle.brand}
+            <strong>{t('brand')}: </strong>{vehicle.brand}
           </TableCell>
           <TableCell align="left"  >
             <strong>Model: </strong>{vehicle.model}
           </TableCell>
           <TableCell align="left" >
-          <strong>Category: </strong>{vehicle.category}
+          <strong>{t('category')}: </strong>{vehicle.category}
           </TableCell>
           <TableCell align="right" >
-          <strong>Price: </strong>{vehicle.price}PLN
+          <strong>{t('price')}: </strong>{vehicle.price}PLN
           </TableCell>
           <TableCell style={{  padding: 0 }} align="right">
                 <IconButton aria-label="edit" className={classes.margin} onClick={()=>{
@@ -76,17 +79,17 @@ const useRowStyles = makeStyles({
                 <Table size="small" aria-label="purchases">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Details</TableCell>
+                      <TableCell>{t('details')}</TableCell>
                     </TableRow>
                   </TableHead>
   
                   <TableBody>
                     <TableRow>
                             <TableCell style={{borderBottom:"unset"}} align="left"><img style={{width:"10rem"}} src={vehicle.pictureUrl} alt="Vehicle" title={vehicle.pictureUrl} /></TableCell>
-                            <TableCell style={{borderBottom:"unset"}} align="left"><strong>Production country:</strong><br />{vehicle.country}</TableCell>
-                            <TableCell style={{borderBottom:"unset"}} align="left"><strong>Production year:</strong><br />{vehicle.yearOfProduction}</TableCell>
-                            <TableCell style={{borderBottom:"unset"}} align="left"><strong>Power:</strong><br />{vehicle.power}HP</TableCell>
-                            <TableCell style={{borderBottom:"unset"}} align="right"><strong>Description:</strong><br /> {vehicle.description}</TableCell>
+                            <TableCell style={{borderBottom:"unset"}} align="left"><strong>{t('prod-country')}:</strong><br />{vehicle.country}</TableCell>
+                            <TableCell style={{borderBottom:"unset"}} align="left"><strong>{t('prod-year')}:</strong><br />{vehicle.yearOfProduction}</TableCell>
+                            <TableCell style={{borderBottom:"unset"}} align="left"><strong>{t('power')}:</strong><br />{vehicle.power}HP</TableCell>
+                            <TableCell style={{borderBottom:"unset"}} align="right"><strong>{t('description')}:</strong><br /> {vehicle.description}</TableCell>
                     </TableRow>
                   </TableBody>
                 </Table>
@@ -100,9 +103,11 @@ const useRowStyles = makeStyles({
   }
 
   const ManageVehicleBoard = () => {
+  const { t } = useTranslation('navbar');
+
     const [vehicles, setVehicles] = useState([])
     const [loading, setLoading]= useState(true)
-    const [message, setMessage] = useState("No FAQs here")
+    const [message, setMessage] = useState(t('no-vehicles'))
     const [vehicle, setVehicle] = useState(null);
 
     //const [dialogOpen, setDialogOpen] = useState(false);
@@ -167,7 +172,7 @@ const useRowStyles = makeStyles({
       )} 
 
       <header className="jumbotron">
-        <h3>Edit Vehicles</h3>
+        <h3>{t('edit-vehicle')}</h3>
       </header>
 
       <TableContainer component={Paper}>

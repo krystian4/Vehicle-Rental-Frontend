@@ -11,6 +11,8 @@ import UserService from "../../services/user.service";
 import PasswordResetModal from "../../components/PasswordResetModal";
 import Button from '@material-ui/core/Button';
 import { parseISO } from 'date-fns';
+import { useTranslation } from 'react-i18next';
+
 
 
 const required = (value) => {
@@ -87,6 +89,7 @@ function getModalStyle() {
   }));
 
 export default function EditUserModal (props){
+  const { t } = useTranslation('navbar');
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
     console.log("Editing: " + props.user.username + "Brithdate: " + props.user.birthdate + "ID: " + props.user.id);
@@ -187,7 +190,7 @@ export default function EditUserModal (props){
             {!successful && (
                 <div>
                 <div className="form-group">
-                    <label htmlFor="username">Username</label>
+                    <label htmlFor="username">{t('username')}</label>
                     <Input
                     type="text"
                     className="form-control"
@@ -211,7 +214,7 @@ export default function EditUserModal (props){
                 </div>
                 <div style={{paddingBottom:"0.5rem"}}>
                   <Button variant="contained" color="primary" onClick={()=>setChangePasswordModalOpen(true)}>
-                    Change password
+                  {t('change-password')}
                   </Button>
                 </div>
 
@@ -219,7 +222,7 @@ export default function EditUserModal (props){
 
 
                 <div className="form-group">
-                    <label htmlFor="name">Name</label>
+                    <label htmlFor="name">{t('name')}</label>
                     <Input
                     type="text"
                     className="form-control"
@@ -231,7 +234,7 @@ export default function EditUserModal (props){
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="lastname">Last Name</label>
+                    <label htmlFor="lastname">{t('last-name')}</label>
                     <Input
                     type="text"
                     className="form-control"
@@ -243,7 +246,7 @@ export default function EditUserModal (props){
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="address">Address</label>
+                    <label htmlFor="address">{t('adress')}</label>
                     <Input
                     type="text"
                     className="form-control"
@@ -255,7 +258,7 @@ export default function EditUserModal (props){
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="city">City</label>
+                    <label htmlFor="city">{t('city')}</label>
                     <Input
                     type="text"
                     className="form-control"
@@ -267,7 +270,7 @@ export default function EditUserModal (props){
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="phone">Phone Number</label>
+                    <label htmlFor="phone">{t('phone-number')}</label>
                     <Input
                     type="text"
                     className="form-control"
@@ -279,7 +282,7 @@ export default function EditUserModal (props){
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="country">Country</label>
+                  <label htmlFor="country">{t('country')}</label>
                   <div>
                       <CountryDropdown 
                           className="form-control"
@@ -291,12 +294,12 @@ export default function EditUserModal (props){
                 </div>
 
                 <div className="form-group">
-                    <label style={{ marginRight: "5px" }}htmlFor="birthDate">Birth date:</label>
+                    <label style={{ marginRight: "5px" }}htmlFor="birthDate">{t('birth-date')}:</label>
                     <DatePicker  dateFormat="yyyy-MM-dd" className="form-control" selected={birthDate} onChange={date => setBirthDate(date)} />
                 </div>
 
                 <div className="form-group">
-                    <button className="btn btn-primary btn-block">Edit</button>
+                    <button className="btn btn-primary btn-block">{t('edit')}</button>
                 </div>
 
 

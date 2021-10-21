@@ -13,6 +13,7 @@ import Collapse from '@material-ui/core/Collapse';
 import VehicleService from '../../services/vehicle.service';
 import Checkbox from '@material-ui/core/Checkbox';
 import EmpService from '../../services/employee.service';
+import { useTranslation } from 'react-i18next';
 
 function getModalStyle() {
     const top = 50;
@@ -51,6 +52,7 @@ function getModalStyle() {
   }));
 
 export default function AddNewFAQModal (props){
+    const { t } = useTranslation('navbar');
     const classes = useStyles();
     const listClasses = listStyles();
     const [modalStyle] = React.useState(getModalStyle);
@@ -147,17 +149,17 @@ export default function AddNewFAQModal (props){
     
       const modalBody = (
         <div style={modalStyle} className={classes.paper}>
-          <h2 id="simple-modal-title">Add new offer</h2>
+          <h2 id="simple-modal-title">{t('add-new-offer')}</h2>
           <form className={classes.root} noValidate autoComplete="off">
 
-          <TextField id="standard-basic" style={{minWidth:"450px", marginBottom:"15px"}} label="Description" onChange={onChangeDesc} error={errorDesc}/>
-          <TextField id="standard-basic" style={{minWidth:"100px", marginBottom:"15px"}} label="Discount %" onChange={onChangeDiscount} type="number" error={errorDiscount}/>
+          <TextField id="standard-basic" style={{minWidth:"450px", marginBottom:"15px"}} label={t('description')} onChange={onChangeDesc} error={errorDesc}/>
+          <TextField id="standard-basic" style={{minWidth:"100px", marginBottom:"15px"}} label={t('discount')} onChange={onChangeDiscount} type="number" error={errorDiscount}/>
 
             {/* VEHICLES LIST */}
             <List className={listClasses.root} style={{marginBottom:"15px"}}>
 
                       <ListItem button onClick={handleClick}>
-                          <ListItemText primary="Vehicles" />
+                          <ListItemText primary={t('vehicles-button')} />
                           {open ? <ExpandLess /> : <ExpandMore />}
                       </ListItem>
 
@@ -189,7 +191,7 @@ export default function AddNewFAQModal (props){
             </List>
 
           <Button variant="contained" color="primary" onClick={handleAddOffer}>
-            Add Offer
+          {t('add-offer')}
           </Button>
         </form>
           

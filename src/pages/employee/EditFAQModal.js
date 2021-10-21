@@ -5,6 +5,7 @@ import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 import AuthService from '../../services/auth.service';
 import FaqService from "../../services/faq.service";
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -32,6 +33,8 @@ function getModalStyle() {
 
 
 export default function EditFAQModal (props){
+  const { t } = useTranslation('navbar');
+
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
     const [fieldError, setFieldError] = React.useState(false);
@@ -58,12 +61,12 @@ export default function EditFAQModal (props){
     const handleEditFAQ = () =>{
         if(question === ""){
             setFieldError(true);
-            setHelpText("Field can't be empty!");
+            setHelpText(t('field-cant-be-empty'));
         }
         else setFieldError(false);
         if(answer === ""){
             setFieldError2(true);
-            setHelpText2("Field can't be empty!");
+            setHelpText2(t('field-cant-be-empty'));
         }
         else setFieldError2(false);
 
@@ -99,12 +102,12 @@ export default function EditFAQModal (props){
     
       const modalBody = (
         <div style={modalStyle} className={classes.paper}>
-          <h2 id="simple-modal-title">Edit FAQ</h2>
+          <h2 id="simple-modal-title">{t('edit-faq')}</h2>
         <form className={classes.root} noValidate autoComplete="off">
-          <TextField error={fieldError} helperText={helpText} id="standard-basic" style={{minWidth:"500px"}} label="Question" onChange={onChangeQuestion} defaultValue={faq.question} />
-          <TextField error={fieldError2} helperText={helpText2} id="standard-basic" style={{minWidth:"500px"}} label="Answer" onChange={onChangeAnswer} defaultValue={faq.answer}/> <br /><br />
+          <TextField error={fieldError} helperText={helpText} id="standard-basic" style={{minWidth:"500px"}} label={t('question')} onChange={onChangeQuestion} defaultValue={faq.question} />
+          <TextField error={fieldError2} helperText={helpText2} id="standard-basic" style={{minWidth:"500px"}} label={t('answer')} onChange={onChangeAnswer} defaultValue={faq.answer}/> <br /><br />
           <Button variant="contained" color="primary" onClick={() => handleEditFAQ()}>
-            Edit
+          {t('edit')}
           </Button>
         </form>
           

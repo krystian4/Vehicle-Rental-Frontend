@@ -18,6 +18,7 @@ import AuthService from "../../services/auth.service";
 import { format } from "date-fns";
 import ErrorIcon from '@material-ui/icons/Error';
 import AddComplaintModal from "./AddComplaintModal";
+import { useTranslation } from 'react-i18next';
 
 
 const useRowStyles = makeStyles({
@@ -29,6 +30,7 @@ const useRowStyles = makeStyles({
   });
   
   function Row(props) {
+    const { t } = useTranslation('navbar');
     const { order } = props;
     const [open, setOpen] = useState(false);
     const classes = useRowStyles();
@@ -48,10 +50,10 @@ const useRowStyles = makeStyles({
             <strong>ID: </strong>{order.id}
           </TableCell>
           <TableCell align="left" >
-            <strong>Order Date: </strong>{format(new Date(order.date), "yyyy-MM-dd")}
+            <strong>{t('order-date')}: </strong>{format(new Date(order.date), "yyyy-MM-dd")}
           </TableCell>
           <TableCell align="right" >
-          <strong>Total Cost: </strong>{order.cost.toFixed(2)}PLN
+          <strong>{t('total-cost')}: </strong>{order.cost.toFixed(2)}PLN
           </TableCell>
         </TableRow>
 
@@ -63,8 +65,8 @@ const useRowStyles = makeStyles({
                 <TableHead>
                   <TableRow >
                     <TableCell style={{borderBottom: '1px solid black'}}>Pos.</TableCell>
-                      <TableCell colSpan={4} style={{borderBottom: '1px solid black'}}>Details</TableCell>
-                      <TableCell style={{borderBottom: '1px solid black'}} align="right">Complaint</TableCell>
+                      <TableCell colSpan={4} style={{borderBottom: '1px solid black'}}>{t('details')}</TableCell>
+                      <TableCell style={{borderBottom: '1px solid black'}} align="right">{t('complaint')}</TableCell>
                     </TableRow>
                   </TableHead>
   
@@ -73,12 +75,12 @@ const useRowStyles = makeStyles({
                       <TableRow >
                             {/* <TableCell style={{borderBottom:"unset"}} align="left"><img style={{width:"10rem"}} src={vehicle.pictureUrl} alt="Vehicle" title={vehicle.pictureUrl} /></TableCell> */}
                             <TableCell style={{borderBottom:"unset"}} align="left"><strong>{index+1}</strong></TableCell>
-                            <TableCell style={{borderBottom:"unset"}} align="left"><strong>Brand:</strong><br />{rental.brand}</TableCell>
+                            <TableCell style={{borderBottom:"unset"}} align="left"><strong>{t('brand')}:</strong><br />{rental.brand}</TableCell>
                             <TableCell style={{borderBottom:"unset"}} align="left"><strong>Model:</strong><br />{rental.model}</TableCell>
-                            <TableCell style={{borderBottom:"unset"}} align="left"><strong>Period:</strong><br />{rental.startDate} - {rental.endDate}</TableCell>
+                            <TableCell style={{borderBottom:"unset"}} align="left"><strong>{t('period')}:</strong><br />{rental.startDate} - {rental.endDate}</TableCell>
                             
 
-                            <TableCell style={{borderBottom:"unset"}} align="right"><strong>Cost:</strong><br /> {rental.resPrice.toFixed(2)}</TableCell>
+                            <TableCell style={{borderBottom:"unset"}} align="right"><strong>{t('cost')}:</strong><br /> {rental.resPrice.toFixed(2)}</TableCell>
                             <TableCell style={{borderBottom:"unset", width:"50px"}} align="right">
                               <IconButton onClick={()=> {
                                 props.setAddComplaintModelOpen(true);
@@ -103,9 +105,10 @@ const useRowStyles = makeStyles({
   }
 
   const UserOrdersPage = () => {
+    const { t } = useTranslation('navbar');
     const [orders, setOrders] = useState([])
     const [loading, setLoading]= useState(true)
-    const [message, setMessage] = useState("No FAQs here")
+    const [message, setMessage] = useState(t('no-orders'))
     const [vehicle, setVehicle] = useState(null);
     const [addModalOpen, setAddComplaintModelOpen] = useState(false);
     const [rentalId, setRentalId] = useState('');
@@ -167,7 +170,7 @@ const useRowStyles = makeStyles({
 
 
       <header className="jumbotron">
-        <h3>Your orders</h3>
+        <h3>{t('your-orders')}</h3>
       </header>
 
       <TableContainer component={Paper}>

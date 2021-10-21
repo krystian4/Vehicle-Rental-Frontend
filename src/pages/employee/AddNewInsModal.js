@@ -10,6 +10,7 @@ import { format } from "date-fns";
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 import EmpService from "../../services/employee.service";
+import { useTranslation } from 'react-i18next';
 
 function getModalStyle() {
     const top = 50;
@@ -35,6 +36,7 @@ function getModalStyle() {
 
 
 export default function EditFAQModal (props){
+    const { t } = useTranslation('navbar');
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
 
@@ -95,14 +97,14 @@ export default function EditFAQModal (props){
     
       const modalBody = (
         <div style={modalStyle} className={classes.paper}>
-          <h2 id="simple-modal-title">{props.isInsurancesList ? "Add new Insurance" : "Add new Inspection"}</h2>
+          <h2 id="simple-modal-title">{props.isInsurancesList ? t('add-insurance') : t('add-inspection')}</h2>
         <form className={classes.root} autoComplete="off">
         <Grid container spacing={3}>
             <Grid item xs={12}>
-            <TextField type="number" label="Vehicle ID" onChange={onChangeId} />
+            <TextField type="number" label={t('vehicleid')} onChange={onChangeId} />
         </Grid>
             <Grid item xs={12} sm={2}>
-                <label style={{paddingTop:"8px"}} htmlFor="price">Price: </label>
+                <label style={{paddingTop:"8px"}} htmlFor="price">{t('price')}: </label>
             </Grid>
 
             <Grid item xs={12} sm={10}>
@@ -118,7 +120,7 @@ export default function EditFAQModal (props){
             </Grid>
 
             <Grid item xs={12} sm={4}>
-                <label style={{paddingTop:"8px"}} htmlFor="price">Purchase Date: </label>
+                <label style={{paddingTop:"8px"}} htmlFor="price">{t('purchase-date')}: </label>
             </Grid>
             <Grid item xs={12} sm={8}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -133,7 +135,7 @@ export default function EditFAQModal (props){
             </Grid>
 
             <Grid item xs={12} sm={4}>
-                <label style={{paddingTop:"8px"}} htmlFor="price">Expiration Date: </label>
+                <label style={{paddingTop:"8px"}} htmlFor="price">{t('exp-date')}: </label>
             </Grid>
              
             <Grid item xs={12} sm={8}>
@@ -152,7 +154,7 @@ export default function EditFAQModal (props){
 
             <Grid item xs={12}>
                 <Button variant="contained" color="primary" onClick={() => handleAdd()}>
-                    Add
+                {t('add')}
                 </Button>
             </Grid>
           </Grid>

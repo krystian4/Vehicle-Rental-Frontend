@@ -14,6 +14,7 @@ import Loading from "../../components/Loading";
 import DeleteUserDialog from './DeleteUserDialog';
 import EditUserModal from './EditUserModal';
 import Button from '@material-ui/core/Button';
+import { useTranslation } from 'react-i18next';
 
 import UserService from "../../services/user.service"
 
@@ -24,6 +25,8 @@ const useStyles = makeStyles({
   });
 
   const ManageUsersBoard = () => {
+  const { t } = useTranslation('navbar');
+
     const classes = useStyles();
     
     const [users, setUsers] = useState([])
@@ -33,7 +36,8 @@ const useStyles = makeStyles({
     const [user, setUser] = useState("")
 
     const [loading, setLoading]= useState(true)
-    const [message, setMessage] = useState("No users here")
+    let msg = t('no-users-here');
+    const [message, setMessage] = useState(msg)
     const [userId, setUserId] = useState("");
 
     const [deleteDialogOpen, setDelDialogOpen] = useState(false);
@@ -95,11 +99,11 @@ const useStyles = makeStyles({
   return (
     <div className="container">
       <header className="jumbotron">
-        <h3>Users</h3>
+        <h3>{t('users-button')}</h3>
       </header>
       <div style={{paddingBottom:"0.5rem"}}>
         <Button variant="contained" color="primary" onClick={()=>handleUsersChange()}>
-          {isCustomersList ? "Show All" : "Show Customers"}
+          {isCustomersList ? t('show-all') : t('show-customers')}
         </Button>
       </div>
       {deleteDialogOpen && (
@@ -124,13 +128,13 @@ const useStyles = makeStyles({
         <TableHead>
           <TableRow>
             <TableCell>ID</TableCell>
-            <TableCell align="right">First Name</TableCell>
-            <TableCell align="right">Last Name</TableCell>
-            <TableCell align="right">Username</TableCell>
+            <TableCell align="right">{t('name')}</TableCell>
+            <TableCell align="right">{t('last-name')}</TableCell>
+            <TableCell align="right">{t('username')}</TableCell>
             <TableCell align="right">E-mail</TableCell>
-            <TableCell align="right">Address</TableCell>
-            <TableCell align="right">City</TableCell>
-            <TableCell align="center">Actions</TableCell>
+            <TableCell align="right">{t('adress')}</TableCell>
+            <TableCell align="right">{t('city')}</TableCell>
+            <TableCell align="center">{t('action')}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

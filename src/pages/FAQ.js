@@ -13,8 +13,8 @@ import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Loading from "../components/Loading";
-
 import FaqService from '../services/faq.service';
+import { useTranslation } from 'react-i18next';
 
 const useRowStyles = makeStyles({
   root: {
@@ -25,6 +25,8 @@ const useRowStyles = makeStyles({
 });
 
 function Row(props) {
+  const { t } = useTranslation('navbar');
+
   const { row } = props;
   const [open, setOpen] = useState(false);
   const classes = useRowStyles();
@@ -39,7 +41,7 @@ function Row(props) {
         </TableCell >
 
         <TableCell align="left" component="th" scope="row">
-          Question:
+        {t('question')}:
         </TableCell>
       </TableRow>
 
@@ -55,7 +57,7 @@ function Row(props) {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Answer</TableCell>
+                    <TableCell>{t('answer')}</TableCell>
                   </TableRow>
                 </TableHead>
 
@@ -75,9 +77,11 @@ function Row(props) {
 }
 
 const FAQ = () => {
-  const [arrayFAQs, setFAQs] = useState([])
-  const [loading, setLoading]= useState(true)
-  const [message, setMessage] = useState("No FAQs here")
+  const { t } = useTranslation('navbar');
+
+  const [arrayFAQs, setFAQs] = useState([]);
+  const [loading, setLoading]= useState(true);
+  const [message, setMessage] = useState(t('no-faq'));
 
   const fetchFaq = () =>{
     FaqService.getFaqs()
@@ -116,7 +120,7 @@ if(arrayFAQs.length === 0){
   return (
     <div className="container">
       <header className="jumbotron">
-        <h2>FAQ</h2>
+        <h2>{t('faq')}</h2>
       </header>
 
       <TableContainer component={Paper}>

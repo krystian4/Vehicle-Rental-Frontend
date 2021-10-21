@@ -2,20 +2,14 @@ import React, { useState, useRef } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
+import { useTranslation } from 'react-i18next';
 
 import AuthService from "../services/auth.service";
 
-const required = (value) => {
-  if (!value) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        This field is required!
-      </div>
-    );
-  }
-};
+
 
 const Login = (props) => {
+  const { t } = useTranslation('navbar');
   const form = useRef();
   const checkBtn = useRef();
 
@@ -24,6 +18,16 @@ const Login = (props) => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
+  const required = (value) => {
+    if (!value) {
+      return (
+        <div className="alert alert-danger" role="alert">
+          {t('field-cant-be-empty')}
+        </div>
+      );
+    }
+  };
+  
   const onChangeUsername = (e) => {
     const username = e.target.value;
     setUsername(username);
@@ -57,7 +61,7 @@ const Login = (props) => {
             error.toString();
 
           setLoading(false);
-          setMessage("Incorrect username or password");
+          setMessage(t('incorrect-username-or-pass'));
         }
       );
     } else {
@@ -76,7 +80,7 @@ const Login = (props) => {
 
         <Form onSubmit={handleLogin} ref={form}>
           <div className="form-group">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="username">{t('username')}</label>
             <Input
               type="text"
               className="form-control"
@@ -88,7 +92,7 @@ const Login = (props) => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">{t('password')}</label>
             <Input
               type="password"
               className="form-control"

@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import UserService from "../../services/user.service";
+import { useTranslation } from 'react-i18next';
 
 
 function getModalStyle() {
@@ -29,9 +30,10 @@ function getModalStyle() {
   }));
 
 export default function AddComplaintModal(props){
+    const { t } = useTranslation('navbar');
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
-    const [helpText, setHelpText] = React.useState("Describe your problem please");
+    const [helpText, setHelpText] = React.useState(t('desc-your-problem'));
 
     const user = JSON.parse(sessionStorage.getItem("user"));
     const [complaint, setComplaint] = useState("");
@@ -43,13 +45,13 @@ export default function AddComplaintModal(props){
 
     const handleAddComplaint = () =>{
         if(complaint === ""){
-            setHelpText("Field can't be empty!");
+            setHelpText(t('field-cant-be-empty'));
             return;
         }
         UserService.addComplaint(props.rentalId, complaint).then(
           (response)=>{
             console.log(response);
-            window.alert("New complaint created");
+            window.alert(t('new-complaint-created'));
           },
           (error)=>{
             console.log(error);
@@ -64,12 +66,12 @@ export default function AddComplaintModal(props){
     
       const modalBody = (
         <div style={modalStyle} className={classes.paper}>
-          <h2 id="simple-modal-title">Create complaint for rental #{props.rentalId}</h2>
+          <h2 id="simple-modal-title">{t('create-complaint-for')} #{props.rentalId}</h2>
           
           <TextareaAutosize placeholder={helpText} id="standard-basic" style={{ width: "100%", paddingLeft: "5px", border:"1px solid black" }} rowsMin="5" onChange={onChangeComplaint}/>
 
           <Button variant="contained" color="primary" onClick={() => handleAddComplaint()}>
-            Make a complain
+          {t('make-a-complaint')}
           </Button>
           
         </div>

@@ -7,6 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
 import { format } from "date-fns";
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -21,6 +22,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Review(props) {
+  const { t } = useTranslation('navbar');
+
   const classes = useStyles();
   const card = props.card;
 
@@ -34,7 +37,7 @@ export default function Review(props) {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
-        Order summary
+      {t('order-summary')}
       </Typography>
       <List disablePadding>
         {cart.map((product, index) => (
@@ -53,21 +56,21 @@ export default function Review(props) {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
-            Our Localization
+          {t('our-localization')}
           </Typography>
           <Typography gutterBottom>VehicleRental</Typography>
-          <Typography gutterBottom>ul. Słoneczna 10</Typography>
+          <Typography gutterBottom>Słoneczna 10</Typography>
           <Typography gutterBottom>Kraków</Typography>
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
-            Payment details
+          {t('payment-details')}
           </Typography>
           
               {card.cash && (
                   <Grid container>
                     <Grid item xs={12}>
-                    <Typography gutterBottom>Paid with cash</Typography>  
+                    <Typography gutterBottom>{t('paid-with-cash')}</Typography>  
                     </Grid>
                   </Grid>
               )}
@@ -75,21 +78,21 @@ export default function Review(props) {
               {!card.cash && (
                 <Grid container>
                     <Grid item xs={6}>
-                    <Typography gutterBottom>Name</Typography>
+                    <Typography gutterBottom>{t('name')}</Typography>
                     </Grid>
                     <Grid item xs={6}>
                     <Typography gutterBottom>{card.cardName}</Typography>
                     </Grid>
 
                     <Grid item xs={6}>
-                    <Typography gutterBottom>Number</Typography>
+                    <Typography gutterBottom>{t('card-number')}</Typography>
                     </Grid>
                     <Grid item xs={6}>
                     <Typography gutterBottom>{card.cardNumber}</Typography>
                     </Grid>
 
                     <Grid item xs={6}>
-                    <Typography gutterBottom>Expiration Date</Typography>
+                    <Typography gutterBottom>{t('exp-date')}</Typography>
                     </Grid>
                     <Grid item xs={6}>
                     <Typography gutterBottom>{card.expDate}</Typography>
@@ -104,7 +107,7 @@ export default function Review(props) {
                 </Grid>
               )}
         </Grid>
-        <Typography variant="h6" gutterBottom className={classes.title}>Additional Informations</Typography>
+        <Typography variant="h6" gutterBottom className={classes.title}>{t('additional-info')}</Typography>
         <TextareaAutosize onChange={handleAddInfChange} style={{width:"100%"}} rowsMin="5" />
       </Grid>
     </React.Fragment>

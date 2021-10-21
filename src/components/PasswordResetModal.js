@@ -5,7 +5,7 @@ import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 import AuthService from '../services/auth.service';
 import UserService from "../services/user.service";
-
+import { useTranslation } from 'react-i18next';
 
 function getModalStyle() {
     const top = 50;
@@ -31,6 +31,7 @@ function getModalStyle() {
 
 
 export default function EditFAQModal (props){
+  const { t } = useTranslation('navbar');
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
     const [fieldError, setFieldError] = React.useState(false);
@@ -40,8 +41,8 @@ export default function EditFAQModal (props){
     const [helpText2, setHelpText2] = React.useState("");
 
     const userId = props.userId;
-    const [password, setPassword] = useState();
-    const [rpassword, setRPassword] = useState();
+    const [password, setPassword] = useState('');
+    const [rpassword, setRPassword] = useState('');
 
     const user = AuthService.getCurrentUser();
         
@@ -57,17 +58,16 @@ export default function EditFAQModal (props){
 
     const handleChangePassword = () =>{
         
-
         if(password === "" || rpassword === ""){
             if(password === ""){
               setFieldError(true);
-              setHelpText("Field can't be empty!");
+              setHelpText(t('field-cant-be-empty'));
             }
             else setFieldError(false);
 
             if(rpassword === ""){
               setFieldError2(true);
-              setHelpText2("Field can't be empty!");
+              setHelpText2(t('field-cant-be-empty'));
             }
             else setFieldError2(false);
 
@@ -76,7 +76,7 @@ export default function EditFAQModal (props){
 
         if(password !== rpassword){
           setFieldError2(true);
-          setHelpText2("Password confirmation failed!");
+          setHelpText2(t('password-confirmation-failed'));
           return;
         }
         //edit with server
@@ -108,12 +108,12 @@ export default function EditFAQModal (props){
     
       const modalBody = (
         <div style={modalStyle} className={classes.paper}>
-          <h2 id="simple-modal-title">Change Password</h2>
+          <h2 id="simple-modal-title">{t('change-password')}</h2>
         <form className={classes.root} noValidate autoComplete="off">
-          <TextField error={fieldError} type="password" helperText={helpText} id="standard-basic" style={{minWidth:"500px"}} label="Password" onChange={onChangePassword} />
-          <TextField error={fieldError2} type="password" helperText={helpText2} id="standard-basic2" style={{minWidth:"500px"}} label="Repeat password" onChange={onChangeRPassword}/> <br /><br />
+          <TextField error={fieldError} type="password" helperText={helpText} id="standard-basic" style={{minWidth:"500px"}} label={t('password')} onChange={onChangePassword} />
+          <TextField error={fieldError2} type="password" helperText={helpText2} id="standard-basic2" style={{minWidth:"500px"}} label={t('repeat-password')} onChange={onChangeRPassword}/> <br /><br />
           <Button variant="contained" color="primary" onClick={() => handleChangePassword()}>
-            Change password
+          {t('change-password')}
           </Button>
         </form>
           

@@ -5,60 +5,12 @@ import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 import { CountryDropdown} from 'react-country-region-selector';
 import DatePicker from "react-datepicker";
+import { useTranslation } from 'react-i18next';
 
 import AuthService from "../services/auth.service";
 
-const required = (value) => {
-  if (!value) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        This field is required!
-      </div>
-    );
-  }
-};
-
-const validEmail = (value) => {
-  if (!isEmail(value)) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        This is not a valid email.
-      </div>
-    );
-  }
-};
-
-const vusername = (value) => {
-  if (value.length < 3 || value.length > 20) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        The username must be between 3 and 20 characters.
-      </div>
-    );
-  }
-};
-
-const vpassword = (value) => {
-  if (value.length < 6 || value.length > 40) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        The password must be between 6 and 40 characters.
-      </div>
-    );
-  }
-};
-
-const rpassword = (value, props, components) => {
-  if(value !== components['password'][0].value) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        The passwords are not the same.
-      </div>
-    );
-  }
-};
-
 const Register = (props) => {
+  const { t } = useTranslation('navbar');
 
   const form = useRef();
   const checkBtn = useRef();
@@ -76,6 +28,54 @@ const Register = (props) => {
 
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
+  const required = (value) => {
+    if (!value) {
+      return (
+        <div className="alert alert-danger" role="alert">
+          {t('field-cant-be-empty')}
+        </div>
+      );
+    }
+  };
+  
+  const validEmail = (value) => {
+    if (!isEmail(value)) {
+      return (
+        <div className="alert alert-danger" role="alert">
+          {t('not-valid-email')}
+        </div>
+      );
+    }
+  };
+  
+  const vusername = (value) => {
+    if (value.length < 3 || value.length > 20) {
+      return (
+        <div className="alert alert-danger" role="alert">
+          {t('user-between-3-and-20')}
+        </div>
+      );
+    }
+  };
+  
+  const vpassword = (value) => {
+    if (value.length < 6 || value.length > 40) {
+      return (
+        <div className="alert alert-danger" role="alert">
+          {t('pass-between-6-and-40')}
+        </div>
+      );
+    }
+  };
+  const rpassword = (value, props, components) => {
+    if(value !== components['password'][0].value) {
+      return (
+        <div className="alert alert-danger" role="alert">
+          {t('pass-not-same')}
+        </div>
+      );
+    }
+  };
 
   const onChangeUsername = (e) => {
     const username = e.target.value;
@@ -159,7 +159,7 @@ const Register = (props) => {
           {!successful && (
             <div>
               <div className="form-group">
-                <label htmlFor="username">Username</label>
+                <label htmlFor="username">{t('username')}</label>
                 <Input
                   type="text"
                   className="form-control"
@@ -183,7 +183,7 @@ const Register = (props) => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">{t('password')}</label>
                 <Input
                   type="password"
                   className="form-control"
@@ -195,7 +195,7 @@ const Register = (props) => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="rpassword">Repeat Password</label>
+                <label htmlFor="rpassword">{t('repeat-password')}</label>
                 <Input
                   type="password"
                   className="form-control"
@@ -205,7 +205,7 @@ const Register = (props) => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="name">Name</label>
+                <label htmlFor="name">{t('name')}</label>
                 <Input
                   type="text"
                   className="form-control"
@@ -217,7 +217,7 @@ const Register = (props) => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="lastname">Last Name</label>
+                <label htmlFor="lastname">{t('last-name')}</label>
                 <Input
                   type="text"
                   className="form-control"
@@ -229,7 +229,7 @@ const Register = (props) => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="address">Address</label>
+                <label htmlFor="address">{t('adress')}</label>
                 <Input
                   type="text"
                   className="form-control"
@@ -241,7 +241,7 @@ const Register = (props) => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="city">City</label>
+                <label htmlFor="city">{t('city')}</label>
                 <Input
                   type="text"
                   className="form-control"
@@ -253,7 +253,7 @@ const Register = (props) => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="phone">Phone Number</label>
+                <label htmlFor="phone">{t('phone-number')}</label>
                 <Input
                   type="text"
                   className="form-control"
@@ -265,7 +265,7 @@ const Register = (props) => {
               </div>
 
               <div className="form-group">
-               <label htmlFor="country">Country</label>
+               <label htmlFor="country">{t('country')}</label>
                <div>
                   <CountryDropdown
                     name="country"
@@ -276,12 +276,12 @@ const Register = (props) => {
               </div>
 
               <div className="form-group">
-                <label style={{ marginRight: "5px" }}htmlFor="birthDate">Birth date:</label>
+                <label style={{ marginRight: "5px" }}htmlFor="birthDate">{t('birth-date')}:</label>
                 <DatePicker  dateFormat="dd/MM/yyyy" className="form-control" selected={birthDate} onChange={date => setBirthDate(date)} />
             </div>
 
               <div className="form-group">
-                <button className="btn btn-primary btn-block">Sign Up</button>
+                <button className="btn btn-primary btn-block">{t('signup')}</button>
               </div>
             </div>
           )}

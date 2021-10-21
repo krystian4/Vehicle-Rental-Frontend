@@ -5,8 +5,10 @@ import UserService from "../services/user.service";
 import Hero from "../components/Hero";
 import Banner from "../components/Banner";
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 const Home = () => {
+  const { t } = useTranslation('navbar');
   const [content, setContent] = useState("");
 
   useEffect(() => {
@@ -30,8 +32,8 @@ const Home = () => {
   return (
     <>
       <Hero> 
-        <Banner title = "Car renting" subtitle = "Vehicles for every occasion!">
-            <Link to="/vehicles" className="home-button">Find vehicle</Link>
+        <Banner title = {t('car-renting')} subtitle = {t('vehicles-for-every-occasion')}>
+            <Link to="/vehicles" className="home-button">{t('find-vehicle')}</Link>
         </Banner>
       </Hero>
     </>

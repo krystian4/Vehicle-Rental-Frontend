@@ -6,8 +6,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import EmpService from "../../services/employee.service";
+import { useTranslation } from 'react-i18next';
 
 export default function RemoveComplainDialog (props){
+  const { t } = useTranslation('navbar');
 
   const handleCloseDelete = () => {
     console.log("Deleted complain id:" + props.complaintId);
@@ -35,18 +37,18 @@ export default function RemoveComplainDialog (props){
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Delete this FAQ?"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{t('delete-complaint')}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Do you want to remove this complaint? You cannot undo this operation!
+          {t('delete-complaint-warning')}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDelete} color="primary">
-            Delete
+          {t('delete')}
           </Button>
           <Button onClick={handleClose} color="primary" autoFocus>
-            Cancel
+          {t('cancel')}
           </Button>
         </DialogActions>
       </Dialog>

@@ -7,6 +7,7 @@ import { CountryDropdown} from 'react-country-region-selector';
 import VehicleService from "../../services/vehicle.service";
 import DatePicker from "react-datepicker";
 import CurrencyInput from 'react-currency-input-field';
+import { useTranslation } from 'react-i18next';
 
 const required = (value) => {
     if (!value) {
@@ -31,6 +32,7 @@ const brandValidator = (value) => {
 
 
 const AddVehicleBoard = () => {
+    const { t } = useTranslation('navbar');
     const form = useRef();
     const checkBtn = useRef();
 
@@ -129,7 +131,7 @@ const AddVehicleBoard = () => {
   return (
     <div className="container" >
       <header className="jumbotron" style={{marginBottom:0 , minWidth:"500px"}}>
-        <h3>Add new Vehicle</h3>
+        <h3>{t('add-new-vehicle')}</h3>
       </header>
       
       <div className="col-md-12">
@@ -137,10 +139,10 @@ const AddVehicleBoard = () => {
         <Form ref={form} onSubmit={handleSubmit}>
             <div className="form-group">
                 <label htmlFor="brand">
-                    Brand:
+                {t('brand')}:
                 </label>
                 <Select className="form-control" name='brand' onChange={onChangeBrand} validations={[brandValidator]}>
-                        <option value=''>Choose brand...</option>
+                        <option value=''>{t('choose-brand')}...</option>
                         <option value='Audi'>Audi</option>
                         <option value='BMW'>BMW</option>
                         <option value='Ferrari'>Ferrari</option>
@@ -152,10 +154,10 @@ const AddVehicleBoard = () => {
 
             <div className="form-group">
                 <label htmlFor="brand">
-                    Brand:
+                {t('category')}:
                 </label>
                 <Select className="form-control" name='brand' onChange={onChangeCategory} validations={[brandValidator]}>
-                        <option value=''>Choose category...</option>
+                        <option value=''>{t('choose-category')}:...</option>
                         <option value='HATCHBACK'>Hatchback</option>
                         <option value='SEDAN'>Sedan</option>
                         <option value='SUV'>SUV</option>
@@ -176,7 +178,7 @@ const AddVehicleBoard = () => {
             </div>
 
             <div className="form-group">
-                <label htmlFor="year">Production Year</label>
+                <label htmlFor="year">{t('prod-year')}</label>
                 <Input
                   type="number"
                   className="form-control w-25"
@@ -188,7 +190,7 @@ const AddVehicleBoard = () => {
             </div>
 
             <div className="form-group">
-               <label htmlFor="country">Country</label>
+               <label htmlFor="country">{t('country')}</label>
                <div>
                   <CountryDropdown
                     className="form-control"
@@ -200,7 +202,7 @@ const AddVehicleBoard = () => {
             </div>
 
             <div className="form-group">
-                <label htmlFor="power">Power</label>
+                <label htmlFor="power">{t('power')}</label>
                 <Input
                   type="number"
                   className="form-control w-25"
@@ -212,7 +214,7 @@ const AddVehicleBoard = () => {
             </div>
 
             <div className="form-group">
-                <label htmlFor="price">Price per Day</label>
+                <label htmlFor="price">{t('price-per-day')}</label>
                 <CurrencyInput
                   className="form-control w-25"
                   name="price"
@@ -224,7 +226,7 @@ const AddVehicleBoard = () => {
             </div>
 
             <div className="form-group">
-                <label htmlFor="description">Description</label>
+                <label htmlFor="description">{t('description')}</label>
                 <textarea
                     className="form-control"
                     name="description"
@@ -233,20 +235,20 @@ const AddVehicleBoard = () => {
                 />
             </div>
 
-
-            <label htmlFor="insurance">INSURANCE</label>
+            <hr />
+            <label htmlFor="insurance">{t('insurance-upper')}</label>
             <div className="form-group">
-                <label style={{ marginRight: "5px" }}htmlFor="insurance">Purchase date:</label>
+                <label style={{ marginRight: "5px" }}htmlFor="insurance">{t('purchase-date')}::</label>
                 <DatePicker  dateFormat="dd/MM/yyyy" className="form-control" selected={inStartDate} onChange={date => setInStartDate(date)} />
             </div>
 
             <div className="form-group">
-                <label style={{ marginRight: "5px" }}htmlFor="insuranceExp">Expiration date:</label>
+                <label style={{ marginRight: "5px" }}htmlFor="insuranceExp">{t('exp-date')}::</label>
                 <DatePicker  dateFormat="dd/MM/yyyy" className="form-control" selected={inExpDate} onChange={date => setInExpDate(date)} />
             </div>
 
             <div className="form-group">
-            <label htmlFor="inPrice">Price</label>
+            <label htmlFor="inPrice">{t('price')}:</label>
             <CurrencyInput
               className="form-control w-25"
               name="inPrice"
@@ -256,20 +258,20 @@ const AddVehicleBoard = () => {
               onChange={(value) => setInPrice(value)}
             />
             </div>
-
-            <label htmlFor="insurance">CAR INSPECTION</label>
+            <hr />
+            <label htmlFor="insurance">{t('car-inspection')}:</label>
             <div className="form-group">
-                <label style={{ marginRight: "5px" }}htmlFor="inspection">Inspection date:</label>
+                <label style={{ marginRight: "5px" }}htmlFor="inspection">{t('inspection-date')}::</label>
                 <DatePicker  dateFormat="dd/MM/yyyy" className="form-control" selected={carInStartDate} onChange={date => setCarInStartDate(date)} />
             </div>
 
             <div className="form-group">
-                <label style={{ marginRight: "5px" }}htmlFor="insuranceExp">Expiration date:</label>
+                <label style={{ marginRight: "5px" }}htmlFor="insuranceExp">{t('exp-date')}::</label>
                 <DatePicker  dateFormat="dd/MM/yyyy" className="form-control" selected={carInExpDate} onChange={date => setCarInExpDate(date)} />
             </div>
 
             <div className="form-group">
-            <label htmlFor="carInPrice">Price</label>
+            <label htmlFor="carInPrice">{t('price')}:</label>
             <CurrencyInput
               className="form-control w-25"
               name="carInPrice"
@@ -281,7 +283,7 @@ const AddVehicleBoard = () => {
             </div>
 
             <div className="form-group">
-                <label htmlFor="picture">Picture url</label>
+                <label htmlFor="picture">{t('pic-url')}:</label>
                 <Input
                   type="text"
                   className="form-control"
@@ -295,7 +297,7 @@ const AddVehicleBoard = () => {
             </div>
 
             <div className="form-group">
-                <button type="submit" className="btn btn-primary btn-block">Add new vehicle</button>
+                <button type="submit" className="btn btn-primary btn-block">{t('add-new-vehicle')}:</button>
             </div>
 
             {message && (

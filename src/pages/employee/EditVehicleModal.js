@@ -9,6 +9,7 @@ import DatePicker from "react-datepicker";
 import CurrencyInput from 'react-currency-input-field';
 import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
+import { useTranslation } from 'react-i18next';
 
 
 const required = (value) => {
@@ -65,6 +66,7 @@ function getModalStyle() {
   }));
 
 const EditVehicleModal = (props) => {
+    const { t } = useTranslation('navbar');
     const vehicle = props.vehicle;
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
@@ -150,10 +152,10 @@ const EditVehicleModal = (props) => {
         <Form ref={form} onSubmit={handleSubmit}>
             <div className="form-group">
                 <label htmlFor="brand">
-                    Brand:
+                {t('brand')}:
                 </label>
                 <Select className="form-control" value={brand} name='brand' onChange={onChangeBrand} validations={[brandValidator]}>
-                        <option value=''>Choose brand...</option>
+                        <option value=''>{t('choose-brand')}</option>
                         <option value='Audi'>Audi</option>
                         <option value='BMW'>BMW</option>
                         <option value='Ferrari'>Ferrari</option>
@@ -164,11 +166,11 @@ const EditVehicleModal = (props) => {
             </div>
 
             <div className="form-group">
-                <label htmlFor="brand">
-                    Brand:
+                <label htmlFor="category">
+                {t('category')}:
                 </label>
-                <Select className="form-control" name='brand' value={category} onChange={onChangeCategory} validations={[brandValidator]}>
-                        <option value=''>Choose category...</option>
+                <Select className="form-control" name='category' value={category} onChange={onChangeCategory} validations={[brandValidator]}>
+                        <option value=''>{t('choose-category')}</option>
                         <option value='HATCHBACK'>Hatchback</option>
                         <option value='SEDAN'>Sedan</option>
                         <option value='SUV'>SUV</option>
@@ -190,7 +192,7 @@ const EditVehicleModal = (props) => {
             </div>
 
             <div className="form-group">
-                <label htmlFor="year">Production Year</label>
+                <label htmlFor="year">{t('prod-year')}</label>
                 <Input
                   type="number"
                   className="form-control w-25"
@@ -202,7 +204,7 @@ const EditVehicleModal = (props) => {
             </div>
 
             <div className="form-group">
-               <label htmlFor="country">Country</label>
+               <label htmlFor="country">{t('country')}</label>
                <div>
                   <CountryDropdown
                     className="form-control"
@@ -214,7 +216,7 @@ const EditVehicleModal = (props) => {
             </div>
 
             <div className="form-group">
-                <label htmlFor="power">Power</label>
+                <label htmlFor="power">{t('power')}</label>
                 <Input
                   type="number"
                   className="form-control w-25"
@@ -226,7 +228,7 @@ const EditVehicleModal = (props) => {
             </div>
 
             <div className="form-group">
-                <label htmlFor="price">Price per Day</label>
+                <label htmlFor="price">{t('price-per-day')}</label>
                 <CurrencyInput
                   className="form-control w-25"
                   name="price"
@@ -239,7 +241,7 @@ const EditVehicleModal = (props) => {
             </div>
 
             <div className="form-group">
-                <label htmlFor="description">Description</label>
+                <label htmlFor="description">{t('description')}</label>
                 <textarea
                     className="form-control"
                     name="description"
@@ -249,7 +251,7 @@ const EditVehicleModal = (props) => {
             </div>
 
             <div className="form-group">
-                <label htmlFor="picture">Picture url</label>
+                <label htmlFor="picture">{t('pic-url')}</label>
                 <Input
                   type="text"
                   className="form-control"
@@ -263,7 +265,7 @@ const EditVehicleModal = (props) => {
             </div>
 
             <div className="form-group">
-                <button type="submit" className="btn btn-primary btn-block">Edit vehicle</button>
+                <button type="submit" className="btn btn-primary btn-block">{t('edit-vehicle')}</button>
             </div>
 
             {message && (

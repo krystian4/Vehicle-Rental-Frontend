@@ -11,6 +11,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 import EmpService from "../../services/employee.service";
+import { useTranslation } from 'react-i18next';
 
 const required = (value) => {
   if (!value) {
@@ -86,6 +87,7 @@ function getModalStyle() {
   }));
 
 export default function EditEmployeeModal (props){
+  const { t } = useTranslation('navbar');
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
     const form = useRef();
@@ -183,7 +185,7 @@ export default function EditEmployeeModal (props){
             {!successful && (
                 <div>
                 <div className="form-group">
-                    <label htmlFor="username">Username</label>
+                    <label htmlFor="username">{t('username')}</label>
                     <Input
                     type="text"
                     className="form-control"
@@ -209,7 +211,7 @@ export default function EditEmployeeModal (props){
                 <hr />
 
                 <div className="form-group">
-                    <label htmlFor="firstName">Name</label>
+                    <label htmlFor="firstName">{t('name')}</label>
                     <Input
                     type="text"
                     className="form-control"
@@ -221,7 +223,7 @@ export default function EditEmployeeModal (props){
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="lastname">Last Name</label>
+                    <label htmlFor="lastname">{t('last-name')}</label>
                     <Input
                     type="text"
                     className="form-control"
@@ -234,19 +236,19 @@ export default function EditEmployeeModal (props){
 
                 <div className="form-group">
                   <label htmlFor="jobTitle">
-                      Title
+                  {t('title')}
                   </label>
                   <Select className="form-control" name='jobTitle' value={jobTitle} onChange={onChangePosition} validations={[positionValidator]}>
-                          <option value=''>Choose job title...</option>
-                          <option value='Employee'>Employee</option>
-                          <option value='Manager'>Manager</option>
-                          <option value='Admin'>Admin</option>
+                          <option value=''>{t('choose-title')}</option>
+                          <option value='Employee'>{t('employee')}</option>
+                          <option value='Manager'>{t('manager')}</option>
+                          <option value='Admin'>{t('admin')}</option>
                   </Select>
                 </div>
 
                 <div className="form-group">
                   <label htmlFor="roles">
-                      Roles
+                  {t('roles')}
                   </label>
                   <br />
                 <FormControl style ={{margin:0}} required error={roleError} value={roles} component="fieldset" className={classes.formControl}>
@@ -262,7 +264,7 @@ export default function EditEmployeeModal (props){
                       control={<Checkbox color="primary" onChange={handleChangeRole} name="admin" />}
                       label="admin"
                     />
-                  <FormHelperText>Pick at least one.</FormHelperText>
+                  <FormHelperText>{t('pick-atleast-one')}</FormHelperText>
                 </FormControl>
                 </div>
 
@@ -278,7 +280,7 @@ export default function EditEmployeeModal (props){
             </div>
 
                 <div className="form-group">
-                    <button className="btn btn-primary btn-block">Edit Employee</button>
+                    <button className="btn btn-primary btn-block">{t('edit-employee')}</button>
                 </div>
 
               </div>

@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 import FaqService from "../../services/faq.service";
+import { useTranslation } from 'react-i18next';
 
 
 function getModalStyle() {
@@ -29,6 +30,7 @@ function getModalStyle() {
   }));
 
 export default function AddNewFAQModal (props){
+    const { t } = useTranslation('navbar');
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
     const [fieldError, setFieldError] = React.useState(false);
@@ -52,12 +54,12 @@ export default function AddNewFAQModal (props){
     const handleAddFAQ = () =>{
         if(question === ""){
             setFieldError(true);
-            setHelpText("Field can't be empty!");
+            setHelpText(t('field-cant-be-empty'));
         }
         else setFieldError(false);
         if(answer === ""){
             setFieldError2(true);
-            setHelpText("Field can't be empty!");
+            setHelpText(t('field-cant-be-empty'));
         }
         else setFieldError2(false);
 
@@ -82,12 +84,12 @@ export default function AddNewFAQModal (props){
     
       const modalBody = (
         <div style={modalStyle} className={classes.paper}>
-          <h2 id="simple-modal-title">Add new FAQ</h2>
+          <h2 id="simple-modal-title">{t('add-new-faq')}</h2>
           <form className={classes.root} noValidate autoComplete="off">
-          <TextField error={fieldError} helperText={helpText} id="standard-basic" style={{minWidth:"500px"}} label="Question" onChange={onChangeQuestion}/>
-          <TextField error={fieldError2} helperText={helpText} id="standard-basic" style={{minWidth:"500px"}} label="Answer" onChange={onChangeAnswer}/> <br /><br />
+          <TextField error={fieldError} helperText={helpText} id="standard-basic" style={{minWidth:"500px"}} label={t('question')} onChange={onChangeQuestion}/>
+          <TextField error={fieldError2} helperText={helpText} id="standard-basic" style={{minWidth:"500px"}} label={t('answer')} onChange={onChangeAnswer}/> <br /><br />
           <Button variant="contained" color="primary" onClick={() => handleAddFAQ()}>
-            Add
+          {t('add')}
           </Button>
         </form>
           

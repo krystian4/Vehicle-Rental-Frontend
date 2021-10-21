@@ -17,6 +17,7 @@ import AddOfferModal from './AddOfferModal';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EmpService from "../../services/employee.service";
+import { useTranslation } from 'react-i18next';
 
 const useRowStyles = makeStyles({
     table: {
@@ -25,6 +26,8 @@ const useRowStyles = makeStyles({
 });
 
 function Row(props) {
+  const { t } = useTranslation('navbar');
+
     const { offer } = props;
     const [open, setOpen] = useState(false);
     const classes = useRowStyles();
@@ -50,11 +53,11 @@ function Row(props) {
                     </IconButton>
                 </TableCell >
                 <TableCell component="th" scope="row">
-                    <strong>Offer ID:</strong> {offer.offerId}
+                    <strong>{t('offer-id')}:</strong> {offer.offerId}
                 </TableCell>
-                <TableCell align="right"><strong>Created by:</strong> {offer.employeeUsername} </TableCell>
-                <TableCell align="right"><strong>Description: </strong>{offer.description} </TableCell>
-                <TableCell align="right"><strong>Discount:</strong> {offer.discount}%</TableCell>
+                <TableCell align="right"><strong>{t('created-by')}:</strong> {offer.employeeUsername} </TableCell>
+                <TableCell align="right"><strong>{t('descrption')}: </strong>{offer.description} </TableCell>
+                <TableCell align="right"><strong>{t('discount')}:</strong> {offer.discount}%</TableCell>
                 <TableCell align="right">
                     <IconButton aria-label="edit" className={classes.margin} onClick={()=>removeOffer(offer.offerId)}>
                         <DeleteIcon />
@@ -69,17 +72,17 @@ function Row(props) {
                             <Table size="small" aria-label="purchases">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell colSpan={10}>Vehicles covered by the promotion</TableCell>
+                                        <TableCell colSpan={10}>{t('vehicles-covered-by-prom')}</TableCell>
                                     </TableRow>
                                 </TableHead>
 
                                 <TableBody>
                                     {offer.vehicles.map((vehicle) => (
                                         <TableRow key={vehicle.vehicleId}>
-                                            <TableCell style={{ borderBottom: "unset" }} align="left"><strong>Vehicle ID:</strong><br />{vehicle.vehicleId}</TableCell>
-                                            <TableCell style={{ borderBottom: "unset" }} align="left"><strong>Brand:</strong><br />{vehicle.brand}</TableCell>
+                                            <TableCell style={{ borderBottom: "unset" }} align="left"><strong>{t('vehicleid')}:</strong><br />{vehicle.vehicleId}</TableCell>
+                                            <TableCell style={{ borderBottom: "unset" }} align="left"><strong>{t('brand')}:</strong><br />{vehicle.brand}</TableCell>
                                             <TableCell style={{ borderBottom: "unset" }} align="left"><strong>Model:</strong><br />{vehicle.model}</TableCell>
-                                            <TableCell style={{ borderBottom: "unset" }} align="right"><strong>Standard Price:</strong><br /> {vehicle.price.toFixed(2)}PLN</TableCell>
+                                            <TableCell style={{ borderBottom: "unset" }} align="right"><strong>{t('standard-price')}:</strong><br /> {vehicle.price.toFixed(2)}PLN</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -95,10 +98,12 @@ function Row(props) {
 
 
 const Offers = () => {
+  const { t } = useTranslation('navbar');
+
     const [offers, setOffers] = useState([]);
 
     const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState("No offers available");
+    const [message, setMessage] = useState(t('no-offers'));
 
     const [addModalIsOpen, setAddModalOpen] = useState(false);
 
@@ -135,7 +140,7 @@ const Offers = () => {
                 </header>
                 <div style={{ paddingBottom: "0.5rem" }}>
                     <Button variant="contained" color="primary" onClick={() => setAddModalOpen(true)}>
-                        Add new offer
+                    {t('add-new-offer')}
                     </Button>
                 </div>
 
@@ -149,11 +154,11 @@ const Offers = () => {
     return (
         <div className="container">
             <header className="jumbotron">
-                <h3>Offers</h3>
+                <h3>{t('offers-button')}</h3>
             </header>
             <div style={{ paddingBottom: "0.5rem" }}>
                 <Button variant="contained" color="primary" onClick={() => setAddModalOpen(true)}>
-                    Add new offer
+                {t('add-new-offer')}
                 </Button>
             </div>
 

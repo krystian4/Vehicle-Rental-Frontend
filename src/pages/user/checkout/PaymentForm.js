@@ -6,8 +6,11 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
+import { useTranslation } from 'react-i18next';
 
 export default function PaymentForm(props) {
+  const { t } = useTranslation('navbar');
+
   const [paymentMethod, setPaymentMethod] = React.useState(props.card.cash? "cash":"card");
   const [cardPayment, setCardPayment] = React.useState(!props.card.cash);
 
@@ -51,13 +54,13 @@ export default function PaymentForm(props) {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
-        Payment method
+      {t('payment-method')}
       </Typography>
       <Grid item xs={12}>
           <FormControl component="fieldset">
                 <RadioGroup aria-label="method" name="method" value={paymentMethod} onChange={handleChange}>
-                  <FormControlLabel value="card" control={<Radio color="primary"/>} label="Use my credit card" />
-                  <FormControlLabel value="cash" control={<Radio color="primary"/>} label="Pay with cash on place" />
+                  <FormControlLabel value="card" control={<Radio color="primary"/>} label={t('use-card')} />
+                  <FormControlLabel value="cash" control={<Radio color="primary"/>} label={t('pay-with-cash')} />
               </RadioGroup>
            </FormControl>
         </Grid>
@@ -65,13 +68,13 @@ export default function PaymentForm(props) {
        {cardPayment && (
           <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
-            <TextField required id="cardName" value={cardName} onChange={handleCardNameChange} label="Name on card" fullWidth autoComplete="cc-name" />
+            <TextField required id="cardName" value={cardName} onChange={handleCardNameChange} label={t('name-on-card')} fullWidth autoComplete="cc-name" />
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField
               required
               id="cardNumber"
-              label="Card number"
+              label={t('card-number')}
               fullWidth
               autoComplete="cc-number"
               value={cardNumber}
@@ -79,14 +82,14 @@ export default function PaymentForm(props) {
             />
           </Grid>
           <Grid item xs={12} md={6}>
-            <TextField required id="expDate" value={expDate} onChange={handleExpDateChange} label="Expiry date" fullWidth autoComplete="cc-exp" />
+            <TextField required id="expDate" value={expDate} onChange={handleExpDateChange} label={t('exp-date')} fullWidth autoComplete="cc-exp" />
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField
               required
               id="cvv"
               label="CVV"
-              helperText="Last three digits on signature strip"
+              helperText={t('card-helper')}
               fullWidth
               autoComplete="cc-csc"
               value={cvv}

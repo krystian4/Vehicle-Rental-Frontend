@@ -13,10 +13,12 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
+import { useTranslation } from 'react-i18next';
 
 import AuthService from "../../services/auth.service";
 
 const required = (value) => {
+
   if (!value) {
     return (
       <div className="alert alert-danger" role="alert">
@@ -120,6 +122,7 @@ function getModalStyle() {
   }));
 
 export default function AddNewFAQModal (props){
+    const { t } = useTranslation('navbar');
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
 
@@ -204,10 +207,8 @@ export default function AddNewFAQModal (props){
     AuthService.registerEmployee(employeeDto).then(
       (response) => {
         console.log(response);
-        console.log("Udao sie!");
       },
       (error) => {
-        console.log("Nie zapisano employee!");
         const resMessage =
             (error.response &&
             error.response.data &&
@@ -272,7 +273,7 @@ export default function AddNewFAQModal (props){
             {!successful && (
                 <div>
                 <div className="form-group">
-                    <label htmlFor="username">Username</label>
+                    <label htmlFor="username">{t('username')}</label>
                     <Input
                     type="text"
                     className="form-control"
@@ -296,7 +297,7 @@ export default function AddNewFAQModal (props){
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password">{t('password')}</label>
                     <Input
                     type="password"
                     className="form-control"
@@ -308,7 +309,7 @@ export default function AddNewFAQModal (props){
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="rpassword">Repeat Password</label>
+                    <label htmlFor="rpassword">{t('repeat-password')}</label>
                     <Input
                     type="password"
                     className="form-control"
@@ -321,7 +322,7 @@ export default function AddNewFAQModal (props){
 
 
                 <div className="form-group">
-                    <label htmlFor="name">Name</label>
+                    <label htmlFor="name">{t('name')}</label>
                     <Input
                     type="text"
                     className="form-control"
@@ -333,7 +334,7 @@ export default function AddNewFAQModal (props){
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="lastname">Last Name</label>
+                    <label htmlFor="lastname">{t('last-name')}</label>
                     <Input
                     type="text"
                     className="form-control"
@@ -345,7 +346,7 @@ export default function AddNewFAQModal (props){
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="address">Address</label>
+                    <label htmlFor="address">{t('adress')}</label>
                     <Input
                     type="text"
                     className="form-control"
@@ -357,7 +358,7 @@ export default function AddNewFAQModal (props){
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="city">City</label>
+                    <label htmlFor="city">{t('city')}</label>
                     <Input
                     type="text"
                     className="form-control"
@@ -369,7 +370,7 @@ export default function AddNewFAQModal (props){
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="phone">Phone Number</label>
+                    <label htmlFor="phone">{t('phone-number')}</label>
                     <Input
                     type="text"
                     className="form-control"
@@ -381,7 +382,7 @@ export default function AddNewFAQModal (props){
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="country">Country</label>
+                  <label htmlFor="country">{t('country')}</label>
                   <div>
                       <CountryDropdown 
                           className="form-control"
@@ -395,25 +396,25 @@ export default function AddNewFAQModal (props){
                 
 
                 <div className="form-group">
-                    <label style={{ marginRight: "5px" }}htmlFor="birthDate">Birth date:</label>
+                    <label style={{ marginRight: "5px" }}htmlFor="birthDate">{t('birth-date')}:</label>
                     <DatePicker  dateFormat="dd/MM/yyyy" className="form-control" selected={birthDate} onChange={date => setBirthDate(date)} />
                 </div>
                 <hr />
                 <div className="form-group">
                   <label htmlFor="jobTitle">
-                      Title
+                  {t('title')}
                   </label>
                   <Select className="form-control" name='jobTitle' onChange={onChangePosition} validations={[positionValidator]}>
-                          <option value=''>Choose job title...</option>
-                          <option value='Employee'>Employee</option>
-                          <option value='Manager'>Manager</option>
-                          <option value='Admin'>Admin</option>
+                          <option value=''>{t('choose-title')}</option>
+                          <option value='Employee'>{t('employee')}</option>
+                          <option value='Manager'>{t('manager')}</option>
+                          <option value='Admin'>{t('admin')}</option>
                   </Select>
                 </div>
 
                 <div className="form-group">
                   <label htmlFor="roles">
-                      Roles
+                  {t('roles')}
                   </label>
                   <br />
                 <FormControl style ={{margin:0}} required error={roleError} component="fieldset" className={classes.formControl}>
@@ -429,7 +430,7 @@ export default function AddNewFAQModal (props){
                       control={<Checkbox color="primary" onChange={handleChangeRole} name="admin" />}
                       label="admin"
                     />
-                  <FormHelperText>Pick at least one.</FormHelperText>
+                  <FormHelperText>{t('pick-atleast-one')}</FormHelperText>
                 </FormControl>
                 </div>
 
@@ -445,9 +446,8 @@ export default function AddNewFAQModal (props){
             </div>
 
                 <div className="form-group">
-                    <button className="btn btn-primary btn-block">Add Employee</button>
+                    <button className="btn btn-primary btn-block">{t('add-employee')}</button>
                 </div>
-
 
               </div>
 

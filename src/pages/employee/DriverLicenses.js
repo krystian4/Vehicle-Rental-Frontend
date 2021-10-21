@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import VerifyLicenseDialog from './VerifyLicenseDialog'
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 const DriverLicenses = () => {
+  const { t } = useTranslation('navbar');
     const classes = useStyles();
     const [driverLicenses, setDriverLicenses] = useState([]);
     const [verifyDialogOpen, setOpenVerifyDialog] = useState(false);
@@ -49,7 +51,7 @@ const DriverLicenses = () => {
   return (
     <div className="container">
       <header className="jumbotron">
-        <h3>Driver Licenses verification</h3>
+        <h3>{t('driver-licenses-ver')}</h3>
       </header>
 
       {verifyDialogOpen &&(
@@ -67,20 +69,20 @@ const DriverLicenses = () => {
             <Grid key={value.id} item xs={12} sm={6}>
               <Paper noWrap className={classes.paper} >
                   <ul style={{listStyleType:"none"}}>
-                      <li><strong>CustomerId: </strong> {value.id}</li>
-                      <li><strong>License number: </strong>{value.drivingLicenseNumber}</li>
-                      <li><strong>First Name: </strong>{value.firstName}</li>
-                      <li><strong>Last Name: </strong>{value.lastName}</li>
-                      <li><strong>Address: </strong>{value.address}</li>
-                      <li><strong>City: </strong>{value.city}</li>
-                      <li><strong>Country: </strong>{value.country}</li>
+                      <li><strong>{t('customer-id')}: </strong> {value.id}</li>
+                      <li><strong>{t('license-num')}: </strong>{value.drivingLicenseNumber}</li>
+                      <li><strong>{t('name')}: </strong>{value.firstName}</li>
+                      <li><strong>{t('last-name')}: </strong>{value.lastName}</li>
+                      <li><strong>{t('adress')}: </strong>{value.address}</li>
+                      <li><strong>{t('city')}: </strong>{value.city}</li>
+                      <li><strong>{t('country')}: </strong>{value.country}</li>
                   </ul>
                     <Button variant="contained" color="primary" onClick={()=>{
                         setLicenseNumber(value.drivingLicenseNumber);
                         setUserId(value.id)
                         setOpenVerifyDialog(true);
                     }}>
-                        Verify
+                        {t('verify')}
                     </Button>
               </Paper>
             </Grid>

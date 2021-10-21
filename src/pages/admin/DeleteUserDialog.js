@@ -6,8 +6,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import UserService from '../../services/user.service'
+import { useTranslation } from 'react-i18next';
 
 export default function DeleteFaqDialog (props){
+  const { t } = useTranslation('navbar');
+
   const userId = props.userId;
 
   const handleCloseDelete = () => {
@@ -37,18 +40,18 @@ export default function DeleteFaqDialog (props){
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Delete this user?"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{t('delete-this-user')}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Do you want to delete this user? You cannot undo this operation!
+            {t('delete-user-question')}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDelete} color="primary">
-            Delete
+          {t('delete')}
           </Button>
           <Button onClick={handleClose} color="primary" autoFocus>
-            Cancel
+          {t('cancel')}
           </Button>
         </DialogActions>
       </Dialog>

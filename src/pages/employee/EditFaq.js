@@ -20,6 +20,7 @@ import DeleteFaqDialog from "./DeleteFaqDialog";
 import AddNewFAQModal from "./AddNewFAQModal";
 import EditFAQModal from "./EditFAQModal";
 import FaqService from '../../services/faq.service';
+import { useTranslation } from 'react-i18next';
 
 const useRowStyles = makeStyles({
   root: {
@@ -30,6 +31,8 @@ const useRowStyles = makeStyles({
 });
 
 function Row(props) {
+  const { t } = useTranslation('navbar');
+
   const { row } = props;
   const [open, setOpen] = useState(false);
   const classes = useRowStyles();
@@ -44,7 +47,7 @@ function Row(props) {
         </TableCell >
 
         <TableCell align="left" component="th" scope="row">
-          Question:
+        {t('question')}:
         </TableCell>
         <TableCell style={{  padding: 0 }} align="right">
               <IconButton aria-label="edit" className={classes.margin} onClick={()=>{
@@ -78,7 +81,7 @@ function Row(props) {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Answer</TableCell>
+                    <TableCell>{t('answer')}</TableCell>
                   </TableRow>
                 </TableHead>
 
@@ -99,9 +102,11 @@ function Row(props) {
 
 
 const EditFaq = () => {
+  const { t } = useTranslation('navbar');
+
     const [arrayFAQs, setFAQs] = useState([])
     const [loading, setLoading]= useState(true)
-    const [message, setMessage] = useState("No FAQs here")
+    const [message, setMessage] = useState(t('no-faq'))
 
     const [dialogOpen, setDialogOpen] = useState(false);
     const [addFaqOpen, setAddNewFAQOPEN] = useState(false);
@@ -148,7 +153,7 @@ const EditFaq = () => {
 
         <div style={{paddingBottom:"0.5rem"}}>
         <Button variant="contained" color="primary" onClick={()=>setAddNewFAQOPEN(true)}>
-          Add new FAQ
+        {t('add-new-faq')}
         </Button>
         </div>
           {addFaqOpen && (
@@ -197,11 +202,11 @@ const EditFaq = () => {
       )}
 
       <header className="jumbotron">
-        <h3>Edit FAQ</h3>
+        <h3>{t('edit-faq')}</h3>
       </header>
       <div style={{paddingBottom:"0.5rem"}}>
         <Button variant="contained" color="primary" onClick={()=>setAddNewFAQOPEN(true)}>
-          Add new FAQ
+        {t('add-new-faq')}
         </Button>
       </div>
 

@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 import UserService from "../../services/user.service";
+import { useTranslation } from 'react-i18next';
 
 
 function getModalStyle() {
@@ -29,6 +30,7 @@ function getModalStyle() {
   }));
 
 export default function AddLicenseModal (props){
+    const { t } = useTranslation('navbar');
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
     const [fieldError, setFieldError] = React.useState(false);
@@ -45,7 +47,7 @@ export default function AddLicenseModal (props){
     const handleAddLicense = () =>{
         if(licenseNumber === ""){
             setFieldError(true);
-            setHelpText("Field can't be empty!");
+            setHelpText(t('field-cant-be-empty'));
             return;
         }
         else setFieldError(false);
@@ -69,12 +71,12 @@ export default function AddLicenseModal (props){
     
       const modalBody = (
         <div style={modalStyle} className={classes.paper}>
-          <h2 id="simple-modal-title">Add License Number</h2>
+          <h2 id="simple-modal-title">{t('add-license-num')}</h2>
           <form className={classes.root} noValidate autoComplete="off">
-          <TextField error={fieldError} type="number" helperText={helpText} id="standard-basic" style={{minWidth:"400px"}} label="License Number" onChange={onChangeNumber}/>
+          <TextField error={fieldError} type="number" helperText={helpText} id="standard-basic" style={{minWidth:"400px"}} label={t('license-num')} onChange={onChangeNumber}/>
           <br /><br />
           <Button variant="contained" color="primary" onClick={() => handleAddLicense()}>
-            Add
+          {t('add')}
           </Button>
         </form>
           

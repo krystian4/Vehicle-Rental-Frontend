@@ -11,8 +11,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { format } from "date-fns";
 import Button from '@material-ui/core/Button';
 import Checkout from "./user/checkout/Checkout";
+import { useTranslation } from 'react-i18next';
 
 const CartPage = () => {
+  const { t } = useTranslation('navbar');
   const [cart, setCart] = useState(JSON.parse(sessionStorage.getItem("cart")));
   const [payButtonClicked, setPayButtonClicked] = useState(false);
   
@@ -50,7 +52,7 @@ const CartPage = () => {
 
     <div className="container">
       <header className="jumbotron" style={{paddingBottom:"20px", paddingTop:"30px", marginBottom:"5px"}}>
-      <h3>Ready to reserve</h3>
+      <h3>{t('ready-to-reserve')}</h3>
 
       </header>
 
@@ -58,12 +60,12 @@ const CartPage = () => {
         <Table  aria-label="simple table">
             <TableHead>
             <TableRow>
-                <TableCell>Brand</TableCell>
+                <TableCell>{t('brand')}</TableCell>
                 <TableCell align="right">Model</TableCell>
-                <TableCell align="right">Start Date</TableCell>
-                <TableCell align="right">End Date</TableCell>
-                <TableCell align="right">Price</TableCell>
-                <TableCell align="right">Action</TableCell>
+                <TableCell align="right">{t('start-date')}</TableCell>
+                <TableCell align="right">{t('end-date')}</TableCell>
+                <TableCell align="right">{t('price')}</TableCell>
+                <TableCell align="right">{t('action')}</TableCell>
             </TableRow>
             </TableHead>
             <TableBody>
@@ -89,7 +91,7 @@ const CartPage = () => {
                 </TableRow>
             ))}
             <TableRow >
-                <TableCell  colSpan={5} align="right">Order total: <strong>{cartTotal}.00PLN</strong></TableCell>
+                <TableCell  colSpan={5} align="right">{t('order-total')}: <strong>{cartTotal}.00PLN</strong></TableCell>
 
             </TableRow>
             </TableBody>
@@ -97,7 +99,7 @@ const CartPage = () => {
         </TableContainer>
         <div className="row" style={{margin:0}}>
           <Button style={{ marginLeft:"auto", width:"16%", marginTop:"5px", marginBottom:"10px"}} variant="contained" color="primary" onClick={()=> handlePay()}>
-                            Pay
+          {t('pay')}
           </Button>
         </div>
     </div>

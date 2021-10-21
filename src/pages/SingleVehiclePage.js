@@ -7,9 +7,11 @@ import VehicleService from "../services/vehicle.service"
 import Button from '@material-ui/core/Button';
 import VehicleComments from "../components/VehicleComments";
 import CustomerService from "../services/customer.service";
+import { useTranslation } from 'react-i18next';
 
 
 const SingleVehiclePage = () => {
+  const { t } = useTranslation('navbar');
   const vehicle = JSON.parse(sessionStorage.getItem("vehicle"));
   const user = JSON.parse(sessionStorage.getItem("user"));
 
@@ -116,7 +118,7 @@ const SingleVehiclePage = () => {
       console.log("Cart existed: ");
       const found = cart.find(item => (item.id === cartItem.id));
       if(found !== undefined){
-        window.alert("Vehicle already in cart!");
+        window.alert(t('vehicle-in-cart'));
         return;
       }
       cart.push(cartItem);
@@ -143,7 +145,7 @@ const SingleVehiclePage = () => {
           <div className="row">
           
 
-            <div className="col h3"><strong>Brand: </strong></div>
+            <div className="col h3"><strong>{t('brand')}: </strong></div>
             <div className="col h3" style={{textAlign:"right"}}>{vehicle.brand}</div>
           </div>
           <hr style={{margin:0}}></hr>
@@ -155,35 +157,35 @@ const SingleVehiclePage = () => {
           <hr style={{margin:0}}></hr>
 
           <div className="row">
-            <div className="col"><strong>HorsePower: </strong></div>
-            <div className="col" style={{textAlign:"right"}}>{vehicle.power}HP</div>
+            <div className="col"><strong>{t('power')}: </strong></div>
+            <div className="col" style={{textAlign:"right"}}>{vehicle.power}{t('hp')}</div>
           </div>
           <hr style={{margin:0}}></hr>
 
           <div className="row">
-            <div className="col"><strong>Production country: </strong></div>
+            <div className="col"><strong>{t('prod-country')}: </strong></div>
             <div className="col" style={{textAlign:"right"}}>{vehicle.country}</div>
           </div>
           <hr style={{margin:0}}></hr>
 
           <div className="row">
-            <div className="col"><strong>Production year: </strong></div>
+            <div className="col"><strong>{t('prod-year')}: </strong></div>
             <div className="col" style={{textAlign:"right"}}>{vehicle.yearOfProduction}</div>
           </div>
           <hr style={{margin:0}}></hr>
 
           <div className="row">
-            <div className="col"><strong>Category: </strong></div>
+            <div className="col"><strong>{t('category')}: </strong></div>
             <div className="col" style={{textAlign:"right"}}>{vehicle.category}</div>
           </div>
           <hr style={{margin:0}}></hr>
 
           <br />
           <br />
-          <p style={{margin:0, color:"rgb(51, 77, 77)"}}><i>Reservation</i> </p>
+          <p style={{margin:0, color:"rgb(51, 77, 77)"}}><i>{t('reservation')}</i> </p>
           <hr style={{margin:0}}></hr>
           <div className="row">
-            <div className="col"><strong>Start Date: </strong></div>
+            <div className="col"><strong>{t('start-date')}: </strong></div>
             <div className="col">
 
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -201,7 +203,7 @@ const SingleVehiclePage = () => {
           </div>
 
           <div className="row">
-            <div className="col"><strong>End Date: </strong></div>
+            <div className="col"><strong>{t('end-date')}: </strong></div>
             <div className="col">
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
 
@@ -218,7 +220,7 @@ const SingleVehiclePage = () => {
           </div>
 
           <div className="row">
-            <div className="col"><strong>Price: </strong></div>
+            <div className="col"><strong>{t('price')}: </strong></div>
             <div className="col">{resPrice.toFixed(2)} PLN</div>
           </div>
 
@@ -227,7 +229,7 @@ const SingleVehiclePage = () => {
       {user !== null && user.roles.includes("ROLE_USER") && resPrice>0 && status && (
         <div className="row" style={{margin:0}}>
         <Button style={{ marginLeft: "auto", marginTop:"20px" }} variant="contained" color="primary" onClick={handleAddToCart}>
-          Add to Cart
+        {t('add-to-cart')}
         </Button>
       </div>
       )} 

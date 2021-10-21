@@ -16,6 +16,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import Loading from "../../components/Loading";
 import EmpService from "../../services/employee.service";
 import RemoveComplainDialog from "./RemoveComplainDialog";
+import { useTranslation } from 'react-i18next';
 
 
 const useRowStyles = makeStyles({
@@ -27,6 +28,8 @@ const useRowStyles = makeStyles({
   });
   
   function Row(props) {
+  const { t } = useTranslation('navbar');
+
     const { complaint } = props;
     const [open, setOpen] = useState(false);
     const classes = useRowStyles();
@@ -40,25 +43,25 @@ const useRowStyles = makeStyles({
             </IconButton>
           </TableCell >
           <TableCell align="left" component="th" scope="row">
-            <strong>Rental ID: </strong><br />{complaint.rentalId}
+            <strong>{t('rental-id')}: </strong><br />{complaint.rentalId}
           </TableCell>
           <TableCell align="left" >
-            <strong>Customer: </strong><br />{complaint.firstName} {complaint.lastName}
+            <strong>{t('customer')}: </strong><br />{complaint.firstName} {complaint.lastName}
           </TableCell>
           <TableCell align="left" >
             <strong>E-mail: </strong><br />{complaint.email}
           </TableCell>
           <TableCell align="left" >
-            <strong>Vehicle ID: </strong><br />{complaint.vehicleId}
+            <strong>{t('vehicleid')}: </strong><br />{complaint.vehicleId}
           </TableCell>
           <TableCell align="left" >
-            <strong>Brand: </strong><br />{complaint.brand}
+            <strong>{t('brand')}: </strong><br />{complaint.brand}
           </TableCell>
           <TableCell align="left"  >
             <strong>Model: </strong><br />{complaint.model}
           </TableCell>
           <TableCell align="right" >
-          <strong>Price: </strong><br />{complaint.resPrice.toFixed(2)}PLN
+          <strong>{t('price')}: </strong><br />{complaint.resPrice.toFixed(2)}PLN
           </TableCell>
           <TableCell style={{  padding: 0 }} align="right">
                 <IconButton aria-label="cancel" className={classes.margin} onClick={()=>{
@@ -77,7 +80,7 @@ const useRowStyles = makeStyles({
                 <Table size="small" aria-label="purchases">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Description</TableCell>
+                      <TableCell>{t('description')}</TableCell>
                     </TableRow>
                   </TableHead>
   
@@ -97,9 +100,11 @@ const useRowStyles = makeStyles({
   }
 
   const ComplaintsList = () => {
+  const { t } = useTranslation('navbar');
+
     const [complaints, setComplaints] = useState([])
     const [loading, setLoading]= useState(true)
-    const [message, setMessage] = useState("No complaints available")
+    const [message, setMessage] = useState(t('no-complaints'))
     const [complaintId, setComplaintId] = useState('');
 
     const [dialogOpen, setDialogOpen] = useState(false);

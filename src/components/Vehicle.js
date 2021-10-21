@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Vehicle = ({ id, brand, category, model, yearOfProduction, country, power, price, description, pictureUrl, discount, removeVehicle }) => {
+    const { t } = useTranslation('navbar');
     const classes = useStyles();
     const vehicle = {
         id,
@@ -48,7 +50,7 @@ const Vehicle = ({ id, brand, category, model, yearOfProduction, country, power,
                         <div style={{display:"flex", justifyContent:"center", width:"100%"}}>
                         <Link style={{ width:"100%" }} to={`/vehicle`} onClick={onClickVehicle}>
                             <Button style={{ width:"100%" }}  variant="contained" color="primary" >
-                                Reserve now
+                            {t('reserve-now')}
                         </Button>
                         </Link>
                         </div>
