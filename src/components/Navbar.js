@@ -5,7 +5,11 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import IconButton from '@material-ui/core/IconButton';
 import { grey } from '@material-ui/core/colors';
 import { useTranslation } from 'react-i18next';
-
+import LanguageIcon from '@material-ui/icons/Language';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import cookies from 'js-cookie';
+import i18next from 'i18next';
 
 const Navbar = () => {
   const { t } = useTranslation('navbar');
@@ -14,6 +18,10 @@ const Navbar = () => {
   const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [showCustomerMenu, setShowCustomerMenu] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
+  
+  const currentLanguageCode = cookies.get('i18next') || 'en';
+  const [lang, setLang] = useState(currentLanguageCode);
+
   const userCart = JSON.parse(sessionStorage.getItem("cart"));
 
   useEffect(() => {
@@ -32,6 +40,12 @@ const Navbar = () => {
     AuthService.logout(currentUser.id);
     sessionStorage.removeItem("user");
   };
+
+  const handleLangChange = (event, newLang) =>{
+    console.log(newLang);
+    setLang(newLang);
+    i18next.changeLanguage(newLang);
+  }
 
   return (
     <nav className="navbar navbar-expand navbar-dark bg-dark">
@@ -142,14 +156,14 @@ const Navbar = () => {
           {showCustomerMenu && (
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="/#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {t('user-dropdown')}
+                {t('user-dropdown')}
               </a>
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <Link to={"/user/drivingLicense"} className="dropdown-item">
                   {t('driver-license')}
                 </Link>
                 <Link to={"/user/orders"} className="dropdown-item">
-                {t('user-orders')}
+                  {t('user-orders')}
                 </Link>
               </div>
             </li>
@@ -179,7 +193,7 @@ const Navbar = () => {
           </li>
           <li className="nav-item">
             <a href="/login" className="nav-link" onClick={logOut}>
-            {t('logout')}
+              {t('logout')}
             </a>
           </li>
         </div>
@@ -187,18 +201,37 @@ const Navbar = () => {
         <div className="navbar-nav ml-auto">
           <li className="nav-item">
             <Link to={"/login"} className="nav-link">
-            {t('login')}
+              {t('login')}
 
             </Link>
           </li>
 
           <li className="nav-item">
             <Link to={"/register"} className="nav-link">
-            {t('signup')}
+              {t('signup')}
             </Link>
           </li>
         </div>
       )}
+      {/* <div className="dropdown">
+          <button
+            className="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <LanguageIcon style={{ color: grey[50] }} onClick={() => { console.log("lang button") }} />
+          </button>
+      </div> */}
+      <ToggleButtonGroup
+  value={lang}
+  exclusive
+  onChange={handleLangChange}
+>
+  <ToggleButton value="pl" style={{ color: grey[50] }}>PL</ToggleButton>
+  <ToggleButton value="en" style={{ color: grey[50] }}>EN</ToggleButton>
+</ToggleButtonGroup>
     </nav>
   );
 };
