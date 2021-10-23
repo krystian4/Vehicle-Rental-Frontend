@@ -20,6 +20,7 @@ const Navbar = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
   
   const currentLanguageCode = cookies.get('i18next') || 'en';
+  
   const [lang, setLang] = useState(currentLanguageCode);
 
   const userCart = JSON.parse(sessionStorage.getItem("cart"));
@@ -213,17 +214,6 @@ const Navbar = () => {
           </li>
         </div>
       )}
-      {/* <div className="dropdown">
-          <button
-            className="btn btn-secondary dropdown-toggle"
-            type="button"
-            id="dropdownMenuButton1"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <LanguageIcon style={{ color: grey[50] }} onClick={() => { console.log("lang button") }} />
-          </button>
-      </div> */}
       <ToggleButtonGroup
   value={lang}
   exclusive
