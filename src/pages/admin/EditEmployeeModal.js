@@ -138,6 +138,7 @@ export default function EditEmployeeModal (props){
     const roleExists = roles.find(role => role === event.target.name) !== undefined;
     const newRoles = roleExists ? roles.filter(role => role !== event.target.name) : [...roles, event.target.name];
     setRoles(newRoles);
+    console.log(newRoles);
 
   };
   const roleError = roles.filter((v) => v).length < 1;

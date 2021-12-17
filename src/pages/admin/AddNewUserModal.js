@@ -231,7 +231,7 @@ export default function AddNewFAQModal (props){
         form.current.validateAll();
 
         if (checkBtn.current.context._errors.length === 0) {
-          
+          console.log('Wysylam role: ', roles);
         AuthService.register(username, email, password, name, lastname, address, city, phone, country, birthDate, roles).then(
             (response) => {
             console.log("User utworzony jego id: " + response.data.id);
